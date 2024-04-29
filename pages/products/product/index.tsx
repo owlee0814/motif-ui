@@ -14,7 +14,7 @@ import {
     Text,
     Title
 } from "@mantine/core";
-import {IconAdjustments, IconHeart} from "@tabler/icons-react";
+import { IconHeart} from "@tabler/icons-react";
 
 export default function Product() {
     const groceries = [
@@ -96,7 +96,7 @@ export default function Product() {
                             <Group>
                                 <Title size={'1.5rem'}>$55.99</Title>
                                 <Title c="gray" td="line-through" size={'1.5rem'} >$69.99</Title>
-                                <Title c="red"size={'1.5rem'} >20%</Title>
+                                <Title c="red" size={'1.5rem'} >20%</Title>
                             </Group>
 
                             <Space h='xl'></Space>

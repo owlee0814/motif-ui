@@ -7,10 +7,8 @@ import {
     Grid,
     Group,
     Title,
-    Image,
     Text,
     Space,
-    NavLink,
     Stack,
     Divider
 } from "@mantine/core";

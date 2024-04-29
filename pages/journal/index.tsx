@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, GridCol, Image, Title, Text, Container} from "@mantine/core";
+import {Grid, Container} from "@mantine/core";
 import {JournalItem} from "../../component/JournalItem/JournalItem";
 
 export default function Home() {
