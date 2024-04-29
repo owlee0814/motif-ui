@@ -36,7 +36,7 @@ export function AuthenticationForm(props: PaperProps) {
     return (
         <Paper radius="md" p="xl" withBorder {...props}>
             <Text size="lg" fw={500}>
-                Welcome to OWEN, {type} with
+                Welcome to Motif, {type} with
             </Text>
             <Space h="xl" />
 

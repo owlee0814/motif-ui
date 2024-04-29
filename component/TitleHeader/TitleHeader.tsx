@@ -1,9 +1,20 @@
 import React from "react";
-import {ActionIcon, Group, rem, Title, useComputedColorScheme, useMantineColorScheme} from '@mantine/core';
+import {
+    ActionIcon,
+    Group,
+    MantineProvider,
+    rem,
+    Title,
+    useComputedColorScheme,
+    useMantineColorScheme
+} from '@mantine/core';
 import Link from "next/link";
 import {IconMoon, IconSun} from "@tabler/icons-react";
 import cx from 'clsx';
 import classes from "./TitleHeader.module.css";
+import {Archivo_Black, Figtree, Inter, Lexend, Montserrat} from "next/font/google";
+
+const montserrat = Montserrat({weight: "600", subsets: ['latin']})
 
 export function TitleHeader() {
     const { setColorScheme } = useMantineColorScheme();
@@ -13,19 +24,23 @@ export function TitleHeader() {
         <>
             <Group gap={5} visibleFrom="xs">
                 <Link
-                    style = {{
-                        'font-size': '4rem',
-                        'border-radius' : 'var(--mantine-radius-sm)',
-                        'padding' : '1rem',
-                        'text-decoration': 'none',
-                        'color': 'light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0))',
-                        'font-weight': 500,
-                        'font-family': 'Roboto Slab'
-                    }}
                     key={'home'}
                     href={'/home'}
+                    style = {{
+                        'padding' : '1rem',
+                        'text-decoration': 'none',
+                    }}
                 >
-                    MOTIF
+                    <Title
+                        size={'2rem'}
+                        c={'black'}
+                        fw={1200}
+                        style={{
+                            'font-family' : montserrat.style.fontFamily
+                        }}
+                    >
+                        MOTIF
+                    </Title>
                 </Link>
 
                 <Link

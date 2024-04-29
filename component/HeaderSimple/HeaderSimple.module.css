@@ -18,7 +18,7 @@
     padding: rem(8px) rem(12px);
     border-radius: var(--mantine-radius-sm);
     text-decoration: none;
-    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-dark-0));
     font-size: var(--mantine-font-size-sm);
     font-weight: 500;
 
@@ -30,11 +30,6 @@
         background-color: var(--mantine-color-blue-filled);
         color: var(--mantine-color-white);
     }
-}
-
-@font-face {
-    font-family: myFirstFont;
-    src: url(https://fonts.googleapis.com/css2?family=Jersey+15&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap);
 }
 
 .jersey-15-regular {

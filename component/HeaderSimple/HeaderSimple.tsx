@@ -1,7 +1,9 @@
 import React from 'react';
-import {Group} from '@mantine/core';
+import {Group, Title} from '@mantine/core';
 import classes from './HeaderSimple.module.css';
 import Link from "next/link";
+import {Montserrat} from "next/font/google";
+import { useHover } from '@mantine/hooks';
 
 const mainLinks = [
     {link: '/journal', label: 'JOURNAL'},
@@ -25,9 +27,9 @@ const brandSubLinks = [
     {link: '/promos', label: 'Promotion'},
 ];
 
+const montserrat = Montserrat({weight: "700", subsets: ['latin']})
 
 export function HeaderSimple() {
-
     const [selectedLink, setSelectedLink] = React.useState("");
 
     const mainItems = mainLinks.map((link) => (
@@ -40,7 +42,13 @@ export function HeaderSimple() {
                 setSelectedLink(link.label);
             }}
         >
-            {link.label}
+            <Title
+                style={{
+                    'font-family' : montserrat.style.fontFamily
+                }}
+            >
+                {link.label}
+            </Title>
         </Link>
 
     ));
@@ -50,9 +58,10 @@ export function HeaderSimple() {
             key={link.label}
             href={link.link}
             className={classes.link}
-            style={{'font-size': 20}}
         >
-            {link.label}
+            <Title c='black' fw='400' size='1.5rem'>
+                {link.label}
+            </Title>
         </Link>
     ));
 
@@ -61,9 +70,10 @@ export function HeaderSimple() {
             key={link.label}
             href={link.link}
             className={classes.link}
-            style={{'font-size': 20}}
         >
-            {link.label}
+            <Title c='black' fw='400' size='1.5rem'>
+                {link.label}
+            </Title>
         </Link>
     ));
 

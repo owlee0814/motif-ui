@@ -1,18 +1,26 @@
 import "@mantine/core/styles.css";
 import Head from "next/head";
 import {AppShell, MantineProvider} from "@mantine/core";
-import {theme} from "../theme";
 import {HeaderSimple} from "../component/HeaderSimple/HeaderSimple";
 import React from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {TitleHeader} from "../component/TitleHeader/TitleHeader";
 import {FooterSocial} from "../component/FooterSocial/FooterSocial";
+import {Inter, Figtree, Lexend, Archivo_Black} from "next/font/google";
+
+const inter = Inter({subsets: ['latin']})
+const lexend = Lexend({weight: "400", subsets: ['latin']})
 
 export default function App({Component, pageProps}: any) {
     const [opened, { toggle }] = useDisclosure();
 
     return (
-        <MantineProvider theme={theme}>
+        <MantineProvider
+            theme={{
+                fontFamily: inter.style.fontFamily,
+                headings: { fontFamily: lexend.style.fontFamily },
+            }}
+        >
             <Head>
                 <title>OWEN</title>
                 <meta
@@ -23,12 +31,19 @@ export default function App({Component, pageProps}: any) {
             </Head>
 
             <AppShell
-                header={{height: 240}}
+                header={{
+                    height: 240
+                }}
                 padding="md"
             >
                 <AppShell.Header>
-                    <TitleHeader/>
-                    <HeaderSimple/>
+                    <div style={{
+                        'padding': 30
+                    }}>
+                        <TitleHeader/>
+                        <HeaderSimple/>
+                    </div>
+
                 </AppShell.Header>
                 <AppShell.Main>
                     <Component {...pageProps} />
