@@ -34,7 +34,7 @@ export function AuthenticationForm(props: PaperProps) {
     });
 
     return (
-        <Paper radius="md" p="xl" withBorder {...props}>
+        <Paper  p="xl" withBorder {...props}>
             <Text size="lg" fw={500}>
                 Welcome to Motif, {type} with
             </Text>
@@ -56,7 +56,7 @@ export function AuthenticationForm(props: PaperProps) {
                                 placeholder="Your name"
                                 value={form.values.name}
                                 onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
-                                radius="md"
+                                
                             />
                         </>
                     )}
@@ -68,7 +68,7 @@ export function AuthenticationForm(props: PaperProps) {
                         value={form.values.email}
                         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
                         error={form.errors.email && 'Invalid email'}
-                        radius="md"
+                        
                     />
 
                     <Text>Password</Text>
@@ -78,7 +78,7 @@ export function AuthenticationForm(props: PaperProps) {
                         value={form.values.password}
                         onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
                         error={form.errors.password && 'Password should include at least 6 characters'}
-                        radius="md"
+                        
                     />
 
                     {type === 'register' && (

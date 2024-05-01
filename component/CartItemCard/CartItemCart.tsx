@@ -3,7 +3,7 @@ import React from "react";
 
 export function CartItemCart() {
     return (
-        <Card shadow="sm" padding="lg" radius="md">
+        <Card shadow="sm" padding="lg" >
             <Grid>
                 <Grid.Col span={3}>
                     <Image

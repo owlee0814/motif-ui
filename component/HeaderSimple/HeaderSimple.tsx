@@ -6,10 +6,11 @@ import {Montserrat} from "next/font/google";
 import { useHover } from '@mantine/hooks';
 
 const mainLinks = [
-    {link: '/journal', label: 'JOURNAL'},
+    {link: '/home', label: 'HOME'},
     {link: '/shop', label: 'SHOP'},
     {link: '/brands', label: 'BRANDS'},
-    {link: '/community', label: 'COMMUNITY'},
+    {link: '/community', label: 'COMMUNITY', disabled: true},
+    {link: '/journal', label: 'JOURNAL', disabled: true},
 ];
 
 const subLinks = [
@@ -22,9 +23,9 @@ const subLinks = [
 ];
 
 const brandSubLinks = [
-    {link: '/brands', label: 'About'},
+    {link: '/brands', label: 'Brands'},
     {link: '/lookbooks', label: 'Lookbook'},
-    {link: '/promos', label: 'Promotion'},
+    {link: '/about', label: 'About Motif'},
 ];
 
 const montserrat = Montserrat({weight: "700", subsets: ['latin']})
@@ -37,7 +38,11 @@ export function HeaderSimple() {
             key={link.label}
             href={link.link}
             className={classes.link}
-            style={{'font-size': 40}}
+            style={ link.disabled ? {
+                'font-size': 40,
+                'pointer-events': 'none'
+            } : {'font-size': 40}}
+
             onClick={() => {
                 setSelectedLink(link.label);
             }}
@@ -46,6 +51,7 @@ export function HeaderSimple() {
                 style={{
                     'font-family' : montserrat.style.fontFamily
                 }}
+                td={link.disabled ? 'line-through' : ''}
             >
                 {link.label}
             </Title>
@@ -59,7 +65,7 @@ export function HeaderSimple() {
             href={link.link}
             className={classes.link}
         >
-            <Title c='black' fw='400' size='1.5rem'>
+            <Title fw='400' size='1.5rem'>
                 {link.label}
             </Title>
         </Link>

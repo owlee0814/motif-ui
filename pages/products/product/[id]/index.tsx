@@ -3,25 +3,28 @@ import {
     Accordion,
     ActionIcon,
     Badge,
-    Box,
     Button,
     Center,
     Container,
     Grid,
     Group,
-    Image, Paper,
+    Image,
     Rating,
     Select,
     Space,
     Text,
     Title
 } from "@mantine/core";
-import { IconHeart, IconShoppingCart, IconShare } from "@tabler/icons-react";
-import { Inter, Tapestry } from 'next/font/google'
+import {IconHeart, IconShare, IconShoppingCart} from "@tabler/icons-react";
+import {Tapestry} from 'next/font/google'
+import Product, {sampleProducts} from "../../../../entities/Product";
+import {router} from "next/client";
 
-const inter = Tapestry({weight: '400', subsets: ['latin'] })
+const inter = Tapestry({weight: '400', subsets: ['latin']})
 
-export default function Product() {
+export default function ProductDetail() {
+    const product : Product = sampleProducts[Number(router.query.id) - 1]
+
     const groceries = [
         {
             value: 'Product Info',
@@ -47,9 +50,6 @@ export default function Product() {
         </Accordion.Item>
     ));
 
-
-
-
     return (
         <>
             <style jsx global>{`
@@ -64,8 +64,7 @@ export default function Product() {
                         <Grid.Col span={1.5}>
                             <div style={{'vertical-align': 'middle'}}>
                                 <Image
-                                    radius="md"
-                                    src={''}
+                                    src={'https://media.discordapp.net/attachments/723908387032531015/1234708378853310464/image.png?ex=6631b749&is=663065c9&hm=cecd757c1d8bb10e792c0f5f7918fdb3e192790dcc34e87ba9012ab24a013cd8&=&format=webp&quality=lossless&width=752&height=700'}
                                     h={125}
                                     w={125}
                                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -73,14 +72,18 @@ export default function Product() {
                             </div>
                         </Grid.Col>
                         <Grid.Col span={7}>
-                            <Title fw={1000} size={'1.25rem'}>Brand</Title>
+                            <Title fw={1000} size={'1.25rem'}>
+                                {product.brandName}
+                            </Title>
                             <Text size={'sm'}>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             </Text>
                             <Space h={'sm'}/>
-                            <Button c='black' color='gray' size={'xs'} radius={0} variant={'outline'}>Go to Brand</Button>
+                            <Button c='black' color='gray' size={'xs'} radius={0} variant={'outline'}>
+                                Go to Brand
+                            </Button>
                         </Grid.Col>
                         <Grid.Col span={3.5}></Grid.Col>
                     </Grid>
@@ -90,41 +93,41 @@ export default function Product() {
                     <Grid.Col span={6}>
                         <Center>
                             <Image
-                                src={'https://images.unsplash.com/photo-1618354691551-44de113f0164?q=80&w=2586&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
+                                src={product.imgSrc}
                                 h={650}
                                 w={"auto"}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Center>
-
+                        <Space h={'sm'}/>
                         <Center>
                             <Group>
                                 <Image
-                                    src={'https://images.unsplash.com/photo-1618354691551-44de113f0164?q=80&w=2586&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
+                                    src={product.imgSrc}
                                     h={"auto"}
                                     w={100}
                                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                                 />
                                 <Image
-                                    src={'https://images.unsplash.com/photo-1618354691551-44de113f0164?q=80&w=2586&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
+                                    src={product.imgSrc}
                                     h={"auto"}
                                     w={100}
                                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                                 />
                                 <Image
-                                    src={'https://images.unsplash.com/photo-1618354691551-44de113f0164?q=80&w=2586&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
+                                    src={product.imgSrc}
                                     h={"auto"}
                                     w={100}
                                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                                 />
                                 <Image
-                                    src={'https://images.unsplash.com/photo-1618354691551-44de113f0164?q=80&w=2586&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
+                                    src={product.imgSrc}
                                     h={"auto"}
                                     w={100}
                                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                                 />
                                 <Image
-                                    src={'https://images.unsplash.com/photo-1618354691551-44de113f0164?q=80&w=2586&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
+                                    src={product.imgSrc}
                                     h={"auto"}
                                     w={100}
                                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -141,24 +144,32 @@ export default function Product() {
                             <Space h='sm'/>
 
                             <Group justify="space-between">
-                                <Title size={'1.25rem'}>Fitom</Title>
+                                <Title size={'1.25rem'}>
+                                    {product.brandName}
+                                </Title>
                                 <ActionIcon variant="transparent" color="gray" size="lg">
                                     <IconShare style={{width: '70%', height: '70%'}} stroke={1.5}/>
                                 </ActionIcon>
                             </Group>
 
-                            <Title size={'2rem'}>Heavyweight Long Sleeve Tee</Title>
+                            <Title size={'2rem'}>{sampleProducts[Number(router.query.id) - 1].productName}</Title>
 
                             <Space h='sm'/>
                             <Text c="gray">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                                 tempor incididunt ut lab</Text>
 
                             <Space h='sm'/>
-                            <Text c="gray" fw={250} size={'1.25rem'}>$69.99</Text>
+                            <Text c="gray" fw={250} size={'1.25rem'}>
+                                $ {product.originalPrice.toFixed(2)}
+                            </Text>
                             <Space h='xs'/>
                             <Group>
-                                <Text size={'1.5rem'}>$55.99</Text>
-                                <Text c="red" size={'1.5rem'}>20%</Text>
+                                <Text size={'1.5rem'}>
+                                    $ {product.currentPrice.toFixed(2)}
+                                </Text>
+                                <Text c="red" size={'1.5rem'}>
+                                    20%
+                                </Text>
                             </Group>
 
                             <Space h='xs'></Space>
@@ -170,6 +181,7 @@ export default function Product() {
                             <Space h='sm'></Space>
 
                             <hr color='#D3D3D3'/>
+                            <Space h='lg'></Space>
                             <Accordion multiple={true}>
                                 {items}
                             </Accordion>
@@ -228,7 +240,7 @@ export default function Product() {
                 <Grid>
                     <Grid.Col span={2}>
                         <Image
-                            radius="md"
+
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -236,7 +248,7 @@ export default function Product() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-                            radius="md"
+
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -244,7 +256,7 @@ export default function Product() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-                            radius="md"
+
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -252,7 +264,7 @@ export default function Product() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-                            radius="md"
+
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -260,7 +272,7 @@ export default function Product() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-                            radius="md"
+
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -268,7 +280,7 @@ export default function Product() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-                            radius="md"
+
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -280,14 +292,14 @@ export default function Product() {
                 <Space h='xl'/>
 
                 <Image
-                    radius="md"
+
                     src={null}
                     h={1000}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 />
                 <Space h='xl'/>
                 <Image
-                    radius="md"
+
                     src={null}
                     h={1000}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -296,12 +308,13 @@ export default function Product() {
                 <Space h='lg'/>
                 <hr/>
                 <Space h='lg'/>
-                <Title size={'2rem'} fw={'200'}>More By Fitom</Title>
+                <Title size={'2rem'} fw={'200'}>
+                    More By {product.brandName}
+                </Title>
                 <Space h='lg'/>
                 <Grid>
                     <Grid.Col span={2}>
                         <Image
-                            radius="md"
                             src={null}
                             h={200}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -309,7 +322,7 @@ export default function Product() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-                            radius="md"
+
                             src={null}
                             h={200}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -317,7 +330,7 @@ export default function Product() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-                            radius="md"
+
                             src={null}
                             h={200}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -325,7 +338,7 @@ export default function Product() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-                            radius="md"
+
                             src={null}
                             h={200}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"

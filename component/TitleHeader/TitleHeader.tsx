@@ -28,15 +28,16 @@ export function TitleHeader() {
                     href={'/home'}
                     style = {{
                         'padding' : '1rem',
-                        'text-decoration': 'none',
+                        'text-decoration': 'none'
                     }}
+                    className={classes.link}
                 >
                     <Title
                         size={'2rem'}
-                        c={'black'}
                         fw={1200}
                         style={{
                             'font-family' : montserrat.style.fontFamily
+
                         }}
                     >
                         MOTIF

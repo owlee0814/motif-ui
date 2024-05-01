@@ -1,12 +1,13 @@
 import "@mantine/core/styles.css";
 import Head from "next/head";
-import {AppShell, MantineProvider} from "@mantine/core";
+import {AppShell, MantineProvider, Space} from "@mantine/core";
 import {HeaderSimple} from "../component/HeaderSimple/HeaderSimple";
 import React from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {TitleHeader} from "../component/TitleHeader/TitleHeader";
 import {FooterSocial} from "../component/FooterSocial/FooterSocial";
 import {Inter, Figtree, Lexend, Archivo_Black} from "next/font/google";
+import '@mantine/carousel/styles.css';
 
 const inter = Inter({subsets: ['latin']})
 const lexend = Lexend({weight: "400", subsets: ['latin']})
@@ -47,6 +48,7 @@ export default function App({Component, pageProps}: any) {
                 </AppShell.Header>
                 <AppShell.Main>
                     <Component {...pageProps} />
+                    <Space h={'5rem'}/>
                     <FooterSocial/>
                 </AppShell.Main>
             </AppShell>

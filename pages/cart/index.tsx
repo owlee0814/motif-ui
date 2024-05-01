@@ -48,7 +48,7 @@ export default function Cart() {
                 </Stack>
             </Grid.Col>
             <Grid.Col span={4}>
-                <Card shadow="sm" padding="lg" radius="md">
+                <Card shadow="sm" padding="lg" >
 
                     <Group justify="space-between" mt="xl" mb="xs">
                         <Title size='24'>Order Summary</Title>
@@ -84,7 +84,7 @@ export default function Cart() {
 
                     </Group>
 
-                    <Button color="blue" fullWidth mt="md" radius="md">
+                    <Button color="blue" fullWidth mt="md" >
                         Checkout
                     </Button>
                 </Card>

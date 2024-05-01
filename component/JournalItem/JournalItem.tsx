@@ -5,7 +5,6 @@ export function JournalItem() {
     return (
         <>
             <Image
-                radius="md"
                 src={null}
                 h={600}
                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
