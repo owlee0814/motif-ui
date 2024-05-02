@@ -35,7 +35,7 @@ export function Post() {
                     <div>
                         <Title size={'sm'}>Title of the post</Title>
                         <Space h={'sm'}/>
-                        <Text>this is a content of the post and blah...</Text>
+                        <Text size={'sm'}>this is a content of the post and blah...</Text>
                     </div>
                     <Image
                         src={''}

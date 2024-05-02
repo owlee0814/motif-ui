@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Container, Text, Card, Title, Space, Group, Badge, ActionIcon, NavLink, Select} from "@mantine/core";
+import {Grid, Container, Text, Card, Title, Space, Group, Badge, ActionIcon, NavLink, Select, Button} from "@mantine/core";
 import {JournalItem} from "../../component/JournalItem/JournalItem";
 import {IconThumbUpFilled, IconMessageDots } from "@tabler/icons-react";
 import {Post} from "./post";
@@ -45,7 +45,7 @@ export default function Home() {
                             />
                         </Group>
                     </Grid.Col>
-                    <Grid.Col span={10}>
+                    <Grid.Col span={9.5}>
                         <Space h={'xs'}/>
                         <Group justify={'space-between'}>
                             <Title>
@@ -54,7 +54,7 @@ export default function Home() {
                             <Select
                                 style={{'padding-top' : '10px'}}
                                 placeholder="Hot"
-                                data={['Hot', 'New', 'Liked (Desc)']}
+                                data={['Hot', 'New', 'Likes']}
                                 variant='unstyled'
                                 w={'10%'}
                                 comboboxProps={{transitionProps: {transition: 'pop', duration: 200}}}

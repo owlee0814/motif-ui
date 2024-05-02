@@ -1,5 +1,5 @@
 import React from 'react';
-import {Group, Title} from '@mantine/core';
+import {Button, Group, TextInput, Title} from '@mantine/core';
 import classes from './HeaderSimple.module.css';
 import Link from "next/link";
 import {Montserrat} from "next/font/google";
@@ -100,6 +100,21 @@ export function HeaderSimple() {
                 selectedLink == 'BRANDS' && (
                     <Group gap={5} visibleFrom="xs">
                         {brandSubItems}
+                    </Group>
+                )
+            }
+            {
+                selectedLink == 'COMMUNITY' && (
+                    <Group justify={'flex-end'} style={{ 'padding-top' : '1rem', 'padding-right' : '5.3%' }}>
+                        <div style={{'width' : '15rem'}}>
+                        <TextInput
+                            variant="filled"
+                            size="md"
+                            radius="xl"
+                            placeholder="Search"
+                        />
+                        </div>
+                        <Button variant="filled" size="sm" radius="xs" bg={'black'}>Create a Post</Button>
                     </Group>
                 )
             }
