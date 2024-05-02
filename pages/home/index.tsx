@@ -3,6 +3,8 @@ import {Grid, Group, Image, Space, Title, Text, Container} from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import {HomeCarousel} from "./HomeCarousel/HomeCarousel";
 import {ProductListing} from "../products/ProductListing";
+import { Post } from "../community/post";
+import { Post2 } from "../community/post2";
 
 export default function Home() {
     return (
@@ -87,53 +89,20 @@ export default function Home() {
                 </Grid.Col>
 
                 <Grid.Col span={4}>
-                    <Grid>
-                        <Grid.Col span={4}/>
-                        <Grid.Col span={8}>
-                            <hr/>
-                        </Grid.Col>
-                    </Grid>
-                    <Group justify="flex-end">
-                        <Title>Latest Post</Title>
-                    </Group>
-                    <Space h='xl'/>
-                    <Group>
-                        <Container>
-                            <Image
-                                h={450}
-                                src={'https://media.discordapp.net/attachments/723908387032531015/1234885358559297698/image.png?ex=66325c1c&is=66310a9c&hm=bc9e8b2a405dff371fb1a5238d265024ce6834c7f05b30a4a0c8f89a905d217d&=&format=webp&quality=lossless&width=700&height=700'}
-                                fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                            />
-                            <Space h={'lg'}/>
-                            <Text>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                laboris nisi ut aliquip ex ea commodo consequat...
-                            </Text>
-                        </Container>
+                    <Title size={'1.5rem'}>Trending</Title>
+                    <Space h={'md'}/>
+                    <Post2/>
+                    <Space h={'sm'}/>
+                    <Post2/>
+                    <Space h={'sm'}/>
+                    <Post2/>
+                    <Space h={'sm'}/>
+                    <Post2/>
+                    <Space h={'sm'}/>
+                    <Post2/>
 
-                    </Group>
-
-                    <Space h='xl'/>
-
-                    <Group>
-                        <Container>
-                            <Image
-                                h={450}
-                                src={'https://media.discordapp.net/attachments/723908387032531015/1234888206801965066/premium_photo-1665413642308-c5c1ed052d12.png?ex=66325ec3&is=66310d43&hm=01301e036996bb77f3fb4a210a4a34874e3b0dad98c1495d7af49e86e4a4f0a1&=&format=webp&quality=lossless&width=466&height=700'}
-                                fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                            />
-                            <Space h={'lg'}/>
-                            <Text>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                laboris nisi ut aliquip ex ea commodo consequat...
-                            </Text>
-                        </Container>
-                    </Group>
                 </Grid.Col>
             </Grid>
         </Container>
-
     )
 }
