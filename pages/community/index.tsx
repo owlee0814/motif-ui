@@ -26,6 +26,9 @@ export default function Home() {
                                 label='All'>
                             </NavLink>
                             <NavLink fw={'600'}
+                                 label='Announcements'>
+                            </NavLink>
+                            <NavLink fw={'600'}
                                 label='Lounge'
                             />
                             <NavLink fw={'600'}

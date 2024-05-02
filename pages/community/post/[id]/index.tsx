@@ -46,6 +46,9 @@ export default function PostDetail() {
                                  label='All'>
                         </NavLink>
                         <NavLink fw={'600'}
+                                 label='Announcements'
+                        />
+                        <NavLink fw={'600'}
                                  label='Lounge'
                         />
                         <NavLink fw={'600'}
