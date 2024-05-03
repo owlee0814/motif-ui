@@ -15,6 +15,7 @@ import {
 import {IconBookmarkFilled, IconShare, IconThumbUpFilled} from "@tabler/icons-react";
 import React from "react";
 import PostComment from "./comment";
+import {CommunityNavBar} from "../../CommunityNavBar";
 
 export default function PostDetail() {
     const items = [
@@ -30,43 +31,7 @@ export default function PostDetail() {
         <Container size={'98%'}>
             <Grid>
                 <Grid.Col span={2}>
-                    <Title
-                        size={'1.5rem'}
-                        fw={800}
-                        style={{
-                            'padding-bottom': '1rem',
-                            'padding-top': '1rem'
-                        }}
-                    >
-                        Motifs
-                    </Title>
-
-                    <Group gap={0}>
-                        <NavLink fw={'600'}
-                                 label='All'>
-                        </NavLink>
-                        <NavLink fw={'600'}
-                                 label='Announcements'
-                        />
-                        <NavLink fw={'600'}
-                                 label='Lounge'
-                        />
-                        <NavLink fw={'600'}
-                                 label='Sales & Deals'
-                        />
-                        <NavLink fw={'600'}
-                                 label='Brand Share'
-                        />
-                        <NavLink fw={'600'}
-                                 label='OOTDs'
-                        />
-                        <NavLink fw={'600'}
-                                 label='What I bought'
-                        />
-                        <NavLink fw={'600'}
-                                 label='Q&A'
-                        />
-                    </Group>
+                    <CommunityNavBar/>
                 </Grid.Col>
                 <Grid.Col span={10}>
                     <Container size={'90%'}>

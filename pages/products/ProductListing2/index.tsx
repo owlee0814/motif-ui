@@ -1,43 +1,57 @@
 import React from "react";
-import {Grid, GridCol, Image, Title, Text, Space, Badge, Group, ActionIcon, ThemeIcon, Center, Card} from "@mantine/core";
+import {Card, Grid, Image, Space, Text, Title} from "@mantine/core";
+import Product from "../../../entities/Product";
 import Link from "next/link";
-import {IconHeart} from "@tabler/icons-react";
 
-export function ProductListing2() {
+interface ProductListing2 {
+    product: Product,
+    rank: number
+}
+
+export function ProductListing2(props: ProductListing2) {
     return (
         <>
-            <Card padding="xs" radius="lg" bg={'rgb(221,221,221)'}>
-            <Link href='products/product'>
-                <Image
-                    src={null}
-                    h={400}
-                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                />
-            </Link>
-
-            <Space h='xs'/>
-            <Group justify="center">
-                <Text fw={800} size={'xs'}>
-                    Brand
-                </Text>
-            </Group>
-            <Space h='xs'/>
-            <Group justify="center">
-                <Text
-                    size={'xs'}
+            <Space h={'sm'}/>
+            <Card padding="md" radius="0" withBorder>
+                <Link
+                    style={{
+                        color: 'inherit',
+                        textDecoration: 'none'
+                    }}
+                    href={'products/product/' + props.product.id}
                 >
-                    Name of listing
-                </Text>
-            </Group>
+                    <Grid>
+                        <Grid.Col span={1.25}>
+                            <Title style={{
+                                'margin': '0',
+                                'position': 'absolute',
+                                'top': '50%',
+                                'transform': 'translateY(-50%)',
+                            }} size={'2rem'}>{props.rank}.</Title>
+                        </Grid.Col>
 
-            <Group justify="center">
-                <Title
-                    fw={200}
-                    size='0.9rem'
-                >
-                    $80
-                </Title>
-            </Group>
+                        <Grid.Col span={8.75}>
+                            <div style={{
+                                'margin': '0',
+                                'position': 'absolute',
+                                'top': '50%',
+                                'transform': 'translateY(-50%)',
+                            }}>
+                                <Text size={'md'} fw={'bold'}>{props.product.brandName}</Text>
+                                <Text size={'sm'}>{props.product.productName}</Text>
+                            </div>
+                        </Grid.Col>
+                        <Grid.Col span={2}>
+                            <Image
+                                src={props.product.imgSrc}
+                                h={60}
+                                w={60}
+                                radius={"xs"}
+                                fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+                            />
+                        </Grid.Col>
+                    </Grid>
+                </Link>
             </Card>
         </>
     );

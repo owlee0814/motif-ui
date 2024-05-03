@@ -2,12 +2,12 @@ import React from 'react';
 import {Button, Group, TextInput, Title} from '@mantine/core';
 import classes from './HeaderSimple.module.css';
 import Link from "next/link";
-import {Montserrat} from "next/font/google";
+import {Montserrat , Sen} from "next/font/google";
 import { useHover } from '@mantine/hooks';
 
 const mainLinks = [
     {link: '/home', label: 'HOME'},
-    {link: '/shop', label: 'SHOP'},
+    {link: '/products', label: 'SHOP'},
     {link: '/brands', label: 'BRANDS'},
     {link: '/community', label: 'COMMUNITY'},
     {link: '/journal', label: 'JOURNAL', disabled: true},
@@ -15,7 +15,7 @@ const mainLinks = [
 
 const subLinks = [
     {link: '/products', label: 'New'},
-    {link: '/exclusives', label: 'Exclusives'},
+    {link: '/exclusives', label: 'Exclusives', disabled: true},
     {link: '/products', label: 'Men'},
     {link: '/products', label: 'Women'},
     {link: '/products', label: 'Accessories'},
@@ -28,7 +28,7 @@ const brandSubLinks = [
     {link: '/about', label: 'About Motif'},
 ];
 
-const montserrat = Montserrat({weight: "700", subsets: ['latin']})
+const montserrat = Sen({weight: "700", subsets: ['latin']})
 
 export function HeaderSimple() {
     const [selectedLink, setSelectedLink] = React.useState("");
@@ -64,8 +64,12 @@ export function HeaderSimple() {
             key={link.label}
             href={link.link}
             className={classes.link}
+            style={ link.disabled ? {
+                'font-size': 40,
+                'pointer-events': 'none'
+            } : {'font-size': 40}}
         >
-            <Title fw='400' size='1.5rem'>
+            <Title fw='400' size='1.5rem' td={link.disabled ? 'line-through' : ''}>
                 {link.label}
             </Title>
         </Link>

@@ -45,5 +45,14 @@ export const sampleProducts : Product[] = [
         originalPrice: 150,
         likeCounts: 5,
         imgSrc: ''
+    },
+    {
+        id : 5,
+        productName: 'Product 4',
+        brandName: 'Brand D',
+        currentPrice: 135,
+        originalPrice: 150,
+        likeCounts: 5,
+        imgSrc: ''
     }
 ];

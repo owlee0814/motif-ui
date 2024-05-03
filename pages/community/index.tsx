@@ -3,6 +3,7 @@ import {Grid, Container, Text, Card, Title, Space, Group, Badge, ActionIcon, Nav
 import {JournalItem} from "../../component/JournalItem/JournalItem";
 import {IconThumbUpFilled, IconMessageDots } from "@tabler/icons-react";
 import {Post} from "./post";
+import {CommunityNavBar} from "./CommunityNavBar";
 
 export default function Home() {
     return (
@@ -10,43 +11,7 @@ export default function Home() {
             <Container size={'98%'}>
                 <Grid>
                     <Grid.Col span={2}>
-                        <Title
-                            size={'1.5rem'}
-                            fw={800}
-                            style={{
-                                'padding-bottom': '1rem',
-                                'padding-top': '1rem'
-                            }}
-                        >
-                            Motifs
-                        </Title>
-
-                        <Group gap={0}>
-                            <NavLink fw={'600'}
-                                label='All'>
-                            </NavLink>
-                            <NavLink fw={'600'}
-                                 label='Announcements'>
-                            </NavLink>
-                            <NavLink fw={'600'}
-                                label='Lounge'
-                            />
-                            <NavLink fw={'600'}
-                                label='Sales & Deals'
-                            />
-                            <NavLink fw={'600'}
-                                label='Brand Share'
-                            />
-                            <NavLink fw={'600'}
-                                label='OOTDs'
-                            />
-                            <NavLink fw={'600'}
-                                label='What I bought'
-                            />
-                            <NavLink fw={'600'}
-                                label='Q&A'
-                            />
-                        </Group>
+                        <CommunityNavBar/>
                     </Grid.Col>
                     <Grid.Col span={9.5}>
                         <Space h={'xs'}/>
