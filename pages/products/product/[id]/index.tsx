@@ -20,11 +20,37 @@ import {Tapestry} from 'next/font/google'
 import Product, {sampleProducts} from "../../../../entities/Product";
 import {router} from "next/client";
 import {ProductListing3} from "../../ProductListing3";
+import {ProductListing2} from "../../ProductListing2";
 
 const inter = Tapestry({weight: '400', subsets: ['latin']})
 
 export default function ProductDetail() {
     const product : Product = sampleProducts[Number(router.query.id) - 1]
+    const productPhotos = [];
+    const stylePhotos = [];
+
+    for (let i = 0; i < 5; i++) {
+        productPhotos.push(
+            <Image
+                src={product.imgSrc}
+                h={125}
+                w={100}
+                fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+            />
+        );
+    }
+
+    for (let i = 0; i < 6; i++) {
+        stylePhotos.push(
+            <Grid.Col span={2}>
+                <Image
+                    src={null}
+                    h={350}
+                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+                />
+            </Grid.Col>
+        );
+    }
 
     const groceries = [
         {
@@ -103,36 +129,7 @@ export default function ProductDetail() {
                         <Space h={'sm'}/>
                         <Center>
                             <Group>
-                                <Image
-                                    src={product.imgSrc}
-                                    h={"auto"}
-                                    w={100}
-                                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                                />
-                                <Image
-                                    src={product.imgSrc}
-                                    h={"auto"}
-                                    w={100}
-                                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                                />
-                                <Image
-                                    src={product.imgSrc}
-                                    h={"auto"}
-                                    w={100}
-                                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                                />
-                                <Image
-                                    src={product.imgSrc}
-                                    h={"auto"}
-                                    w={100}
-                                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                                />
-                                <Image
-                                    src={product.imgSrc}
-                                    h={"auto"}
-                                    w={100}
-                                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                                />
+                                {productPhotos}
                             </Group>
                         </Center>
                     </Grid.Col>
@@ -226,8 +223,6 @@ export default function ProductDetail() {
                                     </Group>
                                 </Grid.Col>
                             </Grid>
-
-
                         </Container>
                     </Grid.Col>
                 </Grid>
@@ -245,48 +240,7 @@ export default function ProductDetail() {
                 <Title fw={'200'}>Styles</Title>
                 <Space h='xl'/>
                 <Grid>
-                    <Grid.Col span={2}>
-                        <Image
-                            src={null}
-                            h={350}
-                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                        />
-                    </Grid.Col>
-                    <Grid.Col span={2}>
-                        <Image
-                            src={null}
-                            h={350}
-                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                        />
-                    </Grid.Col>
-                    <Grid.Col span={2}>
-                        <Image
-                            src={null}
-                            h={350}
-                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                        />
-                    </Grid.Col>
-                    <Grid.Col span={2}>
-                        <Image
-                            src={null}
-                            h={350}
-                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                        />
-                    </Grid.Col>
-                    <Grid.Col span={2}>
-                        <Image
-                            src={null}
-                            h={350}
-                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                        />
-                    </Grid.Col>
-                    <Grid.Col span={2}>
-                        <Image
-                            src={null}
-                            h={350}
-                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                        />
-                    </Grid.Col>
+                    {stylePhotos}
                 </Grid>
                 <Space h='xl'/>
                 <hr/>
@@ -303,7 +257,6 @@ export default function ProductDetail() {
                     h={1000}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 />
-
                 <Space h='lg'/>
                 <hr/>
                 <Space h='lg'/>

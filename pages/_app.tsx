@@ -1,8 +1,8 @@
 import "@mantine/core/styles.css";
 import Head from "next/head";
-import {AppShell, MantineProvider, Space} from "@mantine/core";
+import {AppShell, Button, MantineProvider, Space} from "@mantine/core";
 import {HeaderSimple} from "../component/HeaderSimple/HeaderSimple";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {TitleHeader} from "../component/TitleHeader/TitleHeader";
 import {FooterSocial} from "../component/FooterSocial/FooterSocial";
@@ -14,6 +14,17 @@ const lexend = Lexend({weight: "400", subsets: ['latin']})
 
 export default function App({Component, pageProps}: any) {
     const [opened, {toggle}] = useDisclosure();
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => { setScrollY(window.scrollY); };
+        handleScroll();
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     return (
         <MantineProvider
@@ -33,7 +44,7 @@ export default function App({Component, pageProps}: any) {
 
             <AppShell
                 header={{
-                    height: 240
+                    height: scrollY > 0 ? 175 : 230
                 }}
                 padding="md"
             >
@@ -41,8 +52,11 @@ export default function App({Component, pageProps}: any) {
                     <div style={{
                         'padding': 30
                     }}>
-                        <TitleHeader/>
-                        <HeaderSimple/>
+                        <TitleHeader titleFontSize={ scrollY > 0 ? '1.5rem' : '2rem' }/>
+                        <HeaderSimple
+                            linkFontSize={ scrollY > 0 ? '1rem' : '2rem' }
+                            subLinkFontSize={ scrollY > 0 ? '1rem' : '1.5rem' }
+                        />
                     </div>
                 </AppShell.Header>
                 <AppShell.Main>

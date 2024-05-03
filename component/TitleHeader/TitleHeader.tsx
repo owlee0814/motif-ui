@@ -16,7 +16,11 @@ import {Archivo_Black, Figtree, Inter, Sen, Montserrat} from "next/font/google";
 
 const montserrat = Sen({weight: "700", subsets: ['latin']})
 
-export function TitleHeader() {
+interface TitleHeaderProps {
+    titleFontSize : String
+}
+
+export function TitleHeader(props : TitleHeaderProps) {
     const { setColorScheme } = useMantineColorScheme();
     const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
 
@@ -33,7 +37,7 @@ export function TitleHeader() {
                     className={classes.link}
                 >
                     <Title
-                        size={'2rem'}
+                        size={props.titleFontSize}
                         fw={1200}
                         style={{
                             'font-family' : montserrat.style.fontFamily

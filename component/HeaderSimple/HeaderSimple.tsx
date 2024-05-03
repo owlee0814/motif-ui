@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Group, TextInput, Title} from '@mantine/core';
 import classes from './HeaderSimple.module.css';
 import Link from "next/link";
 import {Montserrat , Sen} from "next/font/google";
 import { useHover } from '@mantine/hooks';
+import {usePathname} from "next/navigation";
 
 const mainLinks = [
     {link: '/home', label: 'HOME'},
@@ -32,27 +33,44 @@ const brandSubLinks = [
 
 const montserrat = Sen({weight: "700", subsets: ['latin']})
 
-export function HeaderSimple() {
-    const [selectedLink, setSelectedLink] = React.useState("");
+interface HeaderSimpleProps {
+    linkFontSize : String,
+    subLinkFontSize : String
+}
 
+export function HeaderSimple(props : HeaderSimpleProps) {
+    const pathname = usePathname()
+    const [brandSubLinksVisible, setBrandSubLinksVisible] = useState(false);
+    const [shopSubLinksVisible, setShopSubLinksVisible] = useState(false);
+
+    // @ts-ignore
+    // @ts-ignore
     const mainItems = mainLinks.map((link) => (
         <Link
             key={link.label}
             href={link.link}
             className={classes.link}
             style={ link.disabled ? {
-                'font-size': 40,
-                'pointer-events': 'none'
-            } : {'font-size': 40}}
-
-            onClick={() => {
-                setSelectedLink(link.label);
+                pointerEvents: 'none'
+            } : {}}
+            onMouseEnter={() => {
+                if (link.link == '/products')
+                    setShopSubLinksVisible(true)
+                if (link.link == '/brands')
+                    setBrandSubLinksVisible(true)
+            }}
+            onMouseLeave={() => {
+                if (link.link == '/products')
+                    setShopSubLinksVisible(false)
+                if (link.link == '/brands')
+                    setBrandSubLinksVisible(false)
             }}
         >
             <Title
                 style={{
                     'font-family' : montserrat.style.fontFamily
                 }}
+                size={props.linkFontSize}
                 td={link.disabled ? 'line-through' : ''}
             >
                 {link.label}
@@ -71,7 +89,7 @@ export function HeaderSimple() {
                 'pointer-events': 'none'
             } : {'font-size': 40}}
         >
-            <Title fw='400' size='1.5rem' td={link.disabled ? 'line-through' : ''}>
+            <Title fw='400' size={props.subLinkFontSize} td={link.disabled ? 'line-through' : ''}>
                 {link.label}
             </Title>
         </Link>
@@ -83,34 +101,41 @@ export function HeaderSimple() {
             href={link.link}
             className={classes.link}
         >
-            <Title fw='400' size='1.5rem'>
+            <Title fw='400' size={props.subLinkFontSize} >
                 {link.label}
             </Title>
         </Link>
     ));
 
+    function subLinkGroup() {
+        if ((shopSubLinksVisible || pathname.includes('/products')) && !brandSubLinksVisible )
+            return (
+                <Group gap={5}
+                       visibleFrom="xs"
+                       onMouseEnter={() => setShopSubLinksVisible(true)}
+                       onMouseLeave={() => setShopSubLinksVisible(false)}>
+                    {subItems}
+                </Group>
+            )
+        else if (brandSubLinksVisible || pathname.includes('/brands'))
+            return (
+                <Group gap={5}
+                       visibleFrom="xs"
+                       onMouseEnter={() => setBrandSubLinksVisible(true)}
+                       onMouseLeave={() => setBrandSubLinksVisible(false)}>
+                    {brandSubItems}
+                </Group>
+            )
+    }
 
     return (
         <>
             <Group gap={5} visibleFrom="xs">
                 {mainItems}
             </Group>
+            {subLinkGroup()}
             {
-                selectedLink == 'SHOP' && (
-                    <Group gap={5} visibleFrom="xs">
-                        {subItems}
-                    </Group>
-                )
-            }
-            {
-                selectedLink == 'BRANDS' && (
-                    <Group gap={5} visibleFrom="xs">
-                        {brandSubItems}
-                    </Group>
-                )
-            }
-            {
-                selectedLink == 'COMMUNITY' && (
+                pathname.includes('/community') && (
                     <Group justify={'flex-end'} style={{ 'padding-top' : '1rem', 'padding-right' : '5.3%' }}>
                         <div style={{'width' : '15rem'}}>
                         <TextInput
