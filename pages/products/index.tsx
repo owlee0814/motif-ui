@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, Grid, Group, NavLink, Select, Space, Text, Title} from "@mantine/core";
+import {Badge, Container, Grid, Group, Image, NavLink, Select, Space, Text, Title} from "@mantine/core";
 import {ProductListing} from "./ProductListing";
 import {ProductsFilter} from "./ProductsFilter";
 import {sampleProducts} from "../../entities/Product";
@@ -11,15 +11,7 @@ export default function Home() {
     for (let i = 0; i < sampleProducts.length; i++) {
         products.push(
             <Grid.Col span={3}>
-                <ProductListing
-                    id={sampleProducts[i].id}
-                    brandName={sampleProducts[i].brandName}
-                    currentPrice={sampleProducts[i].currentPrice}
-                    imgSrc={sampleProducts[i].imgSrc}
-                    likeCounts={sampleProducts[i].likeCounts}
-                    originalPrice={sampleProducts[i].originalPrice}
-                    productName={sampleProducts[i].productName}
-                />
+                <ProductListing product={sampleProducts[i]}/>
             </Grid.Col>
         );
     }
@@ -32,6 +24,25 @@ export default function Home() {
                         <ProductsFilter/>
                     </Grid.Col>
                     <Grid.Col span={10}>
+
+                        {/*<Space h={'lg'}/>*/}
+                        {/*<Group>*/}
+                        {/*    <Group gap={'5'}>*/}
+                        {/*        <Text fw={'bold'} size={'sm'}>Brands: </Text>*/}
+                        {/*        <Badge bg={'blue'}>Brand A</Badge>*/}
+                        {/*        <Badge bg={'blue'}>Brand B</Badge>*/}
+                        {/*    </Group>*/}
+                        {/*    <Group gap={'5'}>*/}
+                        {/*        <Text fw={'bold'} size={'sm'}>Category: </Text>*/}
+                        {/*        <Badge bg={'red'}>Shirts</Badge>*/}
+                        {/*        <Badge bg={'red'}>Shoes</Badge>*/}
+                        {/*    </Group>*/}
+                        {/*    <Group gap={'5'}>*/}
+                        {/*        <Text fw={'bold'} size={'sm'}>Color: </Text>*/}
+                        {/*        <Badge bg={'violet'}>Red</Badge>*/}
+                        {/*    </Group>*/}
+                        {/*</Group>*/}
+
                         <Space h={'lg'}/>
                         <Group justify={'space-between'}>
                             <Text>100 items</Text>

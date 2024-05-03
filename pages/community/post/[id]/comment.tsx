@@ -10,6 +10,7 @@ export default function PostComment({username, avatarImgUrl, comment}) {
                     src={avatarImgUrl}
                     alt={username}
                     radius="xl"
+                    color="indigo"
                 />
                 <div>
                     <Text size="sm">{username}</Text>

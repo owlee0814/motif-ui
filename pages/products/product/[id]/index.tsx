@@ -19,6 +19,7 @@ import {IconHeart, IconShare, IconShoppingCart} from "@tabler/icons-react";
 import {Tapestry} from 'next/font/google'
 import Product, {sampleProducts} from "../../../../entities/Product";
 import {router} from "next/client";
+import {ProductListing3} from "../../ProductListing3";
 
 const inter = Tapestry({weight: '400', subsets: ['latin']})
 
@@ -81,7 +82,7 @@ export default function ProductDetail() {
                                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             </Text>
                             <Space h={'sm'}/>
-                            <Button c='black' color='gray' size={'xs'} radius={0} variant={'outline'}>
+                            <Button color='gray' size={'xs'} radius={0} variant={'outline'}>
                                 Go to Brand
                             </Button>
                         </Grid.Col>
@@ -159,17 +160,23 @@ export default function ProductDetail() {
                                 tempor incididunt ut lab</Text>
 
                             <Space h='sm'/>
-                            <Text c="gray" fw={250} size={'1.25rem'}>
-                                $ {product.originalPrice.toFixed(2)}
-                            </Text>
+                            {
+                                product.originalPrice > product.currentPrice ?
+                                <Text c="gray" fw={250} size={'1.25rem'}>
+                                    $ {product.originalPrice.toFixed(2)}
+                                </Text> : ''
+                            }
                             <Space h='xs'/>
                             <Group>
                                 <Text size={'1.5rem'}>
                                     $ {product.currentPrice.toFixed(2)}
                                 </Text>
-                                <Text c="red" size={'1.5rem'}>
-                                    20%
-                                </Text>
+                                {
+                                    product.originalPrice > product.currentPrice ?
+                                    <Text c="red" size={'1.5rem'}>
+                                        {100 - (product.currentPrice * 100 / product.originalPrice)}%
+                                    </Text> : ''
+                                }
                             </Group>
 
                             <Space h='xs'></Space>
@@ -240,7 +247,6 @@ export default function ProductDetail() {
                 <Grid>
                     <Grid.Col span={2}>
                         <Image
-
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -248,7 +254,6 @@ export default function ProductDetail() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -256,7 +261,6 @@ export default function ProductDetail() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -264,7 +268,6 @@ export default function ProductDetail() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -272,7 +275,6 @@ export default function ProductDetail() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -280,7 +282,6 @@ export default function ProductDetail() {
                     </Grid.Col>
                     <Grid.Col span={2}>
                         <Image
-
                             src={null}
                             h={350}
                             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -292,14 +293,12 @@ export default function ProductDetail() {
                 <Space h='xl'/>
 
                 <Image
-
                     src={null}
                     h={1000}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 />
                 <Space h='xl'/>
                 <Image
-
                     src={null}
                     h={1000}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -314,42 +313,23 @@ export default function ProductDetail() {
                 <Space h='lg'/>
                 <Grid>
                     <Grid.Col span={2}>
-                        <Image
-                            src={null}
-                            h={200}
-                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                        />
+                        <ProductListing3/>
                     </Grid.Col>
                     <Grid.Col span={2}>
-                        <Image
-
-                            src={null}
-                            h={200}
-                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                        />
+                        <ProductListing3/>
                     </Grid.Col>
                     <Grid.Col span={2}>
-                        <Image
-
-                            src={null}
-                            h={200}
-                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                        />
+                        <ProductListing3/>
                     </Grid.Col>
                     <Grid.Col span={2}>
-                        <Image
-
-                            src={null}
-                            h={200}
-                            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                        />
+                        <ProductListing3/>
                     </Grid.Col>
                 </Grid>
                 <Space h='xl'/>
                 <Title size={'2rem'} fw={'200'}>Reviews</Title>
                 <Space h='xs'/>
                 <Rating color="rgba(0, 0, 0, 1)" defaultValue={4} size="md"/>
-                <Space h='xs'/>
+                <Space h='xl'/>
                 <Title>TBD</Title>
             </Container>
         </>

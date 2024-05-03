@@ -4,12 +4,16 @@ import Link from "next/link";
 import {IconHeart} from "@tabler/icons-react";
 import Product from "../../../entities/Product";
 
-export function ProductListing(product: Product) {
+interface ProductListingProps {
+    product: Product
+}
+
+export function ProductListing(props: ProductListingProps) {
     return (
         <>
-            <Link href={'products/product/' + product.id}>
+            <Link href={'products/product/' + props.product.id}>
                 <Image
-                    src={product.imgSrc}
+                    src={props.product.imgSrc}
                     h={400}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 />
@@ -17,29 +21,30 @@ export function ProductListing(product: Product) {
 
             <Group justify="space-between">
                 <Anchor underline="never"
-                        fw={700} c='black'
+                        fw={700}
+                        style={{color : 'inherit'}}
                         href={'brand'}
                         size={'sm'}
                 >
-                    {product.brandName}
+                    {props.product.brandName}
                 </Anchor>
                 <Group justify="end" gap={0}>
                     <ThemeIcon variant="transparent" color="gray">
                         <IconHeart style={{width: '70%', height: '70%'}} stroke={1.5}/>
                     </ThemeIcon>
                     <Text size={'xs'}>
-                        {product.likeCounts}
+                        {props.product.likeCounts}
                     </Text>
                 </Group>
             </Group>
 
             <Group>
                 <Anchor underline="never"
-                        c='black'
+                        style={{color : 'inherit'}}
                         href={'products/product'}
                         size={'xs'}
                 >
-                    {product.productName}
+                    {props.product.productName}
                 </Anchor>
             </Group>
 
@@ -50,14 +55,14 @@ export function ProductListing(product: Product) {
                     fw={200}
                     size='0.9rem'
                 >
-                    ${product.currentPrice}
+                    ${props.product.currentPrice}
                 </Title>
                 <Title
                     fw={200}
                     size='0.9rem'
                     c='gray'
                 >
-                    ${product.originalPrice}
+                    ${props.product.originalPrice}
                 </Title>
             </Group>
         </>

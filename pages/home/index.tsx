@@ -107,7 +107,7 @@ export default function Home() {
                     <Post2/>
                     <Post2/>
                     <Post2/>
-                    <Space h={'xl'}/>
+                    <Space h={'lg'}/>
                     <Title size={'1.5rem'}>Top Seller</Title>
                     <Space h={'0.5%'}/>
                     {topProducts}

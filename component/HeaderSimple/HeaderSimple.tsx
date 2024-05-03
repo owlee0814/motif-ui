@@ -7,9 +7,11 @@ import { useHover } from '@mantine/hooks';
 
 const mainLinks = [
     {link: '/home', label: 'HOME'},
-    {link: '/products', label: 'SHOP'},
     {link: '/brands', label: 'BRANDS'},
+    {link: '/products', label: 'SHOP'},
+    {link: '', label: '|'},
     {link: '/community', label: 'COMMUNITY'},
+    {link: '/profile', label: 'PROFILE'},
     {link: '/journal', label: 'JOURNAL', disabled: true},
 ];
 
@@ -81,7 +83,7 @@ export function HeaderSimple() {
             href={link.link}
             className={classes.link}
         >
-            <Title c='black' fw='400' size='1.5rem'>
+            <Title fw='400' size='1.5rem'>
                 {link.label}
             </Title>
         </Link>
