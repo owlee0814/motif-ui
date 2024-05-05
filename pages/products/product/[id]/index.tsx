@@ -20,7 +20,6 @@ import {Tapestry} from 'next/font/google'
 import Product, {sampleProducts} from "../../../../entities/Product";
 import {router} from "next/client";
 import {ProductListing3} from "../../ProductListing3";
-import {ProductListing2} from "../../ProductListing2";
 
 const inter = Tapestry({weight: '400', subsets: ['latin']})
 
@@ -89,7 +88,7 @@ export default function ProductDetail() {
                 <Group>
                     <Grid>
                         <Grid.Col span={1.5}>
-                            <div style={{'vertical-align': 'middle'}}>
+                            <div style={{verticalAlign: 'middle'}}>
                                 <Image
                                     src={'https://media.discordapp.net/attachments/723908387032531015/1234708378853310464/image.png?ex=6631b749&is=663065c9&hm=cecd757c1d8bb10e792c0f5f7918fdb3e192790dcc34e87ba9012ab24a013cd8&=&format=webp&quality=lossless&width=752&height=700'}
                                     h={125}

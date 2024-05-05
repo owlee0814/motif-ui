@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Image, NavLink} from "@mantine/core";
+import {Grid, Image} from "@mantine/core";
 import Link from "next/link";
 
 export default function Lookbooks() {

@@ -1,26 +1,13 @@
-import {signIn, getCsrfToken, getProviders, useSession} from 'next-auth/react'
-import styles from './signin.module.css'
-import {
-    Anchor,
-    Button,
-    Text,
-    Checkbox,
-    Input,
-    Paper,
-    PasswordInput,
-    Space,
-    TextInput,
-    Title,
-    Card, Center
-} from "@mantine/core";
-import {session} from "next-auth/core/routes";
+import {getCsrfToken, getProviders, signIn, useSession} from 'next-auth/react'
+import classes from './signin.module.css'
+import {Anchor, Button, Card, Center, Paper, PasswordInput, Space, Text, TextInput, Title} from "@mantine/core";
 import {useRouter} from "next/router";
 import React, {useEffect} from "react";
-import classes from './signin.module.css';
 import {useForm} from "@mantine/form";
 import Link from 'next/link';
-import { CtxOrReq } from 'next-auth/client/_utils';
+import {CtxOrReq} from 'next-auth/client/_utils';
 
+// @ts-ignore
 const Signin = ({csrfToken, providers}) => {
     const {data: session, status} = useSession()
     const router = useRouter()

@@ -24,7 +24,7 @@ export default NextAuth({
                         email: "test@test.com",
                     }
                 ];
-
+                
                 const user = users.find(
                     (user) =>
                         user.username === credentials.username &&

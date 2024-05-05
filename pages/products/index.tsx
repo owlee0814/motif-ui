@@ -1,5 +1,5 @@
 import React from "react";
-import {Badge, Container, Grid, Group, Image, NavLink, Select, Space, Text, Title} from "@mantine/core";
+import {Container, Grid, Group, Select, Space, Text} from "@mantine/core";
 import {ProductListing} from "./ProductListing";
 import {ProductsFilter} from "./ProductsFilter";
 import {sampleProducts} from "../../entities/Product";

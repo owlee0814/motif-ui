@@ -1,13 +1,9 @@
 import React from "react";
-import {Grid, Group, Image, Space, Title, Text, Container} from "@mantine/core";
-import { Carousel } from "@mantine/carousel";
+import {Container, Grid, Image, Space, Title} from "@mantine/core";
+import {Carousel} from "@mantine/carousel";
 import {HomeCarousel} from "./HomeCarousel/HomeCarousel";
-import {ProductListing} from "../products/ProductListing";
-import {Post, PostCard} from "../community/PostCard";
-import { PostCard2 } from "../community/PostCard2";
-import {CartItemCart} from "../../component/CartItemCard/CartItemCart";
+import {PostCard2} from "../community/PostCard2";
 import {ProductListing2} from "../products/ProductListing2";
-import Link from "next/link";
 import {sampleProducts} from "../../entities/Product";
 import {samplePosts} from "../../entities/Post";
 

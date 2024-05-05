@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {Button, Group, TextInput, Title} from '@mantine/core';
 import classes from './HeaderSimple.module.css';
 import Link from "next/link";
-import {Montserrat , Sen} from "next/font/google";
-import { useHover } from '@mantine/hooks';
+import {Sen} from "next/font/google";
 import {usePathname} from "next/navigation";
 
 const mainLinks = [

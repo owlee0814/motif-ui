@@ -1,4 +1,4 @@
-import {ActionIcon, Button, Checkbox, Container, Grid, Group, Input, NavLink, Space, Stack, Title} from "@mantine/core";
+import {Button, Checkbox, Grid, Group, Input, NavLink, Space, Stack, Title} from "@mantine/core";
 import React from "react";
 import {ColorPickerIcon} from "../ColorPickerIcon/ColorPickerIcon";
 

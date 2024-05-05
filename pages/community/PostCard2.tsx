@@ -1,5 +1,5 @@
-import {ActionIcon, Badge, Card, Grid, Group, Image, Space, Text, Title} from "@mantine/core";
-import {IconMessageDots, IconThumbUpFilled} from "@tabler/icons-react";
+import {ActionIcon, Card, Grid, Group, Image, Space, Text, Title} from "@mantine/core";
+import {IconThumbUpFilled} from "@tabler/icons-react";
 import React from "react";
 import Link from "next/link";
 import Post from "../../entities/Post";

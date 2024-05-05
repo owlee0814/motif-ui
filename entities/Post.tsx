@@ -1,5 +1,3 @@
-import Product from "./Product";
-
 export default interface Post {
     title: string,
     post: string,

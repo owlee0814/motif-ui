@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {ActionIcon, AspectRatio, Avatar, Group, Image, Overlay, Text, Title} from "@mantine/core";
-import {IconBookmarkFilled, IconHeart, IconHeartFilled} from "@tabler/icons-react";
+import {IconBookmarkFilled, IconHeartFilled} from "@tabler/icons-react";
 
 export default function OotdCard() {
     const [visible, setVisible] = useState(false);

@@ -1,16 +1,5 @@
 import React from "react";
-import {
-    Button,
-    Card,
-    Center,
-    Grid,
-    Group,
-    Title,
-    Text,
-    Space,
-    Stack,
-    Divider
-} from "@mantine/core";
+import {Button, Card, Center, Divider, Grid, Group, Space, Stack, Text, Title} from "@mantine/core";
 import {CartItemCart} from "../../component/CartItemCard/CartItemCart";
 
 export default function Cart() {

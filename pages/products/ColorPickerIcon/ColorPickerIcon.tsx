@@ -1,6 +1,5 @@
 import {ActionIcon} from "@mantine/core";
-import React, {useEffect, useState} from "react";
-import {root} from "postcss";
+import React, {useState} from "react";
 
 interface ColorPickerIconProps {
     bg : string,

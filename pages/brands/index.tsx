@@ -1,4 +1,4 @@
-import {AppShell, Text, Grid, Image, NavLink, Title, Space, Container, Group} from "@mantine/core";
+import {Container, Grid, Group, Image, NavLink, Space, Text, Title} from "@mantine/core";
 import React from "react";
 
 export default function Home() {

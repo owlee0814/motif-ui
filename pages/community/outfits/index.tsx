@@ -1,24 +1,8 @@
-import React, {useState} from "react";
-import {
-    ActionIcon,
-    AspectRatio,
-    Button,
-    Container,
-    Grid,
-    Group,
-    Image,
-    Overlay,
-    rem,
-    Select,
-    Space,
-    Title
-} from "@mantine/core";
+import React from "react";
+import {ActionIcon, Container, Grid, Group, Space, Title} from "@mantine/core";
 import {CommunityNavBar} from "../CommunityNavBar";
-import {ProductListing2} from "../../products/ProductListing2";
-import {sampleProducts} from "../../../entities/Product";
-import {useHover} from "@mantine/hooks";
 import OotdCard from "./OotdCard";
-import { Carousel } from "@mantine/carousel";
+import {Carousel} from "@mantine/carousel";
 import {IconPlus} from "@tabler/icons-react";
 
 export default function index() {

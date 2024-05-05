@@ -1,20 +1,21 @@
-import { useToggle, upperFirst } from '@mantine/hooks';
-import { useForm } from '@mantine/form';
+import {upperFirst, useToggle} from '@mantine/hooks';
+import {useForm} from '@mantine/form';
 import {
-    TextInput,
-    PasswordInput,
-    Text,
-    Paper,
-    Group,
-    PaperProps,
-    Button,
-    Divider,
-    Checkbox,
     Anchor,
-    Stack, Space,
+    Button,
+    Checkbox,
+    Divider,
+    Group,
+    Paper,
+    PaperProps,
+    PasswordInput,
+    Space,
+    Stack,
+    Text,
+    TextInput,
 } from '@mantine/core';
-import { GoogleButton } from './GoogleButton';
-import { TwitterButton } from './TwitterButton';
+import {GoogleButton} from './GoogleButton';
+import {TwitterButton} from './TwitterButton';
 import React from "react";
 
 export function AuthenticationForm(props: PaperProps) {

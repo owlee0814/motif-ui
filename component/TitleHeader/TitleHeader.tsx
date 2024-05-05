@@ -1,24 +1,16 @@
 import React from "react";
-import {
-    ActionIcon,
-    Group,
-    MantineProvider,
-    rem,
-    Title,
-    useComputedColorScheme,
-    useMantineColorScheme
-} from '@mantine/core';
+import {ActionIcon, Group, Title, useComputedColorScheme, useMantineColorScheme} from '@mantine/core';
 import Link from "next/link";
 import {IconMoon, IconSun} from "@tabler/icons-react";
 import cx from 'clsx';
 import classes from "./TitleHeader.module.css";
-import {Archivo_Black, Figtree, Inter, Sen, Montserrat} from "next/font/google";
+import {Sen} from "next/font/google";
 import LoginButton from "../LoginButton/LoginButton";
 
 const montserrat = Sen({weight: "700", subsets: ['latin']})
 
 interface TitleHeaderProps {
-    titleFontSize : String
+    titleFontSize : string
 }
 
 export function TitleHeader(props : TitleHeaderProps) {
@@ -32,8 +24,8 @@ export function TitleHeader(props : TitleHeaderProps) {
                     key={'home'}
                     href={'/home'}
                     style = {{
-                        'padding' : '1rem',
-                        'text-decoration': 'none'
+                        padding : '1rem',
+                        textDecoration: 'none'
                     }}
                     className={classes.link}
                 >

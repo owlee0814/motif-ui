@@ -1,5 +1,5 @@
-import { useSession, signIn, signOut } from "next-auth/react"
-import {Button, Group, NavLink, Popover, Select, Stack, Text} from "@mantine/core";
+import {signIn, signOut, useSession} from "next-auth/react"
+import {Button, Group, Popover, Stack} from "@mantine/core";
 import Link from "next/link";
 
 export default function LoginButton() {
@@ -9,7 +9,7 @@ export default function LoginButton() {
             <Group gap={0}>
                 <Popover width={200} position="bottom" withArrow shadow="md">
                     <Popover.Target>
-                        <Button fw={'400'} variant={'transparent'} style={{color: 'inherit'}} size={'sm'}>{(session.user.name).toUpperCase()}</Button>
+                        <Button fw={'400'} variant={'transparent'} style={{color: 'inherit'}} size={'sm'}>{(session.user?.name)?.toUpperCase()}</Button>
                     </Popover.Target>
                     <Popover.Dropdown>
                         <Stack>

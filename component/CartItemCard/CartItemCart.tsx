@@ -1,4 +1,4 @@
-import {Card, Center, Grid, Image, PaperProps, Text} from "@mantine/core";
+import {Card, Center, Grid, Image, Text} from "@mantine/core";
 import React from "react";
 
 export function CartItemCart() {
