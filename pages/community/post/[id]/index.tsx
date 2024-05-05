@@ -22,7 +22,7 @@ export default function PostDetail() {
         { title: 'All', href: '/community' },
         { title: 'Lounge', href: '/community' }
     ].map((item, index) => (
-        <Anchor href={item.href} key={index} c={'black'} fw={'800'}>
+        <Anchor href={item.href} key={index} style={{color: 'inherit.inherit'}} fw={'800'}>
             {item.title}
         </Anchor>
     ));

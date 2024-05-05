@@ -30,8 +30,8 @@ export function PostCard2(props: PostCard2Props) {
                                 }}
                             >
                                 <Title size={'0.9rem'}>{props.post.title}</Title>
-                                <Space h={'sm'}/>
-                                <Text fw={'lighter'} size={'xs'}>{props.post.post.substring(0, 50)}...</Text>
+                                <Space h={'xs'}/>
+                                <Text size={'xs'}>{props.post.post.substring(0, 50)}...</Text>
                             </div>
                         </Grid.Col>
                         <Grid.Col span={1.5}>

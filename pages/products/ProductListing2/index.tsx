@@ -30,26 +30,26 @@ export function ProductListing2(props: ProductListing2) {
                             }} size={'2rem'}>{props.rank}.</Title>
                         </Grid.Col>
 
-                        <Grid.Col span={7}>
+                        <Grid.Col span={6.75}>
                             <div style={{
                                 'margin': '0',
                                 'position': 'absolute',
                                 'top': '50%',
                                 'transform': 'translateY(-50%)',
                             }}>
-                                <Text size={'md'} fw={'bold'}>{props.product.brandName}</Text>
-                                <Text size={'sm'}>{props.product.productName}</Text>
+                                <Title size={'sm'} fw={'bold'}>{props.product.brandName.toUpperCase()}</Title>
+                                <Text size={'xs'}>{props.product.productName}</Text>
                             </div>
                         </Grid.Col>
-                        <Grid.Col span={1.75}>
+                        <Grid.Col span={2}>
                             <div style={{
                                 'margin': '0',
                                 'position': 'absolute',
                                 'top': '50%',
                                 'transform': 'translateY(-50%)',
                             }}>
-                                <Text c='gray' size={'xs'}>$ {props.product.originalPrice.toFixed(2)}</Text>
-                                <Text size={'sm'}>$ {props.product.currentPrice.toFixed(2)}</Text>
+                                <Text c='gray' td="line-through" size={'xs'}>$ {props.product.originalPrice.toFixed(2)}</Text>
+                                <Text size={'xs'}>$ {props.product.currentPrice.toFixed(2)}</Text>
                             </div>
                         </Grid.Col>
                         <Grid.Col span={2}>
