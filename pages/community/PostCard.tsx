@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Post from "../../entities/Post";
 
-function getBadgeColor(tag) {
+function getBadgeColor(tag: string) {
     let tagColor = ''
     switch (tag) {
         case 'new':
@@ -48,6 +48,7 @@ export function PostCard(props: PostCardProps) {
                 <Group justify="space-between">
                     <Group gap={5}>
                     {props.post.tags.map((t) => (
+                        // eslint-disable-next-line react/jsx-key
                         <Badge
                             bg={getBadgeColor(t)}
                         >

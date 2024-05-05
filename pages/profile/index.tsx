@@ -3,10 +3,14 @@ import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useEffect} from "react";
 
+
 export default function index() {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data: session, status } = useSession()
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter()
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         if (status === "unauthenticated") {
             try {

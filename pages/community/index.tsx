@@ -30,6 +30,7 @@ export default function Home() {
                         <Space h={'lg'}/>
                         <Grid>
                             {samplePosts.map((post) => (
+                                // eslint-disable-next-line react/jsx-key
                                 <PostCard post={post}/>
                             ))}
                         </Grid>

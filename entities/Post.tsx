@@ -4,7 +4,7 @@ export default interface Post {
     title: string,
     post: string,
     postImgUrl?: string
-    tags: String[],
+    tags: string[],
     username: string
     postedDate: string
     likes: number

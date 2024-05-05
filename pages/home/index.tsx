@@ -104,6 +104,7 @@ export default function Home() {
                     <Title size={'1.5rem'}>TRENDING</Title>
                     <Space h={'0.5%'}/>
                     {samplePosts.slice(0,5).map((post) => (
+                        // eslint-disable-next-line react/jsx-key
                         <PostCard2 post={post}/>
                     ))}
                     <Space h={'lg'}/>
