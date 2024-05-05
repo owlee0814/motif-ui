@@ -18,13 +18,14 @@ import {
 import {IconHeart, IconShare, IconShoppingCart} from "@tabler/icons-react";
 import {Tapestry} from 'next/font/google'
 import Product, {sampleProducts} from "../../../../entities/Product";
-import {router} from "next/client";
+
 import {ProductListing3} from "../../ProductListing3";
+import {useRouter} from "next/router";
 
 const inter = Tapestry({weight: '400', subsets: ['latin']})
 
 export default function ProductDetail() {
-    const product : Product = sampleProducts[Number(router.query.id) - 1]
+    const product : Product = sampleProducts[Number(useRouter().query.id) - 1]
     const productPhotos = [];
     const stylePhotos = [];
 
