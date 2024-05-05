@@ -17,7 +17,7 @@ export const sampleProducts : Product[] = [
         currentPrice: 30,
         originalPrice: 40,
         likeCounts: 11,
-        imgSrc: ''
+        imgSrc: 'https://motif-mvp-bucket.s3.amazonaws.com/products/40fb1c9b1b1c4e00aa6e1c3fca1aa4cc.jpeg'
     },
     {
         id : 2,
@@ -26,7 +26,7 @@ export const sampleProducts : Product[] = [
         currentPrice: 40,
         originalPrice: 50,
         likeCounts: 3,
-        imgSrc: ''
+        imgSrc: 'https://motif-mvp-bucket.s3.amazonaws.com/products/6bca8f38d7a44f9c98bbaa2619fd170d.jpeg'
     },
     {
         id : 3,
@@ -35,7 +35,7 @@ export const sampleProducts : Product[] = [
         currentPrice: 25,
         originalPrice: 50,
         likeCounts: 6,
-        imgSrc: ''
+        imgSrc: 'https://motif-mvp-bucket.s3.amazonaws.com/products/bdc45b8cfca341bb9a1c846a99784b78.jpeg'
     },
     {
         id : 4,
@@ -44,7 +44,7 @@ export const sampleProducts : Product[] = [
         currentPrice: 135,
         originalPrice: 150,
         likeCounts: 5,
-        imgSrc: ''
+        imgSrc: 'https://motif-mvp-bucket.s3.amazonaws.com/products/w1200_q60.jpg-7.avif'
     },
     {
         id : 5,
@@ -53,6 +53,6 @@ export const sampleProducts : Product[] = [
         currentPrice: 335,
         originalPrice: 400,
         likeCounts: 5,
-        imgSrc: ''
+        imgSrc: 'https://motif-mvp-bucket.s3.amazonaws.com/products/6cd203e2ecb24c70a3be93bdc2178034.jpeg'
     }
 ];

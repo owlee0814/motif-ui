@@ -11,7 +11,7 @@ interface ProductListingProps {
 export function ProductListing(props: ProductListingProps) {
     return (
         <>
-            <Link href={'products/product/' + props.product.id}>
+            <Link href={'products/' + props.product.id}>
                 <Image
                     src={props.product.imgSrc}
                     h={400}

@@ -18,7 +18,7 @@ export function ProductListing2(props: ProductListing2) {
                         color: 'inherit',
                         textDecoration: 'none'
                     }}
-                    href={'products/product/' + props.product.id}
+                    href={'products/' + props.product.id}
                 >
                     <Grid>
                         <Grid.Col span={1.25}>

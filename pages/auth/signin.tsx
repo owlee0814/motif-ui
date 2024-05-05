@@ -73,7 +73,7 @@ const Signin = ({providers}) => {
                                             </Button>
                                         </div>
                                     )
-                                })}
+                            })}
 
                         </form>
                         <Text ta="center" mt="md">

@@ -29,9 +29,8 @@ export default function Home() {
                         </Group>
                         <Space h={'lg'}/>
                         <Grid>
-                            {samplePosts.map((post) => (
-                                // eslint-disable-next-line react/jsx-key
-                                <PostCard post={post}/>
+                            {samplePosts.map((post, i) => (
+                                <PostCard post={post} key={post.id}/>
                             ))}
                         </Grid>
                     </Grid.Col>

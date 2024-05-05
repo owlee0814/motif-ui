@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
     Accordion,
     ActionIcon,
@@ -17,17 +17,23 @@ import {
 } from "@mantine/core";
 import {IconHeart, IconShare, IconShoppingCart} from "@tabler/icons-react";
 import {Tapestry} from 'next/font/google'
-import Product, {sampleProducts} from "../../../../entities/Product";
+import Product, {sampleProducts} from "../../../entities/Product";
 
-import {ProductListing3} from "../../../../component/ProductListing3";
+import {ProductListing3} from "../../../component/ProductListing3";
 import {useRouter} from "next/router";
 
 const inter = Tapestry({weight: '400', subsets: ['latin']})
 
 export default function ProductDetail() {
-    const product : Product = sampleProducts[Number(useRouter().query.id) - 1]
+    const router = useRouter();
+    const [product, setProduct] = useState<Product>(sampleProducts[Number(router.query.id) - 1]);
     const productPhotos = [];
     const stylePhotos = [];
+
+    useEffect(()=>{
+        if(!router.isReady) return;
+        setProduct(sampleProducts[Number(router.query.id) - 1]);
+    }, [router.isReady]);
 
     for (let i = 0; i < 5; i++) {
         productPhotos.push(

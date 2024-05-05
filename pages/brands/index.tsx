@@ -27,7 +27,7 @@ export default function Home() {
                 </Grid.Col>
                 <Grid.Col span={10}>
                     <Image
-                        src={'https://media.discordapp.net/attachments/723908387032531015/1234884705791250502/image.png?ex=66325b80&is=66310a00&hm=cd2bba212ae74aff4f0aaace81baf4c6ce3e7a994a4f5fc8ca2b387b5f628e6f&=&format=webp&quality=lossless&width=2400&height=1184'}
+                        src={''}
                         h={450}
                         fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                     />
@@ -39,20 +39,20 @@ export default function Home() {
                     <Grid>
                         <Grid.Col span={6}>
                             <Image
-                                src={'https://media.discordapp.net/attachments/723908387032531015/1234890708637319219/IMG_4482.PNG?ex=66326118&is=66310f98&hm=0fea7cda57712090fec0433641311e8edc2a47aa652dd27ffa0eefad67800bb5&=&format=webp&quality=lossless&width=648&height=1402'}
+                                src={''}
                                 h={400}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                             <Space h={'lg'}/>
                             <Image
-                                src={'https://media.discordapp.net/attachments/723908387032531015/1234890710239543397/IMG_4480.PNG?ex=66326118&is=66310f98&hm=4ddc24744d5168eb2fc5591a2523f45abab03ddddb566865a9050ae64168ab5c&=&format=webp&quality=lossless&width=648&height=1402'}
+                                src={''}
                                 h={400}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Grid.Col>
                         <Grid.Col span={6}>
                             <Image
-                                src={'https://media.discordapp.net/attachments/723908387032531015/1234890709375389758/IMG_4481.PNG?ex=66326118&is=66310f98&hm=146ad70304380b335fbad2fff0c906f99a0977b642aa297e4560a715a3dd3541&=&format=webp&quality=lossless&width=648&height=1402'}
+                                src={''}
                                 h={820}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />

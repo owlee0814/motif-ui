@@ -133,8 +133,12 @@ export function HeaderSimple(props : HeaderSimpleProps) {
             {subLinkGroup()}
             {
                 pathname?.includes('/community') && (
-                    <Group justify={'flex-end'} style={{ 'padding-top' : '1rem', 'padding-right' : '5.3%' }}>
-                        <div style={{'width' : '15rem'}}>
+                    <Group justify={'flex-end'}
+                    style={{
+                        paddingTop : '1rem',
+                        paddingRight : '5.3%'
+                    }}>
+                        <div style={{width : '15rem'}}>
                         <TextInput
                             variant="filled"
                             size="md"

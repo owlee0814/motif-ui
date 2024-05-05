@@ -42,7 +42,7 @@ export function PostCard(props: PostCardProps) {
                 style={{
                     textDecoration: 'none'
                 }}
-                href={'community/post/1'}
+                href={'community/post/' + props.post.id}
             >
             <Card padding="lg" radius="0" withBorder>
                 <Group justify="space-between">

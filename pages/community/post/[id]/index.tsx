@@ -1,23 +1,29 @@
 import {
-    ActionIcon, Anchor,
+    ActionIcon,
+    Anchor,
     Breadcrumbs,
     Button,
     Card,
     Container,
     Grid,
-    Group, Image,
-    NavLink,
+    Group,
+    Image,
     Space,
     Text,
     Textarea,
     Title
 } from "@mantine/core";
 import {IconBookmarkFilled, IconShare, IconThumbUpFilled} from "@tabler/icons-react";
-import React from "react";
+import React, {useEffect} from "react";
 import PostComment from "./comment";
 import {CommunityNavBar} from "../../../../component/CommunityNavBar/CommunityNavBar";
+import Post, {samplePosts} from "../../../../entities/Post";
+import {useRouter} from "next/router";
 
 export default function PostDetail() {
+    const router = useRouter();
+    const [post, setPost] = React.useState<Post>();
+
     const items = [
         { title: 'All', href: '/community' },
         { title: 'Lounge', href: '/community' }
@@ -26,6 +32,11 @@ export default function PostDetail() {
             {item.title}
         </Anchor>
     ));
+
+    useEffect(()=>{
+        if(!router.isReady) return;
+        setPost(samplePosts[Number(router.query.id) - 1]);
+    }, [router.isReady]);
 
     return (
         <Container size={'98%'}>
@@ -39,15 +50,15 @@ export default function PostDetail() {
                         {items}
                     </Breadcrumbs>
                     <Space h={'md'}/>
-                    <Title>Post Title</Title>
+                    <Title>{post?.title}</Title>
                     <Space h={'lg'}/>
                     <Group justify={'space-between'}>
                         <Group>
-                            <Text size={'sm'}>username</Text>
-                            <Text size={'sm'}>posted 01/01/2024</Text>
+                            <Text size={'sm'}>{post?.username}</Text>
+                            <Text size={'sm'}>posted {post?.postedDate}</Text>
                         </Group>
                         <Group>
-                            <Text fw={'800'}>4 Likes</Text>
+                            <Text fw={'800'}>{post?.likes} Likes</Text>
                             <ActionIcon variant='transparent' color="gray" size="1.5rem" radius="0">
                                 <IconThumbUpFilled style={{width: '100%', height: '100%'}} stroke={1.5}/>
                             </ActionIcon>
@@ -62,30 +73,19 @@ export default function PostDetail() {
                     <Space h='xl'/>
                     <Space h={'lg'}/>
                     <Image
-                        src={'https://media.discordapp.net/attachments/723908387032531015/1234891624467664957/DSCF0140.jpg?ex=663261f2&is=66311072&hm=f9a404053638a8e13a7d047ea6ef0a88842871c6890e44b4c89febf401eeb004&=&format=webp&width=934&height=1402'}
+                        src={''}
                         h={500}
                         w={800}
                         radius={"lg"}
                         fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                     />
                     <Space h={'lg'}/>
-                    <Text>Aliquam sem et tortor consequat id porta nibh venenatis. Quisque sagittis purus sit amet.
-                        Maecenas
-                        ultricies mi eget mauris pharetra et ultrices. Lectus magna fringilla urna porttitor rhoncus
-                        dolor
-                        purus. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Enim sit amet venenatis
-                        urna cursus
-                        eget nunc scelerisque viverra. Enim tortor at auctor urna nunc id cursus metus aliquam. Tellus
-                        cras
-                        adipiscing enim eu turpis egestas pretium aenean pharetra. At tempor commodo ullamcorper a lacus
-                        vestibulum sed arcu non. Senectus et netus et malesuada fames ac turpis egestas maecenas. Non
-                        blandit
-                        massa enim nec dui.</Text>
+                    <Text>{post?.post}</Text>
                     <Space h='lg'/>
                     <hr/>
                     <Space h='sm'/>
                     <div style={{'width' : '90%'}}>
-                    <Title size={'md'}>2 comments</Title>
+                    <Title size={'md'}>{post?.commentCount} comments</Title>
                     <Space h='lg'/>
                     <Textarea
                         variant="filled"
