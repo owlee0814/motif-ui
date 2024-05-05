@@ -4,17 +4,18 @@ import {Carousel} from "@mantine/carousel";
 import Link from "next/link";
 
 interface HomeCarouselProps {
-    url: String
-    title: String
+    imgUrl: string
+    href: string
+    title: string
 }
 
-export function HomeCarousel({url, title}: HomeCarouselProps) {
+export function HomeCarousel(props: HomeCarouselProps) {
     return (
         <Carousel.Slide>
             <div style={{'position': 'relative'}}>
-                <Link href={'/home'}>
+                <Link href={props.href}>
                 <Image
-                    src={url}
+                    src={props.imgUrl}
                     h={450}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 />
@@ -28,7 +29,7 @@ export function HomeCarousel({url, title}: HomeCarouselProps) {
                         'transform': 'translate(-50%, -50%)'
                     }}
                 >
-                    {title}
+                    {props.title}
                 </Title>
                 </Link>
             </div>
