@@ -34,8 +34,8 @@ const brandSubLinks = [
 const montserrat = Sen({weight: "700", subsets: ['latin']})
 
 interface HeaderSimpleProps {
-    linkFontSize : String,
-    subLinkFontSize : String
+    linkFontSize : string,
+    subLinkFontSize : string
 }
 
 export function HeaderSimple(props : HeaderSimpleProps) {
@@ -43,6 +43,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
     const [brandSubLinksVisible, setBrandSubLinksVisible] = useState(false);
     const [shopSubLinksVisible, setShopSubLinksVisible] = useState(false);
 
+    // @ts-ignore
     // @ts-ignore
     // @ts-ignore
     const mainItems = mainLinks.map((link) => (
@@ -85,9 +86,9 @@ export function HeaderSimple(props : HeaderSimpleProps) {
             href={link.link}
             className={classes.link}
             style={ link.disabled ? {
-                'font-size': 40,
-                'pointer-events': 'none'
-            } : {'font-size': 40}}
+                fontSize: 40,
+                pointerEvents: 'none'
+            } : {fontSize: 40}}
         >
             <Title fw='400' size={props.subLinkFontSize} td={link.disabled ? 'line-through' : ''}>
                 {link.label}
