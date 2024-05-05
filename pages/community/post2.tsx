@@ -20,7 +20,7 @@ export function Post2() {
                             <div>
                                 <Title size={'sm'}>Title of the post</Title>
                                 <Space h={'sm'}/>
-                                <Text>this is a content of the post and blah...</Text>
+                                <Text fw={'lighter'}>this is a content of the post and blah...</Text>
                             </div>
                         </Grid.Col>
                         <Grid.Col span={1.5}>

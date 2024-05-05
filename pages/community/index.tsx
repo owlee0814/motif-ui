@@ -1,7 +1,5 @@
 import React from "react";
-import {Grid, Container, Text, Card, Title, Space, Group, Badge, ActionIcon, NavLink, Select, Button} from "@mantine/core";
-import {JournalItem} from "../../component/JournalItem/JournalItem";
-import {IconThumbUpFilled, IconMessageDots } from "@tabler/icons-react";
+import {Container, Grid, Group, Select, Space, Title} from "@mantine/core";
 import {Post} from "./post";
 import {CommunityNavBar} from "./CommunityNavBar";
 

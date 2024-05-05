@@ -1,5 +1,6 @@
-import {ActionIcon, Button, Container, Grid, Group, Input, NavLink, Space, Title} from "@mantine/core";
+import {ActionIcon, Button, Checkbox, Container, Grid, Group, Input, NavLink, Space, Stack, Title} from "@mantine/core";
 import React from "react";
+import {ColorPickerIcon} from "../ColorPickerIcon/ColorPickerIcon";
 
 export function ProductsFilter() {
     return (
@@ -46,26 +47,26 @@ export function ProductsFilter() {
             >
                 Brands
             </Title>
-            <Group gap={0}>
-                <NavLink
+            <Stack gap={25}>
+                <Checkbox
                     label='Brand A'
                 />
-                <NavLink
+                <Checkbox
                     label='Brand B'
                 />
-                <NavLink
+                <Checkbox
                     label='Brand C'
                 />
-                <NavLink
+                <Checkbox
                     label='Brand D'
                 />
-                <NavLink
+                <Checkbox
                     label='Brand E'
                 />
-                <NavLink
+                <Checkbox
                     label='Brand F'
                 />
-            </Group>
+            </Stack>
 
             <Title
                 size={'1.5rem'}
@@ -74,28 +75,28 @@ export function ProductsFilter() {
                     'padding-bottom': '1rem',
                     'padding-top': '1rem'
                 }}
+                mt={'md'}
             >
                 Colors
             </Title>
             <Grid>
                 <Grid.Col span={10}>
                     <Group gap={8}>
-                        <ActionIcon bg='red' variant="filled" size="lg" radius="xl" />
-                        <ActionIcon bg='orange' variant="filled" size="lg" radius="xl" />
-                        <ActionIcon bg='yellow' variant="filled" size="lg" radius="xl" />
-                        <ActionIcon bg='violet' variant="filled" size="lg" radius="xl" />
-                        <ActionIcon bg='indigo' variant="filled" size="lg" radius="xl" />
-                        <ActionIcon bg='pink' variant="filled" size="lg" radius="xl" />
-                        <ActionIcon bg='green' variant="filled" size="lg" radius="xl" />
-                        <ActionIcon bg='navy' variant="filled" size="lg" radius="xl" />
-                        <ActionIcon variant="default" size="lg" radius="xl" />
-                        <ActionIcon bg='gray' variant="filled" size="lg" radius="xl" />
-                        <ActionIcon bg='black' variant="filled" size="lg" radius="xl" />
+                        <ColorPickerIcon bg='red' size="lg" radius="xl"/>
+                        <ColorPickerIcon bg='orange' size="lg" radius="xl" />
+                        <ColorPickerIcon bg='yellow'  size="lg" radius="xl" />
+                        <ColorPickerIcon bg='violet'  size="lg" radius="xl" />
+                        <ColorPickerIcon bg='indigo'  size="lg" radius="xl" />
+                        <ColorPickerIcon bg='pink' size="lg" radius="xl" />
+                        <ColorPickerIcon bg='green' size="lg" radius="xl" />
+                        <ColorPickerIcon bg='navy' size="lg" radius="xl" />
+                        <ColorPickerIcon bg='white' size="lg" radius="xl" />
+                        <ColorPickerIcon bg='gray' size="lg" radius="xl" />
+                        <ColorPickerIcon bg='black'  size="lg" radius="xl" />
                     </Group>
                 </Grid.Col>
             </Grid>
 
-            <Space h='sm'/>
             <Title
                 size={'1.5rem'}
                 fw={800}
@@ -103,6 +104,7 @@ export function ProductsFilter() {
                     'padding-bottom': '0.5rem',
                     'padding-top': '1rem'
                 }}
+                mt={'lg'}
             >
                 Price
             </Title>
@@ -129,23 +131,14 @@ export function ProductsFilter() {
             >
                 Discount
             </Title>
-            <Group gap={0}>
-                <NavLink
-                    label='Up To 25%'
-                />
-                <NavLink
-                    label='Up To 50%'
-                />
-                <NavLink
-                    label='Up to 75%'
-                />
-                <NavLink
-                    label='Clearance'
-                />
-            </Group>
+            <Stack gap={25}>
+                <Checkbox label='Up To 25%' />
+                <Checkbox label='Up To 50%' />
+                <Checkbox label='Up to 75%' />
+                <Checkbox label='Clearance' />
+            </Stack>
 
-            <Space h='xl'/>
-            <Button fullWidth variant="filled" size="md" radius="xs" bg={'black'}>
+            <Button w={'80%'} variant="filled" size="md" radius="xs" bg={'black'} mt={50}>
                 Clear
             </Button>
         </>

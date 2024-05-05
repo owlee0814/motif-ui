@@ -10,7 +10,7 @@ const mainLinks = [
     {link: '/home', label: 'HOME'},
     {link: '/brands', label: 'BRANDS'},
     {link: '/products', label: 'SHOP'},
-    {link: '', label: '|'},
+    {link: '', label: '|', disabled: true},
     {link: '/community', label: 'COMMUNITY'},
     {link: '/profile', label: 'PROFILE'},
     {link: '/journal', label: 'JOURNAL', disabled: true},
@@ -71,7 +71,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                     'font-family' : montserrat.style.fontFamily
                 }}
                 size={props.linkFontSize}
-                td={link.disabled ? 'line-through' : ''}
+                td={link.disabled && link.label !== '|' ? 'line-through' : ''}
             >
                 {link.label}
             </Title>

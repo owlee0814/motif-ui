@@ -13,6 +13,7 @@ import {IconMoon, IconSun} from "@tabler/icons-react";
 import cx from 'clsx';
 import classes from "./TitleHeader.module.css";
 import {Archivo_Black, Figtree, Inter, Sen, Montserrat} from "next/font/google";
+import LoginButton from "../LoginButton/LoginButton";
 
 const montserrat = Sen({weight: "700", subsets: ['latin']})
 
@@ -58,16 +59,7 @@ export function TitleHeader(props : TitleHeaderProps) {
                 >
                     CART
                 </Link>
-                <Link
-                    key='login'
-                    href={'/login'}
-                    className={classes.link}
-                    style={{
-                        'marginRight' : '0.5rem'
-                    }}
-                >
-                    LOGIN
-                </Link>
+                <LoginButton/>
                 <ActionIcon
                     onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
                     variant="subtle"

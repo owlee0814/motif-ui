@@ -30,7 +30,7 @@ export function ProductListing2(props: ProductListing2) {
                             }} size={'2rem'}>{props.rank}.</Title>
                         </Grid.Col>
 
-                        <Grid.Col span={8.75}>
+                        <Grid.Col span={7}>
                             <div style={{
                                 'margin': '0',
                                 'position': 'absolute',
@@ -39,6 +39,17 @@ export function ProductListing2(props: ProductListing2) {
                             }}>
                                 <Text size={'md'} fw={'bold'}>{props.product.brandName}</Text>
                                 <Text size={'sm'}>{props.product.productName}</Text>
+                            </div>
+                        </Grid.Col>
+                        <Grid.Col span={1.75}>
+                            <div style={{
+                                'margin': '0',
+                                'position': 'absolute',
+                                'top': '50%',
+                                'transform': 'translateY(-50%)',
+                            }}>
+                                <Text c='gray' size={'xs'}>$ {props.product.originalPrice.toFixed(2)}</Text>
+                                <Text size={'sm'}>$ {props.product.currentPrice.toFixed(2)}</Text>
                             </div>
                         </Grid.Col>
                         <Grid.Col span={2}>
