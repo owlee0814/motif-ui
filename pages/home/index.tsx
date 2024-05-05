@@ -1,9 +1,9 @@
 import React from "react";
 import {Container, Grid, Image, Space, Title} from "@mantine/core";
 import {Carousel} from "@mantine/carousel";
-import {HomeCarousel} from "./HomeCarousel/HomeCarousel";
-import {PostCard2} from "../community/PostCard2";
-import {ProductListing2} from "../products/ProductListing2";
+import {HomeCarousel} from "../../component/HomeCarousel/HomeCarousel";
+import {PostCard2} from "../../component/PostCard2/PostCard2";
+import {ProductListing2} from "../../component/ProductListing2";
 import {sampleProducts} from "../../entities/Product";
 import {samplePosts} from "../../entities/Post";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {ActionIcon, Container, Grid, Group, Space, Title} from "@mantine/core";
-import {CommunityNavBar} from "../CommunityNavBar";
+import {CommunityNavBar} from "../../../component/CommunityNavBar/CommunityNavBar";
 import OotdCard from "./OotdCard";
 import {Carousel} from "@mantine/carousel";
 import {IconPlus} from "@tabler/icons-react";

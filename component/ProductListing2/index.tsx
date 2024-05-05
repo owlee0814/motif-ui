@@ -1,6 +1,6 @@
 import React from "react";
 import {Card, Grid, Image, Space, Text, Title} from "@mantine/core";
-import Product from "../../../entities/Product";
+import Product from "../../entities/Product";
 import Link from "next/link";
 
 interface ProductListing2 {

@@ -1,7 +1,7 @@
 import React from "react";
 import {Container, Grid, Group, Select, Space, Title} from "@mantine/core";
-import {PostCard} from "./PostCard";
-import {CommunityNavBar} from "./CommunityNavBar";
+import {PostCard} from "../../component/PostCard/PostCard";
+import {CommunityNavBar} from "../../component/CommunityNavBar/CommunityNavBar";
 import {samplePosts} from "../../entities/Post";
 
 export default function Home() {

@@ -6,7 +6,7 @@ export default interface Product {
     currentPrice: number,
     originalPrice: number,
     likeCounts: number,
-    imgSrc: String
+    imgSrc?: string
 }
 
 export const sampleProducts : Product[] = [

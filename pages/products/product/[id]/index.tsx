@@ -19,7 +19,7 @@ import {IconHeart, IconShare, IconShoppingCart} from "@tabler/icons-react";
 import {Tapestry} from 'next/font/google'
 import Product, {sampleProducts} from "../../../../entities/Product";
 
-import {ProductListing3} from "../../ProductListing3";
+import {ProductListing3} from "../../../../component/ProductListing3";
 import {useRouter} from "next/router";
 
 const inter = Tapestry({weight: '400', subsets: ['latin']})
@@ -32,7 +32,7 @@ export default function ProductDetail() {
     for (let i = 0; i < 5; i++) {
         productPhotos.push(
             <Image
-                src={product.imgSrc}
+                src={product?.imgSrc}
                 h={125}
                 w={100}
                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -100,7 +100,7 @@ export default function ProductDetail() {
                         </Grid.Col>
                         <Grid.Col span={7}>
                             <Title fw={1000} size={'1.25rem'}>
-                                {product.brandName}
+                                {product?.brandName}
                             </Title>
                             <Text size={'sm'}>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -120,7 +120,7 @@ export default function ProductDetail() {
                     <Grid.Col span={6}>
                         <Center>
                             <Image
-                                src={product.imgSrc}
+                                src={product?.imgSrc}
                                 h={650}
                                 w={"auto"}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -143,14 +143,14 @@ export default function ProductDetail() {
 
                             <Group justify="space-between">
                                 <Title size={'1.25rem'}>
-                                    {product.brandName}
+                                    {product?.brandName}
                                 </Title>
                                 <ActionIcon variant="transparent" color="gray" size="lg">
                                     <IconShare style={{width: '70%', height: '70%'}} stroke={1.5}/>
                                 </ActionIcon>
                             </Group>
 
-                            <Title size={'2rem'}>{sampleProducts[Number(useRouter().query.id) - 1].productName}</Title>
+                            <Title size={'2rem'}>{sampleProducts[Number(useRouter().query.id) - 1]?.productName}</Title>
 
                             <Space h='sm'/>
                             <Text c="gray">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -158,20 +158,20 @@ export default function ProductDetail() {
 
                             <Space h='sm'/>
                             {
-                                product.originalPrice > product.currentPrice ?
+                                product?.originalPrice > product?.currentPrice ?
                                 <Text c="gray" fw={250} size={'1.25rem'}>
-                                    $ {product.originalPrice.toFixed(2)}
+                                    $ {product?.originalPrice.toFixed(2)}
                                 </Text> : ''
                             }
                             <Space h='xs'/>
                             <Group>
                                 <Text size={'1.5rem'}>
-                                    $ {product.currentPrice.toFixed(2)}
+                                    $ {product?.currentPrice.toFixed(2)}
                                 </Text>
                                 {
-                                    product.originalPrice > product.currentPrice ?
+                                    product?.originalPrice > product?.currentPrice ?
                                     <Text c="red" size={'1.5rem'}>
-                                        {100 - (product.currentPrice * 100 / product.originalPrice)}%
+                                        {100 - (product?.currentPrice * 100 / product?.originalPrice)}%
                                     </Text> : ''
                                 }
                             </Group>
@@ -261,7 +261,7 @@ export default function ProductDetail() {
                 <hr/>
                 <Space h='lg'/>
                 <Title size={'2rem'} fw={'200'}>
-                    More By {product.brandName}
+                    More By {product?.brandName}
                 </Title>
                 <Space h='lg'/>
                 <Grid>

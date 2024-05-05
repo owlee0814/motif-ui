@@ -105,7 +105,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
     ));
 
     function subLinkGroup() {
-        if ((shopSubLinksVisible || pathname.includes('/products')) && !brandSubLinksVisible )
+        if ((shopSubLinksVisible || pathname?.includes('/products')) && !brandSubLinksVisible )
             return (
                 <Group gap={5}
                        visibleFrom="xs"
@@ -114,7 +114,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                     {subItems}
                 </Group>
             )
-        else if (brandSubLinksVisible || pathname.includes('/brands'))
+        else if (brandSubLinksVisible || pathname?.includes('/brands'))
             return (
                 <Group gap={5}
                        visibleFrom="xs"
@@ -132,7 +132,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
             </Group>
             {subLinkGroup()}
             {
-                pathname.includes('/community') && (
+                pathname?.includes('/community') && (
                     <Group justify={'flex-end'} style={{ 'padding-top' : '1rem', 'padding-right' : '5.3%' }}>
                         <div style={{'width' : '15rem'}}>
                         <TextInput

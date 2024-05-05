@@ -15,7 +15,7 @@ import {
 import {IconBookmarkFilled, IconShare, IconThumbUpFilled} from "@tabler/icons-react";
 import React from "react";
 import PostComment from "./comment";
-import {CommunityNavBar} from "../../CommunityNavBar";
+import {CommunityNavBar} from "../../../../component/CommunityNavBar/CommunityNavBar";
 
 export default function PostDetail() {
     const items = [

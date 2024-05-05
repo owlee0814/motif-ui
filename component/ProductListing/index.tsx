@@ -2,7 +2,7 @@ import React from "react";
 import {Anchor, Group, Image, Space, Text, ThemeIcon, Title} from "@mantine/core";
 import Link from "next/link";
 import {IconHeart} from "@tabler/icons-react";
-import Product from "../../../entities/Product";
+import Product from "../../entities/Product";
 
 interface ProductListingProps {
     product: Product
