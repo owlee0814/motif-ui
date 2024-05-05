@@ -42,9 +42,6 @@ export function HeaderSimple(props : HeaderSimpleProps) {
     const [brandSubLinksVisible, setBrandSubLinksVisible] = useState(false);
     const [shopSubLinksVisible, setShopSubLinksVisible] = useState(false);
 
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
     const mainItems = mainLinks.map((link) => (
         <Link
             key={link.label}

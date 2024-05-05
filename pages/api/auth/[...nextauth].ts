@@ -27,8 +27,8 @@ export default NextAuth({
                 
                 const user = users.find(
                     (user) =>
-                        user.username === credentials.username &&
-                        user.password === credentials.password
+                        user.username === credentials?.username &&
+                        user.password === credentials?.password
                 )
                 return user ? { id: user.id, name: user.name, email: user.email } : null;
             }

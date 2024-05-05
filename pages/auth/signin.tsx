@@ -8,7 +8,7 @@ import Link from 'next/link';
 import {CtxOrReq} from 'next-auth/client/_utils';
 
 // @ts-ignore
-const Signin = ({csrfToken, providers}) => {
+const Signin = ({providers}) => {
     const {data: session, status} = useSession()
     const router = useRouter()
 
@@ -59,6 +59,7 @@ const Signin = ({csrfToken, providers}) => {
                             {providers &&
                                 Object.values(providers).map(provider => {
                                     return (
+                                        // @ts-ignore
                                         <div key={provider.name}>
                                             <Button
                                                 fullWidth mt="xl"
