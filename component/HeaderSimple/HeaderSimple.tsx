@@ -28,7 +28,7 @@ const subLinks = [
 const brandSubLinks = [
     {link: '/brands', label: 'Brands'},
     {link: '/lookbooks', label: 'Lookbook'},
-    {link: '/about', label: 'About Motif'},
+    {link: '/about', label: 'About MOTIF'},
 ];
 
 const montserrat = Sen({weight: "700", subsets: ['latin']})

@@ -1,26 +1,32 @@
 import {Avatar, Button, Group, Space, Text} from "@mantine/core";
 import React from "react";
 
-export default function PostComment({username, avatarImgUrl, comment}) {
+interface PostCommentProps {
+    avatarImgUrl: string,
+    username: string,
+    comment: string
+}
+
+export default function PostComment(props: PostCommentProps) {
     return (
         <div>
             <Space h={'sm'}/>
             <Group>
                 <Avatar
-                    src={avatarImgUrl}
-                    alt={username}
+                    src={props.avatarImgUrl}
+                    alt={props.username}
                     radius="xl"
                     color="indigo"
                 />
                 <div>
-                    <Text size="sm">{username}</Text>
+                    <Text size="sm">{props.username}</Text>
                     <Text size="xs" c="dimmed">
                         10 minutes ago
                     </Text>
                 </div>
             </Group>
             <Text pl={54} pt="sm" size="sm">
-                {comment}
+                {props.comment}
             </Text>
             <Space h={'xs'}/>
             <Group gap={0} style={{'padding-left': '46px'}}>

@@ -15,7 +15,7 @@ export function ColorPickerIcon(props: ColorPickerIconProps) {
         <>
             <ActionIcon
                 bg={props.bg}
-                variant={variant}
+                variant={props.bg !== 'white' ? variant : 'default'}
                 size={props.size}
                 radius={props.radius}
                 color={'black'}

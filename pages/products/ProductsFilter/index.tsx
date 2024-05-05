@@ -44,6 +44,8 @@ export function ProductsFilter() {
                     'padding-bottom': '1rem',
                     'padding-top': '1rem'
                 }}
+                mt={'sm'}
+                mb={'xs'}
             >
                 Brands
             </Title>
@@ -80,7 +82,7 @@ export function ProductsFilter() {
                 Colors
             </Title>
             <Grid>
-                <Grid.Col span={10}>
+                <Grid.Col span={8}>
                     <Group gap={8}>
                         <ColorPickerIcon bg='red' size="lg" radius="xl"/>
                         <ColorPickerIcon bg='orange' size="lg" radius="xl" />
@@ -105,6 +107,7 @@ export function ProductsFilter() {
                     'padding-top': '1rem'
                 }}
                 mt={'lg'}
+                mb={'xs'}
             >
                 Price
             </Title>

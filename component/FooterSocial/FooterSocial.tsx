@@ -1,11 +1,12 @@
-import {Container, Group, ActionIcon, rem, Title} from '@mantine/core';
+import {Container, Group, ActionIcon, rem, Title, Text} from '@mantine/core';
 import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 import classes from './FooterSocial.module.css';
 import React from "react";
 
 export function FooterSocial() {
     return (
-        <Container fluid className={classes.inner}>
+        <Container fluid>
+            <Group justify={'space-between'}>
 
             <Title style={{
                 'font-size': '1.25rem',
@@ -15,16 +16,23 @@ export function FooterSocial() {
                 MOTIF
             </Title>
 
-            <Group gap={0} className={classes.links} justify="flex-end" wrap="nowrap">
-                <ActionIcon size="lg" color="gray" variant="subtle">
-                    <IconBrandTwitter style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-                </ActionIcon>
-                <ActionIcon size="lg" color="gray" variant="subtle">
-                    <IconBrandYoutube style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-                </ActionIcon>
-                <ActionIcon size="lg" color="gray" variant="subtle">
-                    <IconBrandInstagram style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-                </ActionIcon>
+                <Group gap={0} className={classes.links}>
+                    <ActionIcon size="lg" color="gray" variant="subtle">
+                        <IconBrandTwitter style={{width: rem(22), height: rem(22)}} stroke={1.5}/>
+                    </ActionIcon>
+                    <ActionIcon size="lg" color="gray" variant="subtle">
+                        <IconBrandYoutube style={{width: rem(22), height: rem(22)}} stroke={1.5}/>
+                    </ActionIcon>
+                    <ActionIcon size="lg" color="gray" variant="subtle">
+                        <IconBrandInstagram style={{width: rem(24), height: rem(24)}} stroke={1.5}/>
+                    </ActionIcon>
+                </Group>
+            </Group>
+           
+            <Group>
+                <Text size={'xs'} mt={'xs'} mb={'md'}>
+                    © All Rights Reserved 2024 · MOTIF
+                </Text>
             </Group>
         </Container>
     );

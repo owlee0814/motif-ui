@@ -2,8 +2,13 @@ import {ActionIcon, Badge, Card, Grid, Group, Image, Space, Text, Title} from "@
 import {IconMessageDots, IconThumbUpFilled} from "@tabler/icons-react";
 import React from "react";
 import Link from "next/link";
+import Post from "../../entities/Post";
 
-export function Post2() {
+interface PostCard2Props {
+    post: Post
+}
+
+export function PostCard2(props: PostCard2Props) {
     return (
         <>
             <Space h={'sm'}/>
@@ -17,10 +22,16 @@ export function Post2() {
                 >
                     <Grid>
                         <Grid.Col span={8.5}>
-                            <div>
-                                <Title size={'sm'}>Title of the post</Title>
+                            <div
+                                style={{
+                                    position: 'relative',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)'
+                                }}
+                            >
+                                <Title size={'0.9rem'}>{props.post.title}</Title>
                                 <Space h={'sm'}/>
-                                <Text fw={'lighter'}>this is a content of the post and blah...</Text>
+                                <Text fw={'lighter'} size={'xs'}>{props.post.post.substring(0, 50)}...</Text>
                             </div>
                         </Grid.Col>
                         <Grid.Col span={1.5}>
@@ -30,7 +41,7 @@ export function Post2() {
                                 'top': '50%',
                                 'transform': 'translateY(-50%)',
                             }}>
-                                <Text size={'xs'}>10</Text>
+                                <Text size={'xs'}>{props.post.likes}</Text>
                                 <ActionIcon variant='transparent' color="gray" size="1.25rem" radius="0">
                                     <IconThumbUpFilled style={{width: '100%', height: '100%'}} stroke={1.5}/>
                                 </ActionIcon>

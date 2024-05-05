@@ -1,4 +1,4 @@
-import NextAuth, {NextAuthOptions, User} from "next-auth"
+import NextAuth, {User} from "next-auth"
 import Credentials from "next-auth/providers/credentials";
 
 export default NextAuth({

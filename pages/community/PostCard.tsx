@@ -2,40 +2,80 @@ import {ActionIcon, Badge, Card, Grid, Group, Image, Space, Text, Title} from "@
 import {IconMessageDots, IconThumbUpFilled} from "@tabler/icons-react";
 import React from "react";
 import Link from "next/link";
+import Post from "../../entities/Post";
 
-export function Post() {
+function getBadgeColor(tag) {
+    let tagColor = ''
+    switch (tag) {
+        case 'new':
+            tagColor = 'blue';
+            break;
+        case 'trending':
+            tagColor = 'red';
+            break;
+        case 'q&a':
+            tagColor = 'green';
+            break;
+        case 'review':
+            tagColor = 'purple';
+            break;
+        case 'lounge':
+            tagColor = 'pink';
+            break;
+        case 'announcement':
+            tagColor = 'black';
+            break;
+        default:
+            tagColor = 'gray';
+    }
+    return tagColor;
+}
+
+interface PostCardProps {
+    post: Post
+}
+
+export function PostCard(props: PostCardProps) {
     return (
         <Grid.Col span={6}>
             <Link
                 style={{
-                    'text-decoration': 'none'
+                    textDecoration: 'none'
                 }}
                 href={'community/post/1'}
             >
             <Card padding="lg" radius="0" withBorder>
                 <Group justify="space-between">
-                    <Badge bg={'blue'}>New</Badge>
+                    <Group gap={5}>
+                    {props.post.tags.map((t) => (
+                        <Badge
+                            bg={getBadgeColor(t)}
+                        >
+                            {t}
+                        </Badge>
+                    ))}
+                    </Group>
                     <Group gap={10}>
                         <Group gap={4}>
                             <ActionIcon variant='transparent' color="gray" size="1.25rem" radius="0">
                                 <IconMessageDots style={{width: '100%', height: '100%'}} stroke={1.5}/>
                             </ActionIcon>
-                            <Text size={'xs'}>4</Text>
+                            <Text size={'xs'}>{props.post.commentCount}</Text>
                         </Group>
                         <Group gap={2}>
                             <ActionIcon variant='transparent' color="gray" size="1.25rem" radius="0">
                                 <IconThumbUpFilled style={{width: '100%', height: '100%'}} stroke={1.5}/>
                             </ActionIcon>
-                            <Text size={'xs'}>10</Text>
+                            <Text size={'xs'}>{props.post.likes}</Text>
                         </Group>
                     </Group>
                 </Group>
                 <Space h={'sm'}/>
                 <Group justify="space-between">
-                    <div>
-                        <Title size={'sm'}>Title of the post</Title>
+                    <div style={{width:'80%'}}>
+                        <Title size={'sm'}>{props.post.title}</Title>
                         <Space h={'sm'}/>
-                        <Text size={'sm'}>this is a content of the post and blah...</Text>
+                        <Text size={'sm'}>{(props.post.post).substring(0, 125)}...</Text>
                     </div>
                     <Image
                         src={''}
@@ -47,8 +87,8 @@ export function Post() {
                 </Group>
                 <Space h={'xl'}/>
                 <Group justify='space-between'>
-                    <Text size={'xs'} fw={800}>username</Text>
-                    <Text size={'xs'}>posted 01/01/2024</Text>
+                    <Text size={'xs'} fw={800}>{props.post.username}</Text>
+                    <Text size={'xs'}>posted {props.post.postedDate}</Text>
                 </Group>
             </Card>
             </Link>

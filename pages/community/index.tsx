@@ -1,7 +1,8 @@
 import React from "react";
 import {Container, Grid, Group, Select, Space, Title} from "@mantine/core";
-import {Post} from "./post";
+import {PostCard} from "./PostCard";
 import {CommunityNavBar} from "./CommunityNavBar";
+import {samplePosts} from "../../entities/Post";
 
 export default function Home() {
     return (
@@ -28,16 +29,9 @@ export default function Home() {
                         </Group>
                         <Space h={'lg'}/>
                         <Grid>
-                            <Post/>
-                            <Post/>
-                            <Post/>
-                            <Post/>
-                            <Post/>
-                            <Post/>
-                            <Post/>
-                            <Post/>
-                            <Post/>
-                            <Post/>
+                            {samplePosts.map((post) => (
+                                <PostCard post={post}/>
+                            ))}
                         </Grid>
                     </Grid.Col>
                 </Grid>
