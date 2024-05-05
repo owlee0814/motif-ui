@@ -150,7 +150,7 @@ export default function ProductDetail() {
                                 </ActionIcon>
                             </Group>
 
-                            <Title size={'2rem'}>{sampleProducts[Number(router.query.id) - 1].productName}</Title>
+                            <Title size={'2rem'}>{sampleProducts[Number(useRouter().query.id) - 1].productName}</Title>
 
                             <Space h='sm'/>
                             <Text c="gray">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
