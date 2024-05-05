@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 import Head from "next/head";
-import {AppShell, MantineProvider, Space} from "@mantine/core";
+import {AppShell, Center, MantineProvider, Space} from "@mantine/core";
 import {HeaderSimple} from "../component/HeaderSimple/HeaderSimple";
 import React, {useEffect, useState} from "react";
 import {TitleHeader} from "../component/TitleHeader/TitleHeader";
@@ -48,11 +48,22 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
                 {pathName?.includes('auth/signin') ? (<Component {...pageProps} />) : (
                     <AppShell
                         header={{
-                            height: scrollY > 0 ? 175 : 230
+                            height: scrollY > 0 ? 175 : 230,
                         }}
                         padding="md"
+                        style={{
+                            maxWidth : '135rem',
+                            minWidth : '90rem',
+                            margin: 'auto'
+                        }}
                     >
-                        <AppShell.Header>
+                        <AppShell.Header
+                            style={{
+                                maxWidth : '135rem',
+                                minWidth : '80rem',
+                                margin: 'auto'
+                            }}
+                        >
                             <div style={{
                                 'padding': 30
                             }}>
