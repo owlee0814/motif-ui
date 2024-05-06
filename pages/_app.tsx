@@ -48,7 +48,7 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
                 {pathName?.includes('auth/signin') ? (<Component {...pageProps} />) : (
                     <AppShell
                         header={{
-                            height: scrollY > 0 ? 175 : 230,
+                            height: scrollY > 0 ? 155 : 200,
                         }}
                         padding="md"
                         style={{
@@ -67,10 +67,10 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
                             <div style={{
                                 'padding': 30
                             }}>
-                                <TitleHeader titleFontSize={scrollY > 0 ? '1rem' : '2rem'}/>
+                                <TitleHeader titleFontSize={scrollY > 0 ? '1.25rem' : '2.5rem'}/>
                                 <HeaderSimple
-                                    linkFontSize={scrollY > 0 ? '1.25rem' : '2rem'}
-                                    subLinkFontSize={scrollY > 0 ? '1.25rem' : '1.5rem'}
+                                    linkFontSize={scrollY > 0 ? '1.25rem' : '1.75rem'}
+                                    subLinkFontSize={scrollY > 0 ? '1rem' : '1.5rem'}
                                 />
                             </div>
                         </AppShell.Header>

@@ -22,7 +22,7 @@ export default function Home() {
                 <Grid.Col span={8}>
                     <Grid>
                         <Grid.Col span={8}>
-                            <hr/>
+                            <Space h={'lg'}/>
                         </Grid.Col>
                     </Grid>
 

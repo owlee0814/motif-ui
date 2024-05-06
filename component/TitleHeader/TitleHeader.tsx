@@ -24,7 +24,7 @@ export function TitleHeader(props : TitleHeaderProps) {
                     key={'home'}
                     href={'/home'}
                     style = {{
-                        padding : '1rem',
+                        paddingTop: '0rem',
                         textDecoration: 'none'
                     }}
                     className={classes.link}

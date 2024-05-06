@@ -12,7 +12,6 @@ const mainLinks = [
     {link: '', label: '|', disabled: true},
     {link: '/community', label: 'COMMUNITY'},
     {link: '/profile', label: 'PROFILE'},
-    {link: '/journal', label: 'JOURNAL', disabled: true},
 ];
 
 const subLinks = [
