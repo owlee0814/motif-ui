@@ -30,7 +30,7 @@ const brandSubLinks = [
     {link: '/about', label: 'About MOTIF'},
 ];
 
-const montserrat = Sen({weight: "700", subsets: ['latin']})
+const sen = Sen({weight: 'variable', subsets: ['latin']})
 
 interface HeaderSimpleProps {
     linkFontSize : string,
@@ -64,8 +64,9 @@ export function HeaderSimple(props : HeaderSimpleProps) {
             }}
         >
             <Title
+                fw={pathname === link.link ? 750 : 700}
                 style={{
-                    'font-family' : montserrat.style.fontFamily
+                    fontFamily : sen.style.fontFamily
                 }}
                 size={props.linkFontSize}
                 td={link.disabled && link.label !== '|' ? 'line-through' : ''}
@@ -73,7 +74,6 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                 {link.label}
             </Title>
         </Link>
-
     ));
 
     const subItems = subLinks.map((link) => (
@@ -114,7 +114,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                     {subItems}
                 </Group>
             )
-        else if (brandSubLinksVisible || pathname?.includes('/brands'))
+        else if (brandSubLinksVisible || pathname?.includes('/brands') || pathname?.includes('/lookbooks') || pathname?.includes('/about'))
             return (
                 <Group gap={5}
                        visibleFrom="xs"

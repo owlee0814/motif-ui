@@ -216,7 +216,7 @@ export default function ProductDetail() {
 
                             <Grid>
                                 <Grid.Col span={9}>
-                                    <Button radius={0} size="xl" color="rgba(0, 0, 0, 1)" fullWidth>Check Out</Button>
+                                    <Button radius={0} size="xl" color="rgba(0, 0, 0, 1)" fullWidth>Add to Cart</Button>
                                 </Grid.Col>
                                 <Grid.Col span={3}>
                                     <Group>
