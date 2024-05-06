@@ -73,8 +73,7 @@ export default function PostDetail() {
                     <Space h='xl'/>
                     <Space h={'lg'}/>
                     <Image
-                        src={''}
-                        h={500}
+                        src={post?.postImgUrl}
                         w={800}
                         radius={"lg"}
                         fallbackSrc="https://placehold.co/600x400?text=Placeholder"

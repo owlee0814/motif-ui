@@ -49,10 +49,10 @@ export function PostCard2(props: PostCard2Props) {
                         </Grid.Col>
                         <Grid.Col span={2}>
                             <Image
-                                src={''}
+                                src={props.post.postImgUrl}
                                 h={60}
                                 w={60}
-                                radius={"xs"}
+                                radius={"sm"}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Grid.Col>

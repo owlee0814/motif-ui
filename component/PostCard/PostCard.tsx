@@ -79,7 +79,7 @@ export function PostCard(props: PostCardProps) {
                         <Text size={'sm'}>{(props.post.post).substring(0, 125)}...</Text>
                     </div>
                     <Image
-                        src={''}
+                        src={props.post.postImgUrl}
                         h={80}
                         w={80}
                         radius={"lg"}

@@ -19,7 +19,8 @@ export const samplePosts : Post[] = [
         postedDate: "5/3/2024",
         username: "StyleChallenger",
         commentCount: 1,
-        tags: ["new", "announcements"]
+        tags: ["new", "announcements"],
+        postImgUrl: 'https://images.unsplash.com/photo-1551232864-3f0890e580d9?q=80&w=3255&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
     {
         id: 2,
@@ -29,7 +30,8 @@ export const samplePosts : Post[] = [
         postedDate: "5/1/2024",
         username: "TailorExpert",
         commentCount: 10,
-        tags: ["new", "lounge"]
+        tags: ["new", "lounge"],
+        postImgUrl: 'https://images.unsplash.com/photo-1633655442168-c6ef0ed2f984?q=80&w=3091&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
     {
         id: 3,
@@ -39,7 +41,8 @@ export const samplePosts : Post[] = [
         postedDate: "4/25/2024",
         username: "SummerStyleFan",
         commentCount: 9,
-        tags: ["lounge"]
+        tags: ["lounge"],
+        postImgUrl: 'https://images.unsplash.com/photo-1610401163517-a94e0a20844f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
     {
         id: 4,
@@ -49,7 +52,8 @@ export const samplePosts : Post[] = [
         postedDate: "4/20/2024",
         username: "StreetStyleGuru",
         commentCount: 4,
-        tags: ["lounge", "trending"]
+        tags: ["lounge", "trending"],
+        postImgUrl: 'https://images.unsplash.com/photo-1602078019624-f4355d0687fd?q=80&w=3160&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
     {
         id: 5,
@@ -59,7 +63,8 @@ export const samplePosts : Post[] = [
         postedDate: "4/5/2024",
         username: "BodyPositiveFashion",
         commentCount: 7,
-        tags: ["lounge"]
+        tags: ["lounge"],
+        postImgUrl: 'https://images.unsplash.com/photo-1633655442164-da26330e85b4?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
     {
         id: 6,
