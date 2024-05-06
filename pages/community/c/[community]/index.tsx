@@ -1,16 +1,22 @@
 import React, {useEffect} from "react";
 import {Container, Grid, Group, Select, Space, Title} from "@mantine/core";
-import {PostCard} from "../../component/PostCard/PostCard";
-import {CommunityNavBar} from "../../component/CommunityNavBar/CommunityNavBar";
-import {samplePosts} from "../../entities/Post";
+
 import {usePathname} from "next/navigation";
+import {CommunityNavBar} from "../../../../component/CommunityNavBar/CommunityNavBar";
+import {samplePosts} from "../../../../entities/Post";
+import {PostCard} from "../../../../component/PostCard/PostCard";
+import {sampleCommunities} from "../../../../entities/Community";
 
 export default function Home() {
     const pathName = usePathname()
     const [communityTitle, setCommunityTitle] = React.useState('');
 
-    useEffect(()=>{
-        setCommunityTitle(pathName);
+    useEffect(()=> {
+        const result = sampleCommunities.find(
+            (community) =>
+                community.path === pathName
+        )
+        setCommunityTitle(result !== undefined ? result.title : '');
     }, [pathName]);
 
     return (

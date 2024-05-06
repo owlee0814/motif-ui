@@ -9,7 +9,7 @@ export default function Lookbooks() {
     for (let i = 0; i <= links.length + 4; i++) {
         lookbooks.push(
                 <Grid.Col span={4}>
-                    <Link href='brands/brand/lookbook'>
+                    <Link href='lookbooks/brand1'>
                         <Image
                             // src={links[i]}
                             h={400}
