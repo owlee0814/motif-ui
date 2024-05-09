@@ -20,12 +20,27 @@
     text-decoration: none;
     color: light-dark(var(--mantine-color-black), var(--mantine-color-dark-0));
 
-    @mixin hover {
-        background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-    }
-
     [data-mantine-color-scheme] &[data-active] {
         background-color: var(--mantine-color-blue-filled);
         color: var(--mantine-color-white);
     }
+}
+
+.title {
+    position: relative;
+}
+
+.title::after {
+    content: '';
+    position: absolute;
+    height: 3px;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    background: light-dark(var(--mantine-color-black), var(--mantine-color-dark-0));
+    transition: width .4s;
+}
+
+.title:hover::after {
+    width: 100%;
 }

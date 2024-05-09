@@ -14,6 +14,7 @@ export function ProductListing(props: ProductListingProps) {
             <Link href={'products/' + props.product.id}>
                 <Image
                     src={props.product.imgSrc}
+                    radius={'lg'}
                     h={400}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 />

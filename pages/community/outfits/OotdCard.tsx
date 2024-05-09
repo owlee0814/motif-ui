@@ -8,7 +8,7 @@ export default function OotdCard() {
     return (
         <AspectRatio ratio={9 / 13} maw={400} onMouseEnter={() => setVisible(true)}
                      onMouseLeave={() => setVisible(false)} mx="auto" pos="relative">
-            <Image src={null} fallbackSrc="https://placehold.co/600x400?text=Placeholder"/>
+            <Image radius={'md'} src={null} fallbackSrc="https://placehold.co/600x400?text=Placeholder"/>
             {
                 visible &&
                 <Overlay color="#000" backgroundOpacity={0.5}>

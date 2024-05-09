@@ -7,6 +7,7 @@ export function ProductListing3() {
             <Image
                 src={null}
                 h={200}
+                radius={'md'}
                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
             />
             <Text>name of item</Text>

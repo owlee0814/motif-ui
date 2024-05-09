@@ -6,15 +6,9 @@ import React from "react";
 export function FooterSocial() {
     return (
         <Container fluid>
-            <Group justify={'space-between'}>
+            <Group justify={'end'}>
 
-            <Title style={{
-                'font-size': '1.25rem',
-                'border-radius' : 'var(--mantine-radius-sm)',
-                'padding' : 15
-            }}>
-                MOTIF
-            </Title>
+
 
                 <Group gap={0} className={classes.links}>
                     <ActionIcon size="lg" color="gray" variant="subtle">
@@ -29,9 +23,18 @@ export function FooterSocial() {
                 </Group>
             </Group>
            
-            <Group>
-                <Text size={'xs'} mt={'xs'} mb={'md'}>
-                    © All Rights Reserved 2024 · MOTIF
+            <Group justify={'space-between'}>
+                <Title style={{
+                    'font-size': '1.25rem',
+                    'border-radius' : 'var(--mantine-radius-sm)',
+                    'padding' : 15
+                }}>
+                    MOTIF
+                </Title>
+
+                <Text size={'sm'}>
+                    © 2024
+                    DEVELOPED & DESIGNED BY OWEN · MOTIF
                 </Text>
             </Group>
         </Container>

@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 import Head from "next/head";
-import {AppShell, Center, MantineProvider, Space} from "@mantine/core";
+import {AppShell, Center, MantineProvider, Space, Title} from "@mantine/core";
 import {HeaderSimple} from "../component/HeaderSimple/HeaderSimple";
 import React, {useEffect, useState} from "react";
 import {TitleHeader} from "../component/TitleHeader/TitleHeader";
@@ -48,29 +48,35 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
                 {pathName?.includes('auth/signin') ? (<Component {...pageProps} />) : (
                     <AppShell
                         header={{
-                            height: scrollY > 0 ? 155 : 200,
+                            height: scrollY > 0 ? 100 : 120,
                         }}
                         padding="md"
                         style={{
                             maxWidth : '135rem',
                             minWidth : '90rem',
-                            margin: 'auto'
+                            margin: 'auto',
                         }}
                     >
                         <AppShell.Header
+                            withBorder={false}
                             style={{
+                                backgroundImage: 'linear-gradient(to bottom, rgb(0,0,0) 45%, light-dark(rgb(255,255,255), rgb(36,36,36)) 45%)',
+                                backgroundSize: 'cover',
                                 maxWidth : '135rem',
                                 minWidth : '80rem',
-                                margin: 'auto'
+                                margin: 'auto',
                             }}
                         >
                             <div style={{
-                                'padding': 30
+                                'padding': 30,
+                                paddingTop: 10,
                             }}>
-                                <TitleHeader titleFontSize={scrollY > 0 ? '1.25rem' : '2.5rem'}/>
+                                <TitleHeader
+                                    titleFontSize={scrollY > 0 ? '1.15rem' : '1.4rem'}
+                                />
                                 <HeaderSimple
-                                    linkFontSize={scrollY > 0 ? '1.25rem' : '1.75rem'}
-                                    subLinkFontSize={scrollY > 0 ? '1rem' : '1.5rem'}
+                                    linkFontSize={scrollY > 0 ? '1.15rem' : '1.6rem'}
+                                    subLinkFontSize={scrollY > 0 ? '1rem' : '1.2rem'}
                                 />
                             </div>
                         </AppShell.Header>

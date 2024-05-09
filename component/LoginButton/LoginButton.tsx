@@ -12,7 +12,7 @@ export default function LoginButton() {
                 <Popover width={125} position="bottom" withArrow shadow="md">
                     <Popover.Target>
                         {/*<Button fw={'400'} variant={'transparent'} style={{color: 'inherit'}} size={'sm'}>{(session.user?.name)?.toUpperCase()}</Button>*/}
-                        <ActionIcon variant='transparent' color="gray">
+                        <ActionIcon size={'1.5rem'} variant='transparent' color="gray">
                             <IconUserCircle style={{width: '100%', height: '100%'}} stroke={1.5}/>
                         </ActionIcon>
                     </Popover.Target>
@@ -32,7 +32,7 @@ export default function LoginButton() {
                                 variant={'transparent'}
                                 style={{color: 'inherit'}}
                             >
-                                saved
+                                favorites
                             </Button>
                             <Button
                                 fw={'400'}

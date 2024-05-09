@@ -12,7 +12,7 @@ export function ProductListing2(props: ProductListing2) {
     return (
         <>
             <Space h={'sm'}/>
-            <Card padding="md" radius="0" withBorder>
+            <Card padding="md" radius={'md'} withBorder>
                 <Link
                     style={{
                         color: 'inherit',

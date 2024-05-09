@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Group, TextInput, Title} from '@mantine/core';
+import {Button, Card, Group, TextInput, Title} from '@mantine/core';
 import classes from './HeaderSimple.module.css';
 import Link from "next/link";
 import {Sen} from "next/font/google";
@@ -69,6 +69,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                 }}
                 size={props.linkFontSize}
                 td={link.disabled && link.label !== '|' ? 'line-through' : ''}
+                className={classes.title}
             >
                 {link.label}
             </Title>
@@ -104,31 +105,55 @@ export function HeaderSimple(props : HeaderSimpleProps) {
     ));
 
     function subLinkGroup() {
-        if ((shopSubLinksVisible || pathname?.includes('/products')) && !brandSubLinksVisible )
+        if (shopSubLinksVisible && !brandSubLinksVisible )
             return (
-                <Group gap={5}
-                       visibleFrom="xs"
-                       onMouseEnter={() => setShopSubLinksVisible(true)}
-                       onMouseLeave={() => setShopSubLinksVisible(false)}>
+                <Card
+                    bg={'light-dark(rgb(233,246,240), rgb(46,46,46))'}
+                    radius={'xl'}
+                    style={{display: 'inline-block'}}
+                    onMouseEnter={() => setShopSubLinksVisible(true)}
+                    onMouseLeave={() => setShopSubLinksVisible(false)}
+                >
+                <Group
+                    gap={5}
+                    visibleFrom="xs"
+                >
                     {subItems}
                 </Group>
+                </Card>
             )
-        else if (brandSubLinksVisible || pathname?.includes('/brands') || pathname?.includes('/lookbooks') || pathname?.includes('/about'))
+        else if (brandSubLinksVisible)
             return (
-                <Group gap={5}
-                       visibleFrom="xs"
-                       onMouseEnter={() => setBrandSubLinksVisible(true)}
-                       onMouseLeave={() => setBrandSubLinksVisible(false)}>
+                <Card
+                    bg={'light-dark(rgb(233,246,240), rgb(46,46,46))'}
+                    radius={'xl'}
+                    style={{display: 'inline-block'}}
+                    onMouseEnter={() => setBrandSubLinksVisible(true)}
+                    onMouseLeave={() => setBrandSubLinksVisible(false)}
+                >
+                <Group
+                    gap={5}
+                    visibleFrom="xs"
+                >
                     {brandSubItems}
                 </Group>
+                </Card>
             )
     }
 
     return (
         <>
-            <Group gap={5} visibleFrom="xs">
-                {mainItems}
+            <Group justify="space-between" mt={'0.6rem'}>
+                <Group gap={5} visibleFrom="xs">
+                    {mainItems}
+                </Group>
+                <Link href={''} style={{ color: 'inherit' }}>
+                    <Title size={'1rem'}>
+                        FEEDBACK@MOTIF.COM
+                    </Title>
+                </Link>
             </Group>
+
             {subLinkGroup()}
             {
                 pathname?.includes('/community') && (

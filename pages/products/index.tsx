@@ -18,12 +18,13 @@ export default function Home() {
 
     return (
         <>
-            <Container size="98%">
+            <Container size="100%">
                 <Grid>
-                    <Grid.Col span={2}>
+                    <Grid.Col span={1.95} >
                         <ProductsFilter/>
                     </Grid.Col>
-                    <Grid.Col span={10}>
+                    <Grid.Col span={0.1}/>
+                    <Grid.Col span={9.9}>
 
                         {/*<Space h={'lg'}/>*/}
                         {/*<Group>*/}
