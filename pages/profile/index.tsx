@@ -29,15 +29,15 @@ export default function index() {
     }
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-        if (status === "unauthenticated") {
-            try {
-                router.push('auth/signin')
-            } catch (error) {
-                console.log(error)
-            }
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (status === "unauthenticated") {
+    //         try {
+    //             router.push('auth/signin')
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    // }, []);
 
     return (
         // (status === "unauthenticated") ? (
