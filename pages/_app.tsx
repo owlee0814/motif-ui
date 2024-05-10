@@ -60,7 +60,7 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
                         <AppShell.Header
                             withBorder={false}
                             style={{
-                                backgroundImage: 'linear-gradient(to bottom, rgb(0,0,0) 45%, light-dark(rgb(255,255,255), rgb(36,36,36)) 45%)',
+                                backgroundImage: 'linear-gradient(to bottom, rgb(0,0,0) 45%, rgb(0,0,0,0) 45%)',
                                 backgroundSize: 'cover',
                                 maxWidth : '135rem',
                                 minWidth : '80rem',

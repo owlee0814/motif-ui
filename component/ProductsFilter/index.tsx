@@ -1,23 +1,22 @@
-import {Button, Card, Center, Checkbox, Grid, Group, Input, NavLink, Space, Stack, Title} from "@mantine/core";
+import {Button, Card, Center, Checkbox, Group, Input, NavLink, Stack, Title} from "@mantine/core";
 import React from "react";
 import {ColorPickerIcon} from "../ColorPickerIcon/ColorPickerIcon";
+import classes from "./ProductsFilter.module.css";
 
 export function ProductsFilter() {
     return (
         <>
-            <Card radius={'xl'} mt={'4.7rem'}>
+            <Card radius={'xl'} mt={'4.7rem'} className={classes.card}>
                 <Center>
                 <Title
                     size={'1.5rem'}
                     fw={800}
-                    style={{
-                        'padding-bottom': '1rem',
-                    }}
+                    style={{ 'padding-bottom': '1rem' }}
                 >
                     Categories
                 </Title>
                 </Center>
-                <Group gap={0} mb={'sm'}>
+                <Group gap={0} mb={'sm'} ml={'sm'}>
                     <NavLink
                         label='category 1'
                     />
@@ -38,20 +37,18 @@ export function ProductsFilter() {
                     />
                 </Group>
             </Card>
-            <Card radius={'xl'} mt={'lg'}>
+            <Card radius={'xl'} mt={'lg'} className={classes.card}>
                 <Center>
                     <Title
                         size={'1.5rem'}
                         fw={800}
-                        style={{
-                            'padding-bottom': '1rem',
-                        }}
+                        style={{'padding-bottom': '1rem'}}
                         mb={'xs'}
                     >
                         Brands
                     </Title>
                 </Center>
-                <Stack gap={25} mb={'md'}>
+                <Stack gap={25} mb={'md'} ml={'sm'}>
                     <Checkbox
                         label='Brand A'
                     />
@@ -72,14 +69,12 @@ export function ProductsFilter() {
                     />
                 </Stack>
             </Card>
-            <Card radius={'xl'} mt={'lg'}>
+            <Card radius={'xl'} mt={'lg'} className={classes.card}>
                 <Center>
                     <Title
                         size={'1.5rem'}
                         fw={800}
-                        style={{
-                            'padding-bottom': '1rem',
-                        }}
+                        style={{ 'padding-bottom': '1rem' }}
                     >
                         Colors
                     </Title>
@@ -100,7 +95,7 @@ export function ProductsFilter() {
                     </Group>
                 </Center>
             </Card>
-            <Card radius={'xl'} mt={'lg'}>
+            <Card radius={'xl'} mt={'lg'} className={classes.card}>
                 <Center>
                     <Title
                         size={'1.5rem'}
@@ -113,21 +108,18 @@ export function ProductsFilter() {
                         Price
                     </Title>
                 </Center>
-                <div style={{
-                    width : '12.5rem',
-                    paddingLeft: '8%',
-                    paddingBottom: '1rem'
-                }}>
-                    <Input.Wrapper label="Min. Price" description="Input description">
+                <Center>
+                <Stack mb={'md'}>
+                    <Input.Wrapper label="Min. Price" description="Input description" ml={'sm'} mr={'sm'}>
                         <Input variant="filled" size="md" radius="lg" placeholder="$ 0.00" />
                     </Input.Wrapper>
-                    <Space h='md'/>
-                    <Input.Wrapper label="Max. Price" description="Input description">
+                    <Input.Wrapper label="Max. Price" description="Input description" ml={'sm'} mr={'sm'}>
                         <Input variant="filled" size="md" radius="lg" placeholder="$ 0.00" />
                     </Input.Wrapper>
-                </div>
+                </Stack>
+                </Center>
             </Card>
-            <Card radius={'xl'} mt={'lg'}>
+            <Card radius={'xl'} mt={'lg'} className={classes.card}>
                 <Center>
                     <Title
                         size={'1.5rem'}
@@ -140,7 +132,7 @@ export function ProductsFilter() {
                         Discount
                     </Title>
                 </Center>
-                <Stack gap={25}>
+                <Stack gap={25} ml={'sm'} mt={'sm'}>
                     <Checkbox label='Up To 25%' />
                     <Checkbox label='Up To 50%' />
                     <Checkbox label='Up to 75%' />

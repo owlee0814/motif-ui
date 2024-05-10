@@ -23,9 +23,10 @@ export default function Home() {
         <>
             <Container size={'98%'}>
                 <Grid>
-                    <Grid.Col span={2}>
+                    <Grid.Col span={2} style={{position: 'fixed'}}>
                         <CommunityNavBar/>
                     </Grid.Col>
+                    <Grid.Col span={2}/>
                     <Grid.Col span={9.5}>
                         <Space h={'xs'}/>
                         <Group justify={'space-between'}>

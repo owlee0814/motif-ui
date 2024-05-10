@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Card, Group, TextInput, Title} from '@mantine/core';
+import {Card, Group, Title, Transition} from '@mantine/core';
 import classes from './HeaderSimple.module.css';
 import Link from "next/link";
 import {Sen} from "next/font/google";
@@ -38,8 +38,8 @@ interface HeaderSimpleProps {
 
 export function HeaderSimple(props : HeaderSimpleProps) {
     const pathname = usePathname()
-    const [brandSubLinksVisible, setBrandSubLinksVisible] = useState(false);
-    const [shopSubLinksVisible, setShopSubLinksVisible] = useState(false);
+    const [shopLinksCardTransition, setShopLinksCardTransition] = useState(false);
+    const [brandLinksCardTransition, setBrandLinksCardTransition] = useState(false);
 
     const mainItems = mainLinks.map((link) => (
         <Link
@@ -51,15 +51,15 @@ export function HeaderSimple(props : HeaderSimpleProps) {
             } : {}}
             onMouseEnter={() => {
                 if (link.link == '/products')
-                    setShopSubLinksVisible(true)
+                    setShopLinksCardTransition(true)
                 if (link.link == '/brands')
-                    setBrandSubLinksVisible(true)
+                    setBrandLinksCardTransition(true)
             }}
             onMouseLeave={() => {
                 if (link.link == '/products')
-                    setShopSubLinksVisible(false)
+                    setShopLinksCardTransition(false)
                 if (link.link == '/brands')
-                    setBrandSubLinksVisible(false)
+                    setBrandLinksCardTransition(false)
             }}
         >
             <Title
@@ -86,7 +86,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                 pointerEvents: 'none'
             } : {fontSize: 40}}
         >
-            <Title fw='400' size={props.subLinkFontSize} td={link.disabled ? 'line-through' : ''}>
+            <Title fw='400' size={props.subLinkFontSize} td={link.disabled ? 'line-through' : ''} className={classes.title}>
                 {link.label}
             </Title>
         </Link>
@@ -98,47 +98,78 @@ export function HeaderSimple(props : HeaderSimpleProps) {
             href={link.link}
             className={classes.link}
         >
-            <Title fw='400' size={props.subLinkFontSize} >
+            <Title fw='400' size={props.subLinkFontSize} className={classes.title}>
                 {link.label}
             </Title>
         </Link>
     ));
 
     function subLinkGroup() {
-        if (shopSubLinksVisible && !brandSubLinksVisible )
-            return (
-                <Card
-                    bg={'light-dark(rgb(233,246,240), rgb(46,46,46))'}
-                    radius={'xl'}
-                    style={{display: 'inline-block'}}
-                    onMouseEnter={() => setShopSubLinksVisible(true)}
-                    onMouseLeave={() => setShopSubLinksVisible(false)}
-                >
-                <Group
-                    gap={5}
-                    visibleFrom="xs"
-                >
-                    {subItems}
-                </Group>
-                </Card>
-            )
-        else if (brandSubLinksVisible)
-            return (
-                <Card
-                    bg={'light-dark(rgb(233,246,240), rgb(46,46,46))'}
-                    radius={'xl'}
-                    style={{display: 'inline-block'}}
-                    onMouseEnter={() => setBrandSubLinksVisible(true)}
-                    onMouseLeave={() => setBrandSubLinksVisible(false)}
-                >
-                <Group
-                    gap={5}
-                    visibleFrom="xs"
-                >
-                    {brandSubItems}
-                </Group>
-                </Card>
-            )
+        return (
+            <Transition
+                mounted={shopLinksCardTransition && !brandLinksCardTransition}
+                transition="fade"
+                duration={400}
+                timingFunction="ease"
+            >
+                {(transitionStyle) => (
+                    <Card
+                        className={classes.nav}
+                        radius={'xl'}
+                        style={{...transitionStyle, display: 'inline-block', position: 'fixed'}}
+                        onMouseEnter={() => {
+                            // setShopSubLinksVisible(true)
+                            setShopLinksCardTransition(true)
+                        }}
+                        onMouseLeave={() => {
+                            // setShopSubLinksVisible(false)
+                            setShopLinksCardTransition(false)
+                        }}
+                    >
+                        <Group
+                            gap={5}
+                            visibleFrom="xs"
+                        >
+                            {subItems}
+                        </Group>
+                    </Card>
+                )}
+            </Transition>
+        )
+    }
+
+    function brandLinkGroup() {
+        return (
+            <Transition
+                mounted={brandLinksCardTransition && !shopLinksCardTransition}
+                transition="fade"
+                duration={400}
+                timingFunction="ease"
+            >
+                {(transitionStyle) => (
+                    <Card
+                        className={classes.nav}
+                        radius={'xl'}
+                        style={{...transitionStyle, display: 'inline-block', position: 'fixed'}}
+                        onMouseEnter={() => {
+                            // setShopSubLinksVisible(true)
+                            setBrandLinksCardTransition(true)
+                        }}
+                        onMouseLeave={() => {
+                            // setShopSubLinksVisible(false)
+                            setBrandLinksCardTransition(false)
+                        }}
+                    >
+                        <Group
+                            gap={5}
+                            visibleFrom="xs"
+                        >
+                            {brandSubItems}
+                        </Group>
+                    </Card>
+                )}
+            </Transition>
+        )
     }
 
     return (
@@ -147,33 +178,21 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                 <Group gap={5} visibleFrom="xs">
                     {mainItems}
                 </Group>
-                <Link href={''} style={{ color: 'inherit' }}>
-                    <Title size={'1rem'}>
-                        FEEDBACK@MOTIF.COM
-                    </Title>
-                </Link>
+                <Group>
+                    <Link href={''} className={classes.link} style={{color:'gray'}}>
+                        <Title size={'1rem'}>
+                            DEV BLOG
+                        </Title>
+                    </Link>
+                    <Link href={''} style={{ color: 'inherit' }}>
+                        <Title size={'1rem'}>
+                            FEEDBACK@MOTIF.COM
+                        </Title>
+                    </Link>
+                </Group>
             </Group>
-
             {subLinkGroup()}
-            {
-                pathname?.includes('/community') && (
-                    <Group justify={'flex-end'}
-                    style={{
-                        paddingTop : '1rem',
-                        paddingRight : '5.3%'
-                    }}>
-                        <div style={{width : '15rem'}}>
-                        <TextInput
-                            variant="filled"
-                            size="md"
-                            radius="xl"
-                            placeholder="Search"
-                        />
-                        </div>
-                        <Button variant="filled" size="sm" radius="xs" bg={'black'}>Create a Post</Button>
-                    </Group>
-                )
-            }
+            {brandLinkGroup()}
         </>
     );
 }

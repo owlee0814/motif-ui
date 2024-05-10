@@ -9,10 +9,12 @@ interface ProductListing2 {
 }
 
 export function ProductListing2(props: ProductListing2) {
+    const cardStyle = { backgroundColor: 'light-dark(rgb(240,240,240), rgb(46,46,46))' }
+
     return (
         <>
             <Space h={'sm'}/>
-            <Card padding="md" radius={'md'} withBorder>
+            <Card padding="md" radius={'md'} style={cardStyle}>
                 <Link
                     style={{
                         color: 'inherit',

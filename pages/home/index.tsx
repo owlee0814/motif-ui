@@ -44,11 +44,7 @@ export default function Home() {
                     <Title>
                         FEATURED MOTIFS
                     </Title>
-                    <Grid>
-                        <Grid.Col span={7}>
-                            <hr/>
-                        </Grid.Col>
-                    </Grid>
+                    <Space h={'0.3%'}/>
                     <Space h='lg'/>
                     <Carousel draggable={false} height={550} align="start" slideGap="md" slideSize="33.33%" loop >
                         <Carousel.Slide>
@@ -104,7 +100,7 @@ export default function Home() {
 
                 <Grid.Col span={4}>
                     <Title size={'1.5rem'}>TRENDING</Title>
-                    <Space h={'0.5%'}/>
+                    <Space h={'0.7%'}/>
                     {samplePosts.slice(0,5).map((post) => (
                         <PostCard2 post={post} key={post.id}/>
                     ))}

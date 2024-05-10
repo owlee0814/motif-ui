@@ -12,7 +12,7 @@
     "@mantine/carousel": "^7.9.0",
     "@mantine/core": "7.9.0",
     "@mantine/form": "^7.9.0",
-    "@mantine/hooks": "7.9.0",
+    "@mantine/hooks": "^7.9.0",
     "@mantinex/dev-icons": "^1.0.2",
     "@mantinex/mantine-logo": "^1.0.1",
     "@tabler/icons-react": "^3.2.0",

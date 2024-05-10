@@ -41,9 +41,10 @@ export default function PostDetail() {
     return (
         <Container size={'98%'}>
             <Grid>
-                <Grid.Col span={2}>
+                <Grid.Col span={2} style={{position: 'fixed'}}>
                     <CommunityNavBar/>
                 </Grid.Col>
+                <Grid.Col span={2}/>
                 <Grid.Col span={10}>
                     <Container size={'90%'}>
                     <Breadcrumbs separator=">" separatorMargin="xs" mt="md">

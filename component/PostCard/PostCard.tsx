@@ -36,6 +36,8 @@ interface PostCardProps {
 }
 
 export function PostCard(props: PostCardProps) {
+    const cardStyle = { backgroundColor: 'light-dark(rgb(240,240,240), rgb(46,46,46))' }
+
     return (
         <Grid.Col span={6}>
             <Link
@@ -44,7 +46,7 @@ export function PostCard(props: PostCardProps) {
                 }}
                 href={'community/post/' + props.post.id}
             >
-            <Card padding="lg" radius={'lg'} withBorder>
+            <Card padding="lg" radius={'lg'} style={cardStyle}>
                 <Group justify="space-between">
                     <Group gap={5}>
                     {props.post.tags.map((t) => (
