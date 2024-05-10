@@ -40,13 +40,13 @@ export default function index() {
     }, []);
 
     return (
-        (status === "unauthenticated") ? (
-            <Container>
-                <Center h={600}>
-                    <Title> PLEASE LOGIN TO ACCESS </Title>
-                </Center>
-            </Container>
-        ) : (
+        // (status === "unauthenticated") ? (
+        //     <Container>
+        //         <Center h={600}>
+        //             <Title> PLEASE LOGIN TO ACCESS </Title>
+        //         </Center>
+        //     </Container>
+        // ) : (
             <Container size={'98%'}>
                 <Grid>
                     <Grid.Col span={2} style={{position: 'fixed'}}>
@@ -145,6 +145,6 @@ export default function index() {
                     </Grid.Col>
                 </Grid>
             </Container>
-        )
+        // )
     );
 }
