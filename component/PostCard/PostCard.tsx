@@ -3,6 +3,7 @@ import {IconMessageDots, IconThumbUpFilled} from "@tabler/icons-react";
 import React from "react";
 import Link from "next/link";
 import Post from "../../entities/Post";
+import classes from "./PostCard.module.css";
 
 function getBadgeColor(tag: string) {
     let tagColor = ''
@@ -46,7 +47,7 @@ export function PostCard(props: PostCardProps) {
                 }}
                 href={'community/post/' + props.post.id}
             >
-            <Card padding="lg" radius={'lg'} style={cardStyle}>
+            <Card padding="lg" radius={'lg'} className={classes.card}>
                 <Group justify="space-between">
                     <Group gap={5}>
                     {props.post.tags.map((t) => (

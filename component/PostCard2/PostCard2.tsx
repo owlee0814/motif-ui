@@ -3,18 +3,17 @@ import {IconThumbUpFilled} from "@tabler/icons-react";
 import React from "react";
 import Link from "next/link";
 import Post from "../../entities/Post";
+import classes from "./PostCard2.module.css";
 
 interface PostCard2Props {
     post: Post
 }
 
 export function PostCard2(props: PostCard2Props) {
-    const cardStyle = { backgroundColor: 'light-dark(rgb(240,240,240), rgb(46,46,46))' }
-
     return (
         <>
             <Space h={'sm'}/>
-            <Card padding="md" radius={'md'} style={cardStyle}>
+            <Card padding="md" radius={'md'} className={classes.card}>
                 <Link
                     style={{
                         color: 'inherit',

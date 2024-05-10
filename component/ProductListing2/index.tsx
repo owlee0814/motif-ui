@@ -2,6 +2,8 @@ import React from "react";
 import {Card, Grid, Image, Space, Text, Title} from "@mantine/core";
 import Product from "../../entities/Product";
 import Link from "next/link";
+import classes from "./ProductListing.module.css";
+
 
 interface ProductListing2 {
     product: Product,
@@ -9,12 +11,11 @@ interface ProductListing2 {
 }
 
 export function ProductListing2(props: ProductListing2) {
-    const cardStyle = { backgroundColor: 'light-dark(rgb(240,240,240), rgb(46,46,46))' }
 
     return (
         <>
             <Space h={'sm'}/>
-            <Card padding="md" radius={'md'} style={cardStyle}>
+            <Card padding="md" radius={'md'} className={classes.card}>
                 <Link
                     style={{
                         color: 'inherit',
