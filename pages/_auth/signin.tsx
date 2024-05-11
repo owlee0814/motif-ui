@@ -1,11 +1,11 @@
-// import {getCsrfToken, getProviders, signIn, useSession} from 'next-auth/react'
+// import {getCsrfToken, getProviders, signIn, useSession} from 'next-_auth/react'
 // import classes from './signin.module.css'
 // import {Anchor, Button, Card, Center, Paper, PasswordInput, Space, Text, TextInput, Title} from "@mantine/core";
 // import {useRouter} from "next/router";
 // import React, {useEffect} from "react";
 // import {useForm} from "@mantine/form";
 // import Link from 'next/link';
-// import {CtxOrReq} from 'next-auth/client/_utils';
+// import {CtxOrReq} from 'next-_auth/client/_utils';
 //
 // // @ts-ignore
 // const Signin = ({providers}) => {

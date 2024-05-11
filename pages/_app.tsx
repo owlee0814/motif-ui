@@ -45,7 +45,7 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
                     <link rel="shortcut icon" href="/favicon.svg"/>
                 </Head>
 
-                {pathName?.includes('auth/signin') ? (<Component {...pageProps} />) : (
+                {pathName?.includes('_auth/signin') ? (<Component {...pageProps} />) : (
                     <AppShell
                         header={{
                             height: scrollY > 0 ? 100 : 120,

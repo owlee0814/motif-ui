@@ -32,7 +32,7 @@ export default function index() {
     // useEffect(() => {
     //     if (status === "unauthenticated") {
     //         try {
-    //             router.push('auth/signin')
+    //             router.push('_auth/signin')
     //         } catch (error) {
     //             console.log(error)
     //         }

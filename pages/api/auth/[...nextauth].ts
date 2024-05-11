@@ -4,7 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 export default NextAuth({
     // pages: {
-    //     signIn: '/auth/signin'
+    //     signIn: '/_auth/signin'
     // },
     // Configure one or more authentication providers
     providers: [
