@@ -8,6 +8,11 @@
 // import {CtxOrReq} from 'next-_auth/client/_utils';
 //
 // // @ts-ignore
+
+export default function Signin() {
+    return <></>;
+}
+
 // const Signin = ({providers}) => {
 //     const {data: session, status} = useSession()
 //     const router = useRouter()
