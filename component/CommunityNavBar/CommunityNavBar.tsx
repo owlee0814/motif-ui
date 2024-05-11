@@ -1,8 +1,21 @@
-import {Group, NavLink, Title} from "@mantine/core";
-import React from "react";
+import {Card, Group, NavLink, Stack, Title} from "@mantine/core";
+import React, {useEffect} from "react";
 import {sampleCommunities} from "../../entities/Community";
+import {usePathname} from "next/navigation";
+import classes from "../ProfileNavBar/ProfileNavBar.module.css";
 
 export function CommunityNavBar() {
+    const [communityTitle, setCommunityTitle] = React.useState('');
+    const pathName = usePathname()
+
+    useEffect(()=> {
+        const result = sampleCommunities.find(
+            (community) =>
+                community.path === pathName
+        )
+        setCommunityTitle(result !== undefined ? result.title : '');
+    }, [pathName]);
+
     return (
         <>
             <Title
@@ -13,20 +26,22 @@ export function CommunityNavBar() {
                     'padding-top': '1rem'
                 }}
             >
-                Motifs
+                {communityTitle}
             </Title>
 
-            <Group gap={0}>
-                {sampleCommunities.map((community, index) => (
-                    <NavLink
-                        fw={'600'}
-                        label={community.title}
-                        href={community.path}
-                        key={index}
-                    >
-                    </NavLink>
-                ))}
-            </Group>
+            <Card radius={'xl'} mt={'1rem'} mr={'2rem'} className={classes.card}>
+                <Group gap={0} ml={'sm'}>
+                    {sampleCommunities.map((community, index) => (
+                        <NavLink
+                            fw={'600'}
+                            label={community.title}
+                            href={community.path}
+                            key={index}
+                        >
+                        </NavLink>
+                    ))}
+                </Group>
+            </Card>
         </>
     );
 }

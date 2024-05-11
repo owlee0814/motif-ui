@@ -6,7 +6,7 @@ export default interface Community {
 export const sampleCommunities = [
     {
         title: 'All',
-        path: '/community'
+        path: '/community/c/all'
     },
     {
         title: 'Announcements',

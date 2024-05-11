@@ -1,4 +1,4 @@
-import {Center, Container, Grid, Title} from "@mantine/core";
+import {Button, Center, Container, Grid, Group, Title} from "@mantine/core";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import React, {useEffect} from "react";
@@ -52,18 +52,21 @@ export default function index() {
                     <Grid.Col span={2} style={{position: 'fixed'}}>
                         <ProfileNavBar/>
                     </Grid.Col>
-                    <Grid.Col span={2.2}/>
-                    <Grid.Col span={9.8}>
-                        <Title
-                            size={'1.5rem'}
-                            fw={800}
-                            style={{
-                                'padding-bottom': '1rem',
-                                'padding-top': '1rem'
-                            }}
-                        >
-                            My Posts
-                        </Title>
+                    <Grid.Col span={2.1}/>
+                    <Grid.Col span={9.9}>
+                        <Group justify={'space-between'}>
+                            <Title
+                                size={'1.5rem'}
+                                fw={800}
+                                style={{
+                                    'padding-bottom': '1rem',
+                                    'padding-top': '1rem'
+                                }}
+                            >
+                                My Posts
+                            </Title>
+                            <Button mt={'0.2rem'} variant="filled" size="sm" radius="xl" bg={'black'}>Create a Post</Button>
+                        </Group>
                         <Grid mt={'md'}>
                             {samplePosts.slice(0, 4).map((post, i) => (
                                 <PostCard post={post} key={post.id}/>

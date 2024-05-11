@@ -31,7 +31,7 @@ export default function Home() {
                                     placeholder="Search"
                                 />
                             </div>
-                            <Button variant="filled" size="sm" radius="xs" bg={'black'}>Create a Post</Button>
+                            <Button variant="filled" size="sm" radius="xl" bg={'black'}>Create a Post</Button>
                         </Group>
                         <Space h={'xs'}/>
                         <Group justify={'space-between'}>

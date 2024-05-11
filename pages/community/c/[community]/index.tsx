@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Container, Grid, Group, Select, Space, Title} from "@mantine/core";
+import {Button, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core";
 
 import {usePathname} from "next/navigation";
 import {CommunityNavBar} from "../../../../component/CommunityNavBar/CommunityNavBar";
@@ -8,16 +8,7 @@ import {PostCard} from "../../../../component/PostCard/PostCard";
 import {sampleCommunities} from "../../../../entities/Community";
 
 export default function Home() {
-    const pathName = usePathname()
-    const [communityTitle, setCommunityTitle] = React.useState('');
 
-    useEffect(()=> {
-        const result = sampleCommunities.find(
-            (community) =>
-                community.path === pathName
-        )
-        setCommunityTitle(result !== undefined ? result.title : '');
-    }, [pathName]);
 
     return (
         <>
@@ -26,23 +17,31 @@ export default function Home() {
                     <Grid.Col span={2} style={{position: 'fixed'}}>
                         <CommunityNavBar/>
                     </Grid.Col>
-                    <Grid.Col span={2}/>
-                    <Grid.Col span={9.5}>
+                    <Grid.Col span={2.1}/>
+                    <Grid.Col span={9.9}>
                         <Space h={'xs'}/>
                         <Group justify={'space-between'}>
-                            <Title>
-                                {communityTitle}
-                            </Title>
                             <Select
-                                style={{'padding-top' : '10px'}}
+                                style={{'padding-top': '10px'}}
                                 placeholder="Hot"
                                 data={['Hot', 'New', 'Likes']}
                                 variant='unstyled'
                                 w={'10%'}
                                 comboboxProps={{transitionProps: {transition: 'pop', duration: 200}}}
                             />
+                            <Group justify={'flex-end'}>
+                                <div style={{width: '15rem'}}>
+                                    <TextInput
+                                        variant="filled"
+                                        size="md"
+                                        radius="xl"
+                                        placeholder="Search"
+                                    />
+                                </div>
+                                <Button variant="filled" size="sm" radius="xl" bg={'black'}>Create a Post</Button>
+                            </Group>
                         </Group>
-                        <Space h={'lg'}/>
+                        <Space h={'1.45rem'}/>
                         <Grid>
                             {samplePosts.map((post, i) => (
                                 <PostCard post={post} key={post.id}/>

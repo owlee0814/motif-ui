@@ -62,9 +62,9 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
                             style={{
                                 backgroundImage: 'linear-gradient(to bottom, rgb(0,0,0) 45%, rgb(0,0,0,0) 45%)',
                                 backgroundSize: 'cover',
-                                maxWidth : '135rem',
-                                minWidth : '80rem',
-                                margin: 'auto',
+                                // maxWidth : '135rem',
+                                // minWidth : '80rem',
+                                // margin: 'auto',
                             }}
                         >
                             <div style={{

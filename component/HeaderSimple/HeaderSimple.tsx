@@ -10,7 +10,7 @@ const mainLinks = [
     {link: '/brands', label: 'BRANDS'},
     {link: '/products', label: 'SHOP'},
     {link: '', label: '|', disabled: true},
-    {link: '/community', label: 'COMMUNITY'},
+    {link: '/community/c/all', label: 'COMMUNITY'},
     {link: '/profile', label: 'PROFILE'},
 ];
 
