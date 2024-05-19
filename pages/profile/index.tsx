@@ -12,13 +12,21 @@ import {ProfileNavBar} from "../../component/ProfileNavBar/ProfileNavBar";
 
 const sen = Sen({weight: "700", subsets: ['latin']})
 
-export default function index() {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const {data: session, status} = useSession()
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+export default function Profile() {
+    const { status} = useSession()
     const router = useRouter()
 
     const ootds = [];
+
+    // useEffect(() => {
+    //     if (status !== "authenticated") {
+    //         try {
+    //             router.push('api/auth/signin')
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    // }, []);
 
     for (let i = 0; i < 6; i++) {
         ootds.push(
@@ -28,25 +36,14 @@ export default function index() {
         );
     }
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    // useEffect(() => {
-    //     if (status === "unauthenticated") {
-    //         try {
-    //             router.push('_auth/signin')
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    // }, []);
-
     return (
-        // (status === "unauthenticated") ? (
-        //     <Container>
-        //         <Center h={600}>
-        //             <Title> PLEASE LOGIN TO ACCESS </Title>
-        //         </Center>
-        //     </Container>
-        // ) : (
+        (status !== "authenticated") ? (
+            <Container>
+                <Center h={600}>
+                    <Title> PLEASE LOGIN TO ACCESS </Title>
+                </Center>
+            </Container>
+        ) : (
             <Container size={'98%'}>
                 <Grid>
                     <Grid.Col span={2} style={{position: 'fixed'}}>
@@ -148,6 +145,6 @@ export default function index() {
                     </Grid.Col>
                 </Grid>
             </Container>
-        // )
+        )
     );
 }

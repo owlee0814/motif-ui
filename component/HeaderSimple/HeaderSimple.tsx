@@ -4,15 +4,7 @@ import classes from './HeaderSimple.module.css';
 import Link from "next/link";
 import {Sen} from "next/font/google";
 import {usePathname} from "next/navigation";
-
-const mainLinks = [
-    {link: '/home', label: 'HOME'},
-    {link: '/brands', label: 'BRANDS'},
-    {link: '/products', label: 'SHOP'},
-    {link: '', label: '|', disabled: true},
-    {link: '/community/c/all', label: 'COMMUNITY'},
-    {link: '/profile', label: 'PROFILE'},
-];
+import {useSession} from "next-auth/react";
 
 const subLinks = [
     {link: '/products', label: 'New'},
@@ -37,6 +29,17 @@ interface HeaderSimpleProps {
 }
 
 export function HeaderSimple(props : HeaderSimpleProps) {
+    const { status} = useSession()
+
+    const mainLinks = [
+        {link: '/home', label: 'HOME'},
+        {link: '/brands', label: 'BRANDS'},
+        {link: '/products', label: 'SHOP'},
+        {link: '', label: '|', disabled: true},
+        {link: '/community/c/all', label: 'COMMUNITY'},
+        {link: status === "unauthenticated" ? '/api/auth/signin' : '/profile', label: 'PROFILE'},
+    ];
+
     const pathname = usePathname()
     const [shopLinksCardTransition, setShopLinksCardTransition] = useState(false);
     const [brandLinksCardTransition, setBrandLinksCardTransition] = useState(false);
