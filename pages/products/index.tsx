@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, Grid, Group, Select, Space, Text} from "@mantine/core";
+import {Container, Grid, Group, Select, Space, Text, Title} from "@mantine/core";
 import {ProductListing} from "../../component/ProductListing";
 import {ProductsFilter} from "../../component/ProductsFilter";
 import {sampleProducts} from "../../entities/Product";
@@ -20,12 +20,10 @@ export default function Home() {
         <>
             <Container size="100%">
                 <Grid>
-                    <Grid.Col span={1.95} >
+                    <Grid.Col span={1.75} >
                         <ProductsFilter/>
                     </Grid.Col>
-                    <Grid.Col span={0.1}/>
-                    <Grid.Col span={9.9}>
-
+                    <Grid.Col span={10.25}>
                         {/*<Space h={'lg'}/>*/}
                         {/*<Group>*/}
                         {/*    <Group gap={'5'}>*/}
@@ -46,7 +44,7 @@ export default function Home() {
 
                         <Space h={'lg'}/>
                         <Group justify={'space-between'}>
-                            <Text>100 items</Text>
+                            <Text size={'xs'}>100 items</Text>
                             <Group gap={10}>
                                 <Select
                                     placeholder="Recommended"
@@ -55,10 +53,9 @@ export default function Home() {
                                     comboboxProps={{transitionProps: {transition: 'pop', duration: 200}}}
                                 />
                             </Group>
-
                         </Group>
                         <Space h={'lg'}/>
-                        <Grid>
+                        <Grid gutter={'18'}>
                             {products}
                         </Grid>
                     </Grid.Col>

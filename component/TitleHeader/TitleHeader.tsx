@@ -1,7 +1,7 @@
 import React from "react";
-import {ActionIcon, Center, Group, Title, useComputedColorScheme, useMantineColorScheme} from '@mantine/core';
+import {ActionIcon, Group, Title, useComputedColorScheme, useMantineColorScheme} from '@mantine/core';
 import Link from "next/link";
-import {IconMoon, IconShoppingBag, IconShoppingCart, IconSun, IconThumbUpFilled} from "@tabler/icons-react";
+import {IconBell, IconMoon, IconShoppingBag, IconSun} from "@tabler/icons-react";
 import cx from 'clsx';
 import classes from "./TitleHeader.module.css";
 import {Sen} from "next/font/google";
@@ -25,7 +25,7 @@ export function TitleHeader(props : TitleHeaderProps) {
                     fw={1200}
                     c={'black'}
                     style={{
-                        'font-family' : montserrat.style.fontFamily
+                        fontFamily : montserrat.style.fontFamily
                     }}
                 >
                     MOTIF
@@ -44,7 +44,7 @@ export function TitleHeader(props : TitleHeaderProps) {
                         fw={1200}
                         c={'white'}
                         style={{
-                            'font-family' : montserrat.style.fontFamily
+                            fontFamily : montserrat.style.fontFamily
                         }}
                     >
                         MOTIF
@@ -53,20 +53,19 @@ export function TitleHeader(props : TitleHeaderProps) {
 
                 <Group style={{marginTop:'-0.4%'}}>
                     <LoginButton/>
-                    <Link
-                        key='cart'
-                        href={'/cart'}
+                    <ActionIcon
+                        variant="subtle"
+                        color="gray"
+                        size={'25'}
                     >
-                        <ActionIcon size={'1.5rem'} variant='transparent' color="gray" mt='0.3rem' radius="0">
-                            <IconShoppingBag style={{width: '100%', height: '100%',}} stroke={1.5}/>
-                        </ActionIcon>
-                    </Link>
+                        <IconBell stroke={1.1}/>
+                    </ActionIcon>
                     <ActionIcon
                         onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
                         variant="subtle"
                         color="gray"
                         aria-label="Toggle color scheme"
-                        size={'md'}
+                        size={'25'}
                     >
                         <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
                         <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />

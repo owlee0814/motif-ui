@@ -7,7 +7,6 @@ export function CartItemCart() {
             <Grid>
                 <Grid.Col span={3}>
                     <Image
-                        radius="sm"
                         src={null}
                         h={180}
                         fallbackSrc="https://placehold.co/600x400?text=Placeholder"

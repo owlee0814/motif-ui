@@ -17,8 +17,8 @@ export default function Home() {
                         size={'2rem'}
                         fw={800}
                         style={{
-                            'padding-bottom': '1rem',
-                            'padding-top': '1rem'
+                            paddingBottom: '1rem',
+                            paddingTop: '1rem'
                         }}
                         mb={'md'}
                     >

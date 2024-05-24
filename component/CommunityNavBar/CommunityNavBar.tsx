@@ -1,4 +1,4 @@
-import {Card, Group, NavLink, Stack, Title} from "@mantine/core";
+import {Card, Group, NavLink, Text, Title} from "@mantine/core";
 import React, {useEffect} from "react";
 import {sampleCommunities} from "../../entities/Community";
 import {usePathname} from "next/navigation";
@@ -22,15 +22,15 @@ export function CommunityNavBar() {
                 size={'1.5rem'}
                 fw={800}
                 style={{
-                    'padding-bottom': '1rem',
-                    'padding-top': '1rem'
+                    paddingBottom: '1rem',
+                    paddingTop: '1rem'
                 }}
             >
                 {communityTitle}
             </Title>
-
-            <Card radius={'xl'} mt={'1rem'} mr={'2rem'} className={classes.card}>
-                <Group gap={0} ml={'sm'}>
+            <Card radius={'0'} mt={'1rem'} className={classes.card}>
+                <Title size={'xs'} p={'xs'}>COMMUNITY</Title>
+                <Group gap={0} ml={'xs'}>
                     {sampleCommunities.map((community, index) => (
                         <NavLink
                             fw={'600'}
@@ -41,6 +41,29 @@ export function CommunityNavBar() {
                         </NavLink>
                     ))}
                 </Group>
+            </Card>
+
+            <Card radius={'0'} mt={'1rem'} className={classes.card} p={'xl'}>
+                <Title size={'md'} pb={'sm'}>Pinned</Title>
+                <Text size={'sm'} style={{whiteSpace: 'pre-line'}}>{
+                    `Et harum quidem rerum facilis est et doloribus asperiores repellat.
+                    Owen`
+                }</Text>
+                <Title size={'md'} pt={'xs'} pb={'sm'}>Community Rules</Title>
+                <Text size={'sm'} style={{whiteSpace: 'pre-line'}}>{
+                    `Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime
+                    placeat facere possimus, Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, 
+                    cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
+                    
+                    omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis 
+                    
+                    debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non 
+                    
+                    recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut 
+                    
+                    reiciendis voluptatibus maiores alias consequatur aut perferendis 
+                    doloribus asperiores repellat.`
+                }</Text>
             </Card>
         </>
     );

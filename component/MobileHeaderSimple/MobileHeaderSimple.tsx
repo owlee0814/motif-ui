@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Card, Group, Title, Transition} from '@mantine/core';
-import classes from './HeaderSimple.module.css';
+import classes from './MobileHeaderSimple.module.css';
 import Link from "next/link";
 import {Sen} from "next/font/google";
 import {usePathname} from "next/navigation";
@@ -30,12 +30,7 @@ const inspoSublinks = [
 
 const sen = Sen({weight: 'variable', subsets: ['latin']})
 
-interface HeaderSimpleProps {
-    linkFontSize : string,
-    subLinkFontSize : string
-}
-
-export function HeaderSimple(props : HeaderSimpleProps) {
+export function MobileHeaderSimple() {
     const { status} = useSession()
 
     const mainLinks = [
@@ -49,7 +44,6 @@ export function HeaderSimple(props : HeaderSimpleProps) {
     ];
 
     const pathname = usePathname()
-    const { width } = useViewportSize();
     const [shopLinksCardTransition, setShopLinksCardTransition] = useState(false);
     const [inspoLinksCardTransition, setInspoLinksCardTransition] = useState(false);
     const [brandLinksCardTransition, setBrandLinksCardTransition] = useState(false);
@@ -84,7 +78,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                 style={{
                     fontFamily : sen.style.fontFamily
                 }}
-                size={props.linkFontSize}
+                size={'.5rem'}
                 className={classes.title}
             >
                 {link.label}
@@ -102,7 +96,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                 pointerEvents: 'none'
             } : {fontSize: 40}}
         >
-            <Title fw='400' size={props.subLinkFontSize} td={link.disabled ? 'line-through' : ''} className={classes.title}>
+            <Title fw='400' size={'1rem'} td={link.disabled ? 'line-through' : ''} className={classes.title}>
                 {link.label}
             </Title>
         </Link>
@@ -114,7 +108,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
             href={link.link}
             className={classes.link}
         >
-            <Title fw='400' size={props.subLinkFontSize} className={classes.title}>
+            <Title fw='400' size={'1rem'} className={classes.title}>
                 {link.label}
             </Title>
         </Link>
@@ -126,7 +120,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
             href={link.link}
             className={classes.link}
         >
-            <Title fw='400' size={props.subLinkFontSize} className={classes.title}>
+            <Title fw='400' size={'1rem'} className={classes.title}>
                 {link.label}
             </Title>
         </Link>
@@ -236,24 +230,8 @@ export function HeaderSimple(props : HeaderSimpleProps) {
 
     return (
         <>
-            <Group justify="space-between" mt={'0.6rem'}>
-                <Group gap={5} visibleFrom="xs">
-                    {mainItems}
-                </Group>
-                <Group>
-                    {width > 1500 && (
-                        <><Link href={''} className={classes.link} style={{color:'gray'}}>
-                            <Title size={'1rem'}>
-                                DEV BLOG
-                            </Title>
-                        </Link>
-                        <Link href={''} style={{ color: 'inherit' }}>
-                            <Title size={'1rem'}>
-                                FEEDBACK@MOTIF.COM
-                            </Title>
-                        </Link></>
-                    )}
-                </Group>
+            <Group mt={'0.6rem'} gap={0} visibleFrom="xs">
+                {mainItems}
             </Group>
             {subLinkGroup()}
             {brandLinkGroup()}

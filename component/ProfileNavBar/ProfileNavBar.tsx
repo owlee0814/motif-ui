@@ -1,39 +1,33 @@
-import {ActionIcon, Avatar, Card, Center, Divider, Group, NavLink, Stack, Text, Title} from "@mantine/core";
+import {ActionIcon, Avatar, Card, Center, Divider, Group, NavLink, Stack, Text, Title, Image} from "@mantine/core";
 import {IconAward, IconBuildingCommunity, IconSunglasses} from "@tabler/icons-react";
 import React from "react";
 import classes from "./ProfileNavBar.module.css"
 import {Sen} from "next/font/google";
+import {useSession} from "next-auth/react";
 
 const sen = Sen({weight: "700", subsets: ['latin']})
 
 export function ProfileNavBar() {
+    const { data} = useSession()
 
     return (
         <Group mr={'xl'}>
-            <Title
-                size={'1.5rem'}
-                fw={800}
-                style={{
-                    'padding-bottom': '1rem',
-                    'padding-top': '1rem'
-                }}
-            >
-                Overview
-            </Title>
-            <Card w='100%' padding="md" radius={'xl'} className={classes.card} >
+            <Card w='100%' className={classes.card} >
                 <div style={{textAlign: 'center'}}>
                     <Center>
                         <Avatar
-                            src={'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png'}
+                            src={data?.user.image}
                             alt={'username'}
                             radius={200}
                             size={'7rem'}
                             style={{border: '5px solid'}}
                         />
                     </Center>
-
                     <Title size={'1.25rem'} mt={'md'} mb={0}>
-                        username123
+                        {data?.user?.username}
+                    </Title>
+                    <Title size={'0.7rem'} fw={'100'} c={'gray'} mb={0}>
+                        {data?.user?.id}
                     </Title>
                     <Title size={'0.7rem'} fw={'100'} c={'gray'} mt={0}>
                         EST. 2024.05
@@ -86,34 +80,34 @@ export function ProfileNavBar() {
                 </div>
             </Card>
 
-            <Card padding="lg" radius={'xl'} mt={'md'} className={classes.card} >
+            <Card padding="lg" mt={'md'} className={classes.card} >
                 <Group gap={5} ml={'md'}>
                     <NavLink
                         fw={'600'}
                         label={'Overview'}
                         style={{
-                            'font-family' : sen.style.fontFamily
+                            fontFamily : sen.style.fontFamily
                         }}
                     />
                     <NavLink
                         fw={'600'}
                         label={'Posts'}
                         style={{
-                            'font-family' : sen.style.fontFamily
+                            fontFamily : sen.style.fontFamily
                         }}
                     />
                     <NavLink
                         fw={'600'}
                         label={'Orders'}
                         style={{
-                            'font-family' : sen.style.fontFamily
+                            fontFamily : sen.style.fontFamily
                         }}
                     />
                     <NavLink
                         fw={'600'}
                         label={'Favorites'}
                         style={{
-                            'font-family' : sen.style.fontFamily,
+                            fontFamily : sen.style.fontFamily,
                         }}
                     />
                     <NavLink
@@ -121,14 +115,14 @@ export function ProfileNavBar() {
                         label={'OOTDs'}
 
                         style={{
-                            'font-family' : sen.style.fontFamily
+                            fontFamily : sen.style.fontFamily
                         }}
                     />
                     <NavLink
                         fw={'600'}
                         label={'Setting'}
                         style={{
-                            'font-family' : sen.style.fontFamily
+                            fontFamily : sen.style.fontFamily
                         }}
                     />
                 </Group>

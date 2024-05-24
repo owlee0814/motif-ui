@@ -14,13 +14,11 @@ export function ProductListing(props: ProductListingProps) {
             <Link href={'products/' + props.product.id}>
                 <Image
                     src={props.product.imgSrc}
-                    radius={'lg'}
-                    h={400}
+                    h={500}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 />
             </Link>
-
-            <Group justify="space-between">
+            <Group justify="space-between" mt={'md'}>
                 <Anchor underline="never"
                         fw={700}
                         style={{color : 'inherit'}}
@@ -29,17 +27,17 @@ export function ProductListing(props: ProductListingProps) {
                 >
                     {props.product.brandName}
                 </Anchor>
-                <Group justify="end" gap={0}>
-                    <ThemeIcon variant="transparent" color="gray">
-                        <IconHeart style={{width: '70%', height: '70%'}} stroke={1.5}/>
-                    </ThemeIcon>
-                    <Text size={'xs'}>
-                        {props.product.likeCounts}
-                    </Text>
-                </Group>
+                {/*<Group justify="end" gap={0}>*/}
+                {/*    <ThemeIcon variant="transparent" color="gray">*/}
+                {/*        <IconHeart style={{width: '70%', height: '70%'}} stroke={1.5}/>*/}
+                {/*    </ThemeIcon>*/}
+                {/*    <Text size={'xs'}>*/}
+                {/*        {props.product.likeCounts}*/}
+                {/*    </Text>*/}
+                {/*</Group>*/}
             </Group>
 
-            <Group>
+            <Group justify={'space-between'} mb={'md'}>
                 <Anchor underline="never"
                         style={{color : 'inherit'}}
                         href={'products/product'}
@@ -47,24 +45,14 @@ export function ProductListing(props: ProductListingProps) {
                 >
                     {props.product.productName}
                 </Anchor>
-            </Group>
-
-            <Space h='5'/>
-
-            <Group gap={3}>
-                <Title
-                    fw={200}
-                    size='0.9rem'
-                >
-                    ${props.product.currentPrice}
-                </Title>
-                <Title
-                    fw={200}
-                    size='0.9rem'
-                    c='gray'
-                >
-                    ${props.product.originalPrice}
-                </Title>
+                <Group gap={3}>
+                    <Text size='xs' c='gray'>
+                        ${props.product.originalPrice}
+                    </Text>
+                    <Text size='xs'>
+                        ${props.product.currentPrice}
+                    </Text>
+                </Group>
             </Group>
         </>
     );

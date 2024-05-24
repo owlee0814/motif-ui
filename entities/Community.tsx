@@ -25,10 +25,6 @@ export const sampleCommunities = [
         path: '/community/c/brands'
     },
     {
-        title: 'OOTDs',
-        path: '/community/outfits'
-    },
-    {
         title: 'What I bought',
         path: '/community/c/reviews'
     },

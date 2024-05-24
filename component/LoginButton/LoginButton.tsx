@@ -1,5 +1,5 @@
 import {signIn, signOut, useSession} from "next-auth/react"
-import {ActionIcon, Button, Group, Popover, Stack} from "@mantine/core";
+import {ActionIcon, Avatar, Button, Group, Popover, Stack} from "@mantine/core";
 import Link from "next/link";
 import {IconLogin, IconThumbUpFilled, IconUser, IconUserCircle} from "@tabler/icons-react";
 import React from "react";
@@ -25,14 +25,7 @@ export default function LoginButton() {
                                     color: 'inherit',
                                 }}
                             >
-                                orders
-                            </Button>
-                            <Button
-                                fw={'400'}
-                                variant={'transparent'}
-                                style={{color: 'inherit'}}
-                            >
-                                favorites
+                                profile
                             </Button>
                             <Button
                                 fw={'400'}

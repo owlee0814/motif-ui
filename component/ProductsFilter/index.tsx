@@ -6,16 +6,15 @@ import classes from "./ProductsFilter.module.css";
 export function ProductsFilter() {
     return (
         <>
-            <Card radius={'xl'} mt={'4.7rem'} className={classes.card}>
-                <Center>
+            <Card mt={'4.7rem'}>
                 <Title
                     size={'1.5rem'}
                     fw={800}
-                    style={{ 'padding-bottom': '1rem' }}
+                    style={{ paddingBottom: '1rem' }}
                 >
                     Categories
                 </Title>
-                </Center>
+
                 <Group gap={0} mb={'sm'} ml={'sm'}>
                     <NavLink
                         label='category 1'
@@ -37,17 +36,15 @@ export function ProductsFilter() {
                     />
                 </Group>
             </Card>
-            <Card radius={'xl'} mt={'lg'} className={classes.card}>
-                <Center>
+            <Card mt={'lg'}>
                     <Title
                         size={'1.5rem'}
                         fw={800}
-                        style={{'padding-bottom': '1rem'}}
+                        style={{paddingBottom: '1rem'}}
                         mb={'xs'}
                     >
                         Brands
                     </Title>
-                </Center>
                 <Stack gap={25} mb={'md'} ml={'sm'}>
                     <Checkbox
                         label='Brand A'
@@ -69,16 +66,14 @@ export function ProductsFilter() {
                     />
                 </Stack>
             </Card>
-            <Card radius={'xl'} mt={'lg'} className={classes.card}>
-                <Center>
+            <Card mt={'lg'}>
                     <Title
                         size={'1.5rem'}
                         fw={800}
-                        style={{ 'padding-bottom': '1rem' }}
+                        style={{ paddingBottom: '1rem' }}
                     >
                         Colors
                     </Title>
-                </Center>
                 <Center>
                     <Group gap={10} w={'80%'} mb={'md'}>
                         <ColorPickerIcon bg='red' size="lg" radius="xl"/>
@@ -95,19 +90,17 @@ export function ProductsFilter() {
                     </Group>
                 </Center>
             </Card>
-            <Card radius={'xl'} mt={'lg'} className={classes.card}>
-                <Center>
+            <Card mt={'lg'}>
                     <Title
                         size={'1.5rem'}
                         fw={800}
                         style={{
-                            'padding-bottom': '0.5rem',
+                            paddingBottom: '0.5rem',
                         }}
                         mb={'xs'}
                     >
                         Price
                     </Title>
-                </Center>
                 <Center>
                 <Stack mb={'md'}>
                     <Input.Wrapper label="Min. Price" description="Input description" ml={'sm'} mr={'sm'}>
@@ -119,19 +112,19 @@ export function ProductsFilter() {
                 </Stack>
                 </Center>
             </Card>
-            <Card radius={'xl'} mt={'lg'} className={classes.card}>
-                <Center>
+            <Card mt={'lg'}>
+
                     <Title
                         size={'1.5rem'}
                         fw={800}
                         style={{
-                            'padding-bottom': '1rem',
-                            'padding-top': '1rem'
+                            paddingBottom: '1rem',
+                            paddingTop: '1rem'
                         }}
                     >
                         Discount
                     </Title>
-                </Center>
+
                 <Stack gap={25} ml={'sm'} mt={'sm'}>
                     <Checkbox label='Up To 25%' />
                     <Checkbox label='Up To 50%' />

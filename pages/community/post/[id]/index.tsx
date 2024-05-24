@@ -41,13 +41,15 @@ export default function PostDetail() {
     }, [router.isReady]);
 
     return (
-        <Container size={'98%'}>
-            <Grid>
-                <Grid.Col span={2}>
-                    <CommunityNavBar/>
+        <Container size="90%" maw={{ base: '1550px', md: '1050px', lg: '1550px'}}>
+            <Grid gutter={'xl'}>
+                <Grid.Col span={3}>
+                    <div style={{paddingTop: '2rem'}}>
+                        <CommunityNavBar/>
+                    </div>
                 </Grid.Col>
-                <Grid.Col span={7}>
-                    <Card radius={'xl'} padding={'xl'} mt={'3rem'}>
+                <Grid.Col span={9}>
+                    <Card padding={'xl'} mt={'3rem'}>
                         <Breadcrumbs separator=">" separatorMargin="xs" mb={'md'}>
                             {items}
                         </Breadcrumbs>
@@ -75,7 +77,6 @@ export default function PostDetail() {
                             <Image
                                 src={post?.postImgUrl}
                                 w={400}
-                                radius={"lg"}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Center>
@@ -88,7 +89,7 @@ export default function PostDetail() {
                             <Textarea
                                 variant="filled"
                                 size="md"
-                                radius="md"
+                                radius="0"
                                 placeholder="Add a comment"
                                 mb={'sm'}
                             />
@@ -99,7 +100,7 @@ export default function PostDetail() {
                             <PostComment username={'olee0814'}
                                          avatarImgUrl={'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png'}
                                          comment={'this is an example comment, blah blah bah'}/>
-                            <Card variant={'filled'} bg={'rgb(241, 243, 245)'}>
+                            <Card>
                                 <Grid>
                                     <Grid.Col span={0.4}/>
                                     <Grid.Col span={11.6}>
@@ -118,12 +119,6 @@ export default function PostDetail() {
                                          comment={'Senectus et netus et malesuada fames ac turpis egestas maecenas. Non blandit massa enim nec dui.'}/>
                         </div>
                     </Card>
-                </Grid.Col>
-                <Grid.Col span={3}>
-                    <Title size={'1.5rem'} mb={'xs'}>TRENDING</Title>
-                    {samplePosts.slice(0,5).map((post) => (
-                        <PostCard2 post={post} key={post.id}/>
-                    ))}
                 </Grid.Col>
             </Grid>
         </Container>

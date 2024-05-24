@@ -1,28 +1,23 @@
-import React, {useEffect} from "react";
-import {Button, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core";
-
-import {usePathname} from "next/navigation";
+import React from "react";
+import {Button, Container, Grid, Group, Select, Space, TextInput} from "@mantine/core";
 import {CommunityNavBar} from "../../../../component/CommunityNavBar/CommunityNavBar";
 import {samplePosts} from "../../../../entities/Post";
 import {PostCard} from "../../../../component/PostCard/PostCard";
-import {sampleCommunities} from "../../../../entities/Community";
+import Link from "next/link";
 
 export default function Home() {
-
-
     return (
         <>
-            <Container size={'98%'}>
-                <Grid>
-                    <Grid.Col span={2} style={{position: 'fixed'}}>
+            <Container size="90%" maw={{ base: '1550px', md: '1050px', lg: '1550px'}}>
+                <Grid gutter={'xl'}>
+                    <Grid.Col span={3}>
                         <CommunityNavBar/>
                     </Grid.Col>
-                    <Grid.Col span={2.1}/>
-                    <Grid.Col span={9.9}>
+                    <Grid.Col span={9}>
                         <Space h={'xs'}/>
                         <Group justify={'space-between'}>
                             <Select
-                                style={{'padding-top': '10px'}}
+                                style={{paddingTop: '10px'}}
                                 placeholder="Hot"
                                 data={['Hot', 'New', 'Likes']}
                                 variant='unstyled'
@@ -34,15 +29,17 @@ export default function Home() {
                                     <TextInput
                                         variant="filled"
                                         size="md"
-                                        radius="xl"
+                                        radius="0"
                                         placeholder="Search"
                                     />
                                 </div>
-                                <Button variant="filled" size="sm" radius="xl" bg={'black'}>Create a Post</Button>
+                                <Button variant="filled" size="sm" radius="0" bg={'black'} component={Link} href="../post/create">
+                                    Create a Post
+                                </Button>
                             </Group>
                         </Group>
                         <Space h={'1.45rem'}/>
-                        <Grid>
+                        <Grid gutter={15}>
                             {samplePosts.map((post, i) => (
                                 <PostCard post={post} key={post.id}/>
                             ))}
