@@ -86,13 +86,13 @@ model Community {
   updatedAt DateTime   @updatedAt
 }
 
-model Post {
-  id          Int        @id @default(autoincrement())
-  title       String
-  content     String
-  authorId    String
-  communityId Int        @relation(fields: [authorId], references: [id])
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  author      UserSocial @relation(fields: [authorId], references: [id])
-}
+// model Post {
+//   id          Int        @id @default(autoincrement())
+//   title       String
+//   content     String
+//   authorId    String
+//   communityId Int        @relation(fields: [authorId], references: [id])
+//   createdAt   DateTime   @default(now())
+//   updatedAt   DateTime   @updatedAt
+//   author      UserSocial @relation(fields: [authorId], references: [id])
+// }
