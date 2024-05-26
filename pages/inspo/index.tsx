@@ -12,6 +12,7 @@ import {
     Title
 } from "@mantine/core";
 import React, {useState} from "react";
+import {formatDate} from "../../util/util";
 
 const outfits = [
     { id: 1, name: "style_guru_24", neighborhood: "Flatiron", image: "/path/to/image1.jpg", views: 42, createdDate: "2024-05-17T13:46:23.555046Z" },
@@ -27,15 +28,6 @@ const outfits = [
     { id: 11, name: "vibrant_yoo25", neighborhood: "Brooklyn Heights", image: "/path/to/image11.jpg", views: 61, createdDate: "2024-05-04T11:06:07.555046Z" },
     { id: 12, name: "trendy_chae21", neighborhood: "Astoria", image: "/path/to/image12.jpg", views: 27, createdDate: "2024-05-10T09:44:31.555046Z" }
 ];
-
-function formatDate(dateString: string) {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = date.toLocaleString('default', { month: 'short' });
-    const year = date.getFullYear();
-
-    return `${day}.${month}.${year}`;
-}
 
 export default function Inspo() {
     const [page, setPage] = useState(1);

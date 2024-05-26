@@ -1,7 +1,7 @@
 import React from "react";
 import {Container, Grid, Group, Select, Space, Text, Title} from "@mantine/core";
-import {ProductListing} from "../../component/ProductListing";
-import {ProductsFilter} from "../../component/ProductsFilter";
+import {ProductListing} from "../../component/Shop/ProductListing";
+import {ProductsFilter} from "../../component/Shop/ProductsFilter";
 import {sampleProducts} from "../../entities/Product";
 
 export default function Home() {

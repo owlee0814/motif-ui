@@ -1,6 +1,6 @@
 import React from "react";
 import {Card, Grid, Image, Space, Text, Title} from "@mantine/core";
-import Product from "../../entities/Product";
+import Product from "../../../entities/Product";
 import Link from "next/link";
 import classes from "./ProductListing.module.css";
 
@@ -15,7 +15,7 @@ export function ProductListing2(props: ProductListing2) {
     return (
         <>
             <Space h={'sm'}/>
-            <Card padding="md" radius={'md'} className={classes.card}>
+            <Card padding="md" radius={0} className={classes.card}>
                 <Link
                     style={{
                         color: 'inherit',
@@ -60,7 +60,6 @@ export function ProductListing2(props: ProductListing2) {
                                 src={props.product.imgSrc}
                                 h={60}
                                 w={60}
-                                radius={"xs"}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Grid.Col>

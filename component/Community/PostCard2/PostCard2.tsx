@@ -2,18 +2,18 @@ import {ActionIcon, Card, Grid, Group, Image, Space, Text, Title} from "@mantine
 import {IconThumbUpFilled} from "@tabler/icons-react";
 import React from "react";
 import Link from "next/link";
-import Post from "../../entities/Post";
 import classes from "./PostCard2.module.css";
+import {PostWithRelations} from "../../../entities/Types";
 
 interface PostCard2Props {
-    post: Post
+    post: PostWithRelations
 }
 
 export function PostCard2(props: PostCard2Props) {
     return (
         <>
             <Space h={'sm'}/>
-            <Card padding="md" radius={'md'} className={classes.card}>
+            <Card padding="md" radius={0} className={classes.card}>
                 <Link
                     style={{
                         color: 'inherit',
@@ -32,7 +32,7 @@ export function PostCard2(props: PostCard2Props) {
                             >
                                 <Title size={'0.9rem'}>{props.post.title}</Title>
                                 <Space h={'xs'}/>
-                                <Text size={'xs'}>{props.post.post.substring(0, 50)}...</Text>
+                                <Text size={'xs'}>{props.post.text.substring(0, 50)}...</Text>
                             </div>
                         </Grid.Col>
                         <Grid.Col span={1.5}>
@@ -42,7 +42,7 @@ export function PostCard2(props: PostCard2Props) {
                                 'top': '50%',
                                 'transform': 'translateY(-50%)',
                             }}>
-                                <Text size={'xs'}>{props.post.likes}</Text>
+                                <Text size={'xs'}>{/*props.post.likes*/}1</Text>
                                 <ActionIcon variant='transparent' color="gray" size="1.25rem" radius="0">
                                     <IconThumbUpFilled style={{width: '100%', height: '100%'}} stroke={1.5}/>
                                 </ActionIcon>
@@ -50,10 +50,10 @@ export function PostCard2(props: PostCard2Props) {
                         </Grid.Col>
                         <Grid.Col span={2}>
                             <Image
-                                src={props.post.postImgUrl}
+                                src={''}
                                 h={60}
                                 w={60}
-                                radius={"sm"}
+                                radius={"0"}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Grid.Col>

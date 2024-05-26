@@ -10,21 +10,19 @@ import {
     Container,
     FileButton,
     Group,
-    Image,
     Space,
     TextInput,
     Title
 } from "@mantine/core";
-import {TitleHeader} from "../TitleHeader/TitleHeader";
+import {TitleHeader} from "../../Header/TitleHeader/TitleHeader";
 import {useForm} from "@mantine/form";
-import {Dropzone,  IMAGE_MIME_TYPE} from "@mantine/dropzone";
 import {IconUpload} from "@tabler/icons-react";
 
 export default function AuthWrapper({ children }: PropsWithChildren<{}>) {
     const { data, status, update } = useSession();
     const allowedCharsRegex = /^[a-zA-Z0-9.]+$/;
     const [image, setImage] = useState<File | null>(null);
-    const [preview, setPreview] = useState<string | null>();
+    const [preview, setPreview] = useState<string | null>(null);
 
     useEffect(() => {
         setPreview(data?.user.image || null)
@@ -32,7 +30,7 @@ export default function AuthWrapper({ children }: PropsWithChildren<{}>) {
 
     const form = useForm({
         initialValues: {
-            username: ''
+            username: '',
         },
         validate: {
             username: (val) => {
@@ -61,7 +59,7 @@ export default function AuthWrapper({ children }: PropsWithChildren<{}>) {
 
     const handleSubmit = async () => {
         try {
-            const res = await fetch("/api/username", {
+            await fetch("/api/username", {
                 method: 'POST',
                 body: JSON.stringify({
                     username: form.values.username,

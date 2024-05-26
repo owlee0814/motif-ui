@@ -1,7 +1,7 @@
 import React from "react";
 import {Center, Container, Divider, Grid, Space, Text, Title} from "@mantine/core";
 import {Carousel} from "@mantine/carousel";
-import OotdCard from "../../../component/OotdCard/OotdCard";
+import OotdCard from "../../../component/Community/OotdCard/OotdCard";
 
 export default function index() {
     const topOotds = [];

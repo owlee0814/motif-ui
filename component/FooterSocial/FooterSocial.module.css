@@ -16,7 +16,26 @@
 }
 
 .links {
+    display: flex;
+    gap: 0;
     @media (max-width: $mantine-breakpoint-xs) {
         margin-top: var(--mantine-spacing-md);
     }
+}
+
+.icon {
+    width: 22px;
+    height: 22px;
+    stroke-width: 1.5;
+}
+
+.title {
+    font-size: 1.25rem;
+    border-radius: var(--mantine-radius-sm);
+    padding: 15px;
+}
+
+.footerContent {
+    justify-content: space-between;
+    align-items: center;
 }

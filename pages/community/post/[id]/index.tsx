@@ -1,66 +1,118 @@
 import {
     ActionIcon,
     Anchor,
-    Breadcrumbs,
     Button,
     Card,
     Center,
-    Container, Divider,
+    Container,
+    Divider,
     Grid,
     Group,
     Image,
     Space,
-    Text,
+    Text as TextMantine,
     Textarea,
     Title
 } from "@mantine/core";
 import {IconBookmarkFilled, IconShare, IconThumbUpFilled} from "@tabler/icons-react";
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import PostComment from "./comment";
-import {CommunityNavBar} from "../../../../component/CommunityNavBar/CommunityNavBar";
-import Post, {samplePosts} from "../../../../entities/Post";
+import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
 import {useRouter} from "next/router";
-import {PostCard2} from "../../../../component/PostCard2/PostCard2";
+import {generateHTML} from '@tiptap/html'
+import Document from '@tiptap/extension-document';
+import Paragraph from '@tiptap/extension-paragraph';
+import {Text} from '@tiptap/extension-text';
+import {Bold} from "@tiptap/extension-bold";
+import Underline from "@tiptap/extension-underline";
+import {Strike} from "@tiptap/extension-strike";
+import {ListItem} from "@tiptap/extension-list-item";
+import {Italic} from "@tiptap/extension-italic";
+import {Code} from "@tiptap/extension-code";
+import {BulletList} from "@tiptap/extension-bullet-list";
+import {Blockquote} from "@tiptap/extension-blockquote";
+import {Heading} from "@tiptap/extension-heading";
+import {PostWithRelations} from "../../../../entities/Types";
 
 export default function PostDetail() {
     const router = useRouter();
-    const [post, setPost] = React.useState<Post>();
+    const { id } = router.query;
+    const [post, setPost] = useState<PostWithRelations>();
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
 
-    const items = [
-        { title: 'All', href: '/community' },
-        { title: 'Lounge', href: '/community' }
-    ].map((item, index) => (
-        <Anchor href={item.href} key={index} style={{color: 'inherit.inherit'}} fw={'800'}>
-            {item.title}
-        </Anchor>
-    ));
+    useEffect(() => {
+        if (!id) return;
 
-    useEffect(()=>{
-        if(!router.isReady) return;
-        setPost(samplePosts[Number(router.query.id) - 1]);
-    }, [router.isReady]);
+        const fetchPost = async () => {
+            try {
+                const response = await fetch(`/api/post/${id}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch post');
+                }
+                const data = await response.json();
+                setPost(data);
+            } catch (error) {
+                if (error instanceof Error) {
+                    setError(error.message);
+                } else {
+                    setError('An unexpected error occurred');
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPost();
+    }, [id]);
+
+    const output = useMemo(() => {
+        return generateHTML(
+            post ? JSON.parse(post?.content) : {
+            type: 'doc',
+            content: [
+                {
+                    type: 'paragraph',
+                    content: [],
+                },
+            ],
+        }, [
+            Document,
+            Paragraph,
+            Text,
+            Bold,
+            Underline,
+            Strike,
+                ListItem,
+                Italic,
+                Code,
+                BulletList,
+                Blockquote,
+                Heading,
+            // other extensions …
+        ])
+    }, [post])
 
     return (
-        <Container size="90%" maw={{ base: '1550px', md: '1050px', lg: '1550px'}}>
+        <Container size="90%" maw={{ base: '1550px', md: '1050px', lg: '1550px' }}>
             <Grid gutter={'xl'}>
                 <Grid.Col span={3}>
-                    <div style={{paddingTop: '2rem'}}>
-                        <CommunityNavBar/>
+                    <div style={{ paddingTop: '2rem' }}>
+                        <CommunityNavBar />
                     </div>
                 </Grid.Col>
                 <Grid.Col span={9}>
                     <Card padding={'xl'} mt={'3rem'}>
-                        <Breadcrumbs separator=">" separatorMargin="xs" mb={'md'}>
-                            {items}
-                        </Breadcrumbs>
+                        <Anchor href={''} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'sm'}>
+                            {post?.community.name}
+                        </Anchor>
                         <Title size={'1.5rem'} mb={'xs'}>{post?.title}</Title>
                         <Group justify={'space-between'}>
                             <Group>
-                                <Text size={'sm'}>{post?.username}</Text>
-                                <Text size={'sm'}>posted {post?.postedDate}</Text>
+                                {/*<TextMantine size={'sm'}>{post?.author.user.name}</TextMantine>*/}
+                                <TextMantine size={'sm'}>posted {post?.createdAt.toString()}</TextMantine>
                             </Group>
                             <Group>
-                                <Text fw={'800'}>{post?.likes} Likes</Text>
+                                <TextMantine fw={'800'}>100 Likes</TextMantine>
                                 <ActionIcon variant='transparent' color="gray" size="1.5rem" radius="0">
                                     <IconThumbUpFilled style={{width: '100%', height: '100%'}} stroke={1.5}/>
                                 </ActionIcon>
@@ -72,19 +124,25 @@ export default function PostDetail() {
                                 </ActionIcon>
                             </Group>
                         </Group>
-                        <Space h='3rem'/>
-                        <Center>
-                            <Image
-                                src={post?.postImgUrl}
-                                w={400}
-                                fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                            />
-                        </Center>
-                        <Space h={'lg'}/>
-                        <Text>{post?.post}</Text>
+                        {/*TODO add image support*/}
+                        {/*{*/}
+                        {/*    post?.postImgUrl ?*/}
+                        {/*        <>*/}
+                        {/*        <Space h='3rem'/>*/}
+                        {/*        <Center>*/}
+                        {/*        <Image*/}
+                        {/*            src={post?.postImgUrl}*/}
+                        {/*            w={400}*/}
+                        {/*            fallbackSrc="https://placehold.co/600x400?text=Placeholder"*/}
+                        {/*        />*/}
+                        {/*        </Center>*/}
+                        {/*        </> :*/}
+                        {/*        <></>*/}
+                        {/*}*/}
+                        <div dangerouslySetInnerHTML={{__html: output}}/>
                         <Divider mt={'xl'} mb={'md'}/>
                         <div>
-                            <Title size={'md'}>{post?.commentCount} comments</Title>
+                            <Title size={'md'}>{} comments</Title>
                             <Space h='lg'/>
                             <Textarea
                                 variant="filled"
@@ -108,7 +166,8 @@ export default function PostDetail() {
                                     </Grid.Col>
                                     <Grid.Col span={0.4}/>
                                     <Grid.Col span={11.6}>
-                                        <PostComment username={'oteh'} avatarImgUrl={''} comment={'This is a second reply'}/>
+                                        <PostComment username={'oteh'} avatarImgUrl={''}
+                                                     comment={'This is a second reply'}/>
                                     </Grid.Col>
                                 </Grid>
                             </Card>

@@ -1,42 +1,42 @@
-import {
-    Avatar,
-    Button,
-    Center,
-    Container,
-    Divider,
-    Grid,
-    Group,
-    rem,
-    Space,
-    Stack,
-    Tabs,
-    Text,
-    Title
-} from "@mantine/core";
+import {Avatar, Button, Center, Container, Grid, Group, rem, Space, Stack, Tabs, Text, Title} from "@mantine/core";
 import {useSession} from "next-auth/react";
-import {useRouter} from "next/router";
-import React from "react";
-import {Carousel} from "@mantine/carousel";
-import {samplePosts} from "../../entities/Post";
-import {PostCard} from "../../component/PostCard/PostCard";
+import React, {useEffect, useState} from "react";
+import {PostCard} from "../../component/Community/PostCard/PostCard";
 import Link from "next/link";
-import OotdCard from "../../component/OotdCard/OotdCard";
+import OotdCard from "../../component/Community/OotdCard/OotdCard";
 import {IconMessageCircle, IconPhoto, IconSettings} from "@tabler/icons-react";
+import {PostWithRelations} from "../../entities/Types";
 
 export default function Profile() {
     const { status, data} = useSession()
 
     const ootds = [];
+    const [userPosts, setUserPosts] = useState<PostWithRelations[]>([]);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
 
-    // useEffect(() => {
-    //     if (status !== "authenticated") {
-    //         try {
-    //             router.push('api/auth/signin')
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    // }, []);
+    useEffect(() => {
+        const fetchGet = async () => {
+            try {
+                const response = await fetch('/api/posts/' + data?.user.id);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch post');
+                }
+                const res = await response.json();
+                setUserPosts(res);
+            } catch (error) {
+                if (error instanceof Error) {
+                    setError(error.message);
+                } else {
+                    setError('An unexpected error occurred');
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchGet();
+    }, [data]);
+
 
     for (let i = 0; i < 20; i++) {
         ootds.push(
@@ -116,7 +116,7 @@ export default function Profile() {
                         <Tabs.Tab value="saved" leftSection={<IconSettings style={{ width: rem(12), height: rem(12) }} />}>
                             Saved
                         </Tabs.Tab>
-                        <Tabs.Tab value="liked" leftSection={<IconSettings style={{ width: rem(12), height: rem(12), fontSize: '1.2rem'}} />}>
+                        <Tabs.Tab value="liked" leftSection={<IconSettings style={{ width: rem(12), height: rem(12) }} />}>
                             Liked
                         </Tabs.Tab>
                     </Tabs.List>
@@ -129,7 +129,7 @@ export default function Profile() {
 
                     <Tabs.Panel value="messages">
                         <Grid mt={'2rem'} gutter={15}>
-                            {samplePosts.slice(0, 4).map((post, i) => (
+                            {userPosts.map((post) => (
                                 <PostCard post={post} key={post.id}/>
                             ))}
                         </Grid>
@@ -143,68 +143,6 @@ export default function Profile() {
                         Settings tab content
                     </Tabs.Panel>
                 </Tabs>
-
-
-                {/*<Title*/}
-                {/*    size={'1.5rem'}*/}
-                {/*    fw={800}*/}
-                {/*    mt={'lg'}*/}
-                {/*    mb={'xl'}*/}
-                {/*>*/}
-                {/*    Recent Orders*/}
-                {/*</Title>*/}
-                {/*<Grid>*/}
-                {/*    <Carousel draggable={false} align="start" slideGap="md" slideSize="25%" loop>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*    </Carousel>*/}
-                {/*</Grid>*/}
-                {/*<Title*/}
-                {/*    size={'1.5rem'}*/}
-                {/*    fw={800}*/}
-                {/*    mt={'xl'}*/}
-                {/*    mb={'xl'}*/}
-                {/*>*/}
-                {/*    Favorites*/}
-                {/*</Title>*/}
-                {/*<Grid mt={'md'}>*/}
-                {/*    <Carousel draggable={false} align="start" slideGap="md" slideSize="25%" loop>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*        <Carousel.Slide>*/}
-                {/*            <ProductListing3/>*/}
-                {/*        </Carousel.Slide>*/}
-                {/*    </Carousel>*/}
-                {/*</Grid>*/}
             </Container>
         )
     );

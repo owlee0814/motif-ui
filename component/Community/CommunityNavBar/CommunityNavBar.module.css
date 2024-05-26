@@ -1,0 +1,24 @@
+.title {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+.preLineText {
+    white-space: pre-line;
+}
+
+.card {
+    background-color: light-dark(rgb(240,240,240), rgb(46,46,46))
+}
+
+.navbar {
+    display: block;
+}
+
+@media (max-width: 800px) {
+    .navbar {
+        display: none;
+    }
+}

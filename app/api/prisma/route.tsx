@@ -7,9 +7,16 @@ export async function POST(req: Request) {
         data: {
             title: body.postTitle,
             content: body.content,
-            authorId: "1",
+            authorId: body.authorId,
+            communityId: body.communityId,
+            text: body.text
         }
     });
 
     return new Response('OK')
+}
+
+export async function GET(req: Request, res: Response) {
+    const communities = await prisma.community.findMany()
+    return new Response(JSON.stringify(communities))
 }

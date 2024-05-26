@@ -44,6 +44,13 @@ export async function POST(req: Request, res: Response) {
                 username: username,
             },
         });
+
+        await prisma.userSocial.create({
+            data: {
+                id: id,
+                userId: id
+            }
+        });
     } else {
         console.log('the username is already taken')
         return new Response('the username is already taken');

@@ -1,19 +1,19 @@
 import "@mantine/core/styles.css";
 import Head from "next/head";
 import {AppShell, Group, MantineProvider, Space, Title} from "@mantine/core";
-import {HeaderSimple} from "../component/HeaderSimple/HeaderSimple";
+import {HeaderSimple} from "../component/Header/HeaderSimple/HeaderSimple";
 import React, {useEffect, useState} from "react";
-import {TitleHeader} from "../component/TitleHeader/TitleHeader";
+import {TitleHeader} from "../component/Header/TitleHeader/TitleHeader";
 import {FooterSocial} from "../component/FooterSocial/FooterSocial";
 import {Sen, Reddit_Mono} from "next/font/google";
 import '@mantine/carousel/styles.css';
 import {SessionProvider} from "next-auth/react"
 import {usePathname} from "next/navigation";
 import '@mantine/tiptap/styles.css';
-import AuthWrapper from "../component/AuthWrapper/AuthWrapper";
+import AuthWrapper from "../component/Auth/AuthWrapper/AuthWrapper";
 import {GetServerSideProps} from "next";
 import {useViewportSize} from "@mantine/hooks";
-import {MobileHeaderSimple} from "../component/MobileHeaderSimple/MobileHeaderSimple";
+import {MobileHeaderSimple} from "../component/Header/MobileHeaderSimple/MobileHeaderSimple";
 import {MantineEmotionProvider} from "@mantine/emotion";
 
 const sen = Sen({weight: "700", subsets: ['latin']})

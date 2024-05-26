@@ -9,13 +9,13 @@ datasource db {
 
 model User {
   id            String          @id @default(cuid())
-  username      String          @unique
   name          String?
   email         String          @unique
   emailVerified DateTime?
   image         String?
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  username      String          @unique
   accounts      Account[]
   Authenticator Authenticator[]
   sessions      Session[]
@@ -31,18 +31,18 @@ model UserSocial {
 
 model Account {
   userId            String
-  type              String
-  provider          String
   providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  access_token      String?
+  expires_at        Int?
+  id_token          String?
+  provider          String
+  refresh_token     String?
+  scope             String?
+  session_state     String?
+  token_type        String?
+  type              String
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
@@ -79,19 +79,23 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
-// model Community {
-//   id        Int        @id @default(autoincrement())
-//   name      String
-//   createdAt DateTime   @default(now())
-//   updatedAt DateTime   @updatedAt
-// }
+model Community {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+}
 
 model Post {
   id          Int        @id @default(autoincrement())
   title       String
   content     String
+  text        String
   authorId    String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  communityId Int
   author      UserSocial @relation(fields: [authorId], references: [id])
+  community   Community  @relation(fields: [communityId], references: [id])
 }

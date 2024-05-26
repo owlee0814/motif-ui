@@ -19,7 +19,7 @@ import {IconHeart, IconShare, IconShoppingCart} from "@tabler/icons-react";
 import {Tapestry} from 'next/font/google'
 import Product, {sampleProducts} from "../../../entities/Product";
 
-import {ProductListing3} from "../../../component/ProductListing3";
+import {ProductListing3} from "../../../component/Shop/ProductListing3";
 import {useRouter} from "next/router";
 
 const inter = Tapestry({weight: '400', subsets: ['latin']})

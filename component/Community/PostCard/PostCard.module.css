@@ -1,0 +1,37 @@
+.card {
+    display: flex;
+    flex-direction: row;
+    background-color: light-dark(rgb(240,240,240), rgb(46,46,46))
+}
+
+.content {
+    flex: 1;
+    padding-left: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%
+}
+
+.image {
+    height: 100%;
+    width: 100%;
+    /*// borderTopRightRadius: theme.radius.md;*/
+    /*// borderBottomRightRadius: theme.radius.md;*/
+}
+
+.actions {
+    justify-content: space-between;
+}
+
+.badge {
+    background-color: gray;
+}
+
+.imageContainer {
+    display: block;
+}
+
+@media (max-width: 1360px) {
+    .imageContainer {
+        display: none;
+    }
+}

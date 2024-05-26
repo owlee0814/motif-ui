@@ -1,9 +1,9 @@
 import React from "react";
 import {ActionIcon, Container, Grid, Group, Space, Title} from "@mantine/core";
-import {CommunityNavBar} from "../../../component/CommunityNavBar/CommunityNavBar";
+import {CommunityNavBar} from "../../../component/Community/CommunityNavBar/CommunityNavBar";
 import {Carousel} from "@mantine/carousel";
 import {IconPlus} from "@tabler/icons-react";
-import OotdCard from "../../../component/OotdCard/OotdCard";
+import OotdCard from "../../../component/Community/OotdCard/OotdCard";
 
 export default function index() {
     const topOotds = [];

@@ -5,7 +5,7 @@ import {IconBell, IconMoon, IconShoppingBag, IconSun} from "@tabler/icons-react"
 import cx from 'clsx';
 import classes from "./TitleHeader.module.css";
 import {Sen} from "next/font/google";
-import LoginButton from "../LoginButton/LoginButton";
+import LoginButton from "../../Auth/LoginButton/LoginButton";
 
 const montserrat = Sen({weight: "700", subsets: ['latin']})
 

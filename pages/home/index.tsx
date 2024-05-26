@@ -2,8 +2,8 @@ import React, {useRef} from "react";
 import {Container, Grid, Image, Space, Title} from "@mantine/core";
 import {Carousel} from "@mantine/carousel";
 import {HomeCarousel} from "../../component/HomeCarousel/HomeCarousel";
-import {PostCard2} from "../../component/PostCard2/PostCard2";
-import {ProductListing2} from "../../component/ProductListing2";
+import {PostCard2} from "../../component/Community/PostCard2/PostCard2";
+import {ProductListing2} from "../../component/Shop/ProductListing2";
 import {sampleProducts} from "../../entities/Product";
 import {samplePosts} from "../../entities/Post";
 import Autoplay from "embla-carousel-autoplay";
@@ -51,7 +51,7 @@ export default function Home() {
                             <Image
                                 src={'https://motif-mvp-bucket.s3.amazonaws.com/ootds/DSCF0133.jpg.webp'}
                                 h={550}
-                                radius={'md'}
+                                radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Carousel.Slide>
@@ -59,7 +59,7 @@ export default function Home() {
                             <Image
                                 src={'https://motif-mvp-bucket.s3.amazonaws.com/ootds/DSCF0140.jpg.webp'}
                                 h={550}
-                                radius={'md'}
+                                radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Carousel.Slide>
@@ -67,7 +67,7 @@ export default function Home() {
                             <Image
                                 src={'https://motif-mvp-bucket.s3.amazonaws.com/ootds/Screenshot_2024-04-30_at_11.17.26_AM.png.webp'}
                                 h={550}
-                                radius={'md'}
+                                radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Carousel.Slide>
@@ -75,7 +75,7 @@ export default function Home() {
                             <Image
                                 src={'https://motif-mvp-bucket.s3.amazonaws.com/ootds/Screenshot_2024-04-30_at_11.18.26_AM.png.webp'}
                                 h={550}
-                                radius={'md'}
+                                radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Carousel.Slide>
@@ -83,7 +83,7 @@ export default function Home() {
                             <Image
                                 src={''}
                                 h={550}
-                                radius={'md'}
+                                radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Carousel.Slide>
@@ -91,7 +91,7 @@ export default function Home() {
                             <Image
                                 src={''}
                                 h={550}
-                                radius={'md'}
+                                radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
                         </Carousel.Slide>

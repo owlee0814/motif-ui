@@ -7,11 +7,11 @@ import TextAlign from '@tiptap/extension-text-align'
 import Superscript from '@tiptap/extension-superscript'
 import SubScript from '@tiptap/extension-subscript'
 import {Button, Card, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core";
-import React from "react";
-import {CommunityNavBar} from "../../../../component/CommunityNavBar/CommunityNavBar";
-import classes from "../../../../component/ProfileNavBar/ProfileNavBar.module.css";
-import {sampleCommunities} from "../../../../entities/Community";
+import React, {useEffect} from "react";
+import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
+import classes from "../../../../component/Community/ProfileNavBar/ProfileNavBar.module.css";
 import {useSession} from "next-auth/react";
+import {Community} from ".prisma/client";
 
 export default function Index() {
     const editor = useEditor({
@@ -29,6 +29,25 @@ export default function Index() {
     const { data } = useSession()
     const [selectedCommunity, setSelectedCommunity] = React.useState('');
     const [postTitle, setPostTitle] = React.useState('');
+    const [communities, setCommunities] = React.useState<Community[]>([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/prisma', {
+                    method: 'GET'
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json(); // Parse the response as JSON
+                setCommunities(data); // Log the JSON data
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+        fetchData()
+    }, []);
 
     return (
         <Container size={'98%'}>
@@ -45,13 +64,13 @@ export default function Index() {
                         <Title size={'xs'} mb={'sm'}>Select a Community</Title>
                         <Select
                             data={
-                                sampleCommunities
-                                    .filter((community) => community.title !== 'All' && community.title !== 'Announcements')
+                                communities
+                                    .filter((community) => community.name !== 'All' && community.name !== 'Announcements')
                                     .map((community) => {
-                                        return community.title;
+                                        return { value: community.id.toString(), label: community.name }
                                     })
                             }
-                            onSelect={(selection) => { setSelectedCommunity(selection.currentTarget.value) }}
+                            onChange={(_value) => { if(_value) setSelectedCommunity(_value)}}
                         />
                         <Space h={'md'}/>
                         <TextInput size='xl' placeholder={'Title'} onChange={(e) => setPostTitle(e.target.value)}/>
@@ -109,16 +128,14 @@ export default function Index() {
                     <Group justify={'flex-end'}>
                         <Button mt={'0.2rem'} variant="filled" size="md" radius="xl" bg={'black'}
                             onClick={async () => {
-                                // console.log(selectedCommunity)
-                                // console.log(postTitle)
-                                // console.log(JSON.stringify(editor?.getJSON()));
                                 await fetch('/api/prisma', {
                                     method: 'POST',
                                     body: JSON.stringify({
-                                        selectedCommunity: selectedCommunity,
+                                        communityId: Number(selectedCommunity),
                                         postTitle: postTitle,
                                         authorId: data?.user.id,
-                                        content: JSON.stringify(editor?.getJSON())
+                                        content: JSON.stringify(editor?.getJSON()),
+                                        text: editor?.getText()
                                     })
                                 })
                             }}

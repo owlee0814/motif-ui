@@ -15,7 +15,6 @@ export function HomeCarousel(props: HomeCarouselProps) {
             <div style={{'position': 'relative'}}>
                 <Link href={props.href}>
                 <Image
-                    radius={'lg'}
                     src={props.imgUrl}
                     h={450}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"

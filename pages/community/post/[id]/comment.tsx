@@ -1,4 +1,4 @@
-import {Avatar, Button, Card, Divider, Grid, Group, Space, Text} from "@mantine/core";
+import {Avatar, Button, Card, Grid, Group, Space, Text} from "@mantine/core";
 import React from "react";
 import {IconMessage} from "@tabler/icons-react";
 
