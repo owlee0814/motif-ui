@@ -16,7 +16,7 @@ export function HomeCarousel(props: HomeCarouselProps) {
                 <Link href={props.href}>
                 <Image
                     src={props.imgUrl}
-                    h={450}
+                    h={600}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 />
                 <Title

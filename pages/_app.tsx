@@ -5,7 +5,7 @@ import {HeaderSimple} from "../component/Header/HeaderSimple/HeaderSimple";
 import React, {useEffect, useState} from "react";
 import {TitleHeader} from "../component/Header/TitleHeader/TitleHeader";
 import {FooterSocial} from "../component/FooterSocial/FooterSocial";
-import {Sen, Reddit_Mono} from "next/font/google";
+import {Sen} from "next/font/google";
 import '@mantine/carousel/styles.css';
 import {SessionProvider} from "next-auth/react"
 import {usePathname} from "next/navigation";
@@ -17,7 +17,6 @@ import {MobileHeaderSimple} from "../component/Header/MobileHeaderSimple/MobileH
 import {MantineEmotionProvider} from "@mantine/emotion";
 
 const sen = Sen({weight: "700", subsets: ['latin']})
-const montserrat = Reddit_Mono({weight: "400", subsets: ['latin']})
 
 export default function App({Component, pageProps: {session, ...pageProps}}: any, { data: string }: any) {
     const [scrollY, setScrollY] = useState(0);

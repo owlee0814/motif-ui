@@ -12,6 +12,8 @@ import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/C
 import classes from "../../../../component/Community/ProfileNavBar/ProfileNavBar.module.css";
 import {useSession} from "next-auth/react";
 import {Community} from ".prisma/client";
+import {redirect} from "next/navigation";
+import {useRouter} from "next/router";
 
 export default function Index() {
     const editor = useEditor({
@@ -27,6 +29,7 @@ export default function Index() {
     });
 
     const { data } = useSession()
+    const router = useRouter()
     const [selectedCommunity, setSelectedCommunity] = React.useState('');
     const [postTitle, setPostTitle] = React.useState('');
     const [communities, setCommunities] = React.useState<Community[]>([]);
@@ -34,7 +37,7 @@ export default function Index() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('/api/prisma', {
+                const response = await fetch('/api/post', {
                     method: 'GET'
                 });
                 if (!response.ok) {
@@ -137,7 +140,7 @@ export default function Index() {
                                         content: JSON.stringify(editor?.getJSON()),
                                         text: editor?.getText()
                                     })
-                                })
+                                }).then(() => router.push('../c/all'))
                             }}
                             >Post</Button>
                     </Group>

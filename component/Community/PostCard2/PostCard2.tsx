@@ -1,9 +1,10 @@
-import {ActionIcon, Card, Grid, Group, Image, Space, Text, Title} from "@mantine/core";
-import {IconThumbUpFilled} from "@tabler/icons-react";
+import {ActionIcon, Badge, Button, Card, Grid, Group, Image, Space, Stack, Text, Title} from "@mantine/core";
+import {IconHeart, IconMessageCircle, IconShare, IconThumbUpFilled} from "@tabler/icons-react";
 import React from "react";
 import Link from "next/link";
 import classes from "./PostCard2.module.css";
 import {PostWithRelations} from "../../../entities/Types";
+import {getBadgeColor} from "../../../util/util";
 
 interface PostCard2Props {
     post: PostWithRelations
@@ -19,43 +20,39 @@ export function PostCard2(props: PostCard2Props) {
                         color: 'inherit',
                         textDecoration: 'none'
                     }}
-                    href={'community/post/1'}
+                    href={'../../community/post/' + props.post.id}
                 >
                     <Grid>
-                        <Grid.Col span={8.5}>
-                            <div
-                                style={{
-                                    position: 'relative',
-                                    top: '50%',
-                                    transform: 'translateY(-50%)'
-                                }}
-                            >
-                                <Title size={'0.9rem'}>{props.post.title}</Title>
-                                <Space h={'xs'}/>
-                                <Text size={'xs'}>{props.post.text.substring(0, 50)}...</Text>
-                            </div>
+                        <Grid.Col span={9}>
+                            <Stack gap={'xs'} pt={'xs'}>
+                                <Badge
+                                    color={getBadgeColor(props.post.community.id)}
+                                    radius={'0'}
+                                    variant={'light'}
+                                >
+                                    {props.post.community.name}
+                                </Badge>
+                                <Title size={'0.9rem'} pl={5} pt={5}>{props.post.title}</Title>
+                                <Group gap={0} className={classes.actions}>
+                                    <Button variant="subtle" c='gray' size={'xs'} leftSection={<IconHeart size={16} />}>
+                                        123
+                                    </Button>
+                                    <Button variant="subtle" c='gray' size={'xs'} leftSection={<IconMessageCircle size={16} />}>
+                                        123
+                                    </Button>
+                                </Group>
+                            </Stack>
                         </Grid.Col>
-                        <Grid.Col span={1.5}>
-                            <Group gap={5} style={{
-                                'margin': '0',
-                                'position': 'absolute',
-                                'top': '50%',
-                                'transform': 'translateY(-50%)',
-                            }}>
-                                <Text size={'xs'}>{/*props.post.likes*/}1</Text>
-                                <ActionIcon variant='transparent' color="gray" size="1.25rem" radius="0">
-                                    <IconThumbUpFilled style={{width: '100%', height: '100%'}} stroke={1.5}/>
-                                </ActionIcon>
+                        <Grid.Col span={3}>
+                            <Group justify={'flex-end'}>
+                                <Image
+                                    src={''}
+                                    h={100}
+                                    w={100}
+                                    radius={"0"}
+                                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+                                />
                             </Group>
-                        </Grid.Col>
-                        <Grid.Col span={2}>
-                            <Image
-                                src={''}
-                                h={60}
-                                w={60}
-                                radius={"0"}
-                                fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                            />
                         </Grid.Col>
                     </Grid>
                 </Link>

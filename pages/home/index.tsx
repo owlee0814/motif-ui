@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Container, Grid, Image, Space, Title} from "@mantine/core";
 import {Carousel} from "@mantine/carousel";
 import {HomeCarousel} from "../../component/HomeCarousel/HomeCarousel";
@@ -7,10 +7,37 @@ import {ProductListing2} from "../../component/Shop/ProductListing2";
 import {sampleProducts} from "../../entities/Product";
 import {samplePosts} from "../../entities/Post";
 import Autoplay from "embla-carousel-autoplay";
+import {PostWithRelations} from "../../entities/Types";
 
 export default function Home() {
     const topProducts = [];
     const autoplay = useRef(Autoplay({ stopOnMouseEnter: true, delay: 6000 }));
+    const [posts, setPosts] = useState<PostWithRelations[]>([]);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchGet = async () => {
+            try {
+                const response = await fetch('/api/posts', { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch post');
+                }
+                const res = await response.json();
+                setPosts(res);
+            } catch (error) {
+                if (error instanceof Error) {
+                    setError(error.message);
+                } else {
+                    setError('An unexpected error occurred');
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchGet();
+    }, []);
+
 
     for (let i = 1; i <= 5; i++) {
         topProducts.push(
@@ -21,7 +48,7 @@ export default function Home() {
     return (
         <Container size={'95%'}>
             <Grid>
-                <Grid.Col span={8}>
+                <Grid.Col span={8.5}>
                     <Grid>
                         <Grid.Col span={8}>
                             <Space h={'lg'}/>
@@ -46,11 +73,11 @@ export default function Home() {
                     </Title>
                     <Space h={'0.3%'}/>
                     <Space h='lg'/>
-                    <Carousel draggable={false} height={550} align="start" slideGap="md" slideSize="33.33%" loop >
+                    <Carousel draggable={false} height={700} align="start" slideGap="md" slideSize="33.33%" loop >
                         <Carousel.Slide>
                             <Image
                                 src={'https://motif-mvp-bucket.s3.amazonaws.com/ootds/DSCF0133.jpg.webp'}
-                                h={550}
+                                h={700}
                                 radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
@@ -58,7 +85,7 @@ export default function Home() {
                         <Carousel.Slide>
                             <Image
                                 src={'https://motif-mvp-bucket.s3.amazonaws.com/ootds/DSCF0140.jpg.webp'}
-                                h={550}
+                                h={700}
                                 radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
@@ -66,7 +93,7 @@ export default function Home() {
                         <Carousel.Slide>
                             <Image
                                 src={'https://motif-mvp-bucket.s3.amazonaws.com/ootds/Screenshot_2024-04-30_at_11.17.26_AM.png.webp'}
-                                h={550}
+                                h={700}
                                 radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
@@ -74,7 +101,7 @@ export default function Home() {
                         <Carousel.Slide>
                             <Image
                                 src={'https://motif-mvp-bucket.s3.amazonaws.com/ootds/Screenshot_2024-04-30_at_11.18.26_AM.png.webp'}
-                                h={550}
+                                h={700}
                                 radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
@@ -82,7 +109,7 @@ export default function Home() {
                         <Carousel.Slide>
                             <Image
                                 src={''}
-                                h={550}
+                                h={700}
                                 radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
@@ -90,7 +117,7 @@ export default function Home() {
                         <Carousel.Slide>
                             <Image
                                 src={''}
-                                h={550}
+                                h={700}
                                 radius={'0'}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
@@ -98,16 +125,16 @@ export default function Home() {
                     </Carousel>
                 </Grid.Col>
 
-                <Grid.Col span={4}>
+                <Grid.Col span={3.5}>
                     <Title size={'1.5rem'}>TRENDING</Title>
                     <Space h={'0.7%'}/>
-                    {samplePosts.slice(0,5).map((post) => (
+                    {posts.map((post) => (
                         <PostCard2 post={post} key={post.id}/>
                     ))}
-                    <Space h={'lg'}/>
-                    <Title size={'1.5rem'}>TOP SELLING</Title>
-                    <Space h={'0.5%'}/>
-                    {topProducts}
+                    {/*<Space h={'lg'}/>*/}
+                    {/*<Title size={'1.5rem'}>TOP SELLING</Title>*/}
+                    {/*<Space h={'0.5%'}/>*/}
+                    {/*{topProducts}*/}
                 </Grid.Col>
             </Grid>
         </Container>

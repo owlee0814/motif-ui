@@ -18,7 +18,7 @@ export default function Profile() {
     useEffect(() => {
         const fetchGet = async () => {
             try {
-                const response = await fetch('/api/posts/' + data?.user.id);
+                const response = await fetch('/api/posts/user/' + data?.user.id);
                 if (!response.ok) {
                     throw new Error('Failed to fetch post');
                 }

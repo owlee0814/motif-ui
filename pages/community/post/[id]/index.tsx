@@ -1,22 +1,20 @@
 import {
-    ActionIcon,
     Anchor,
+    Badge,
     Button,
     Card,
-    Center,
     Container,
     Divider,
     Grid,
     Group,
-    Image,
     Space,
     Text as TextMantine,
     Textarea,
     Title
 } from "@mantine/core";
-import {IconBookmarkFilled, IconShare, IconThumbUpFilled} from "@tabler/icons-react";
+import {IconBookmarkFilled, IconHeart, IconShare} from "@tabler/icons-react";
 import React, {useEffect, useMemo, useState} from "react";
-import PostComment from "./comment";
+
 import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
 import {useRouter} from "next/router";
 import {generateHTML} from '@tiptap/html'
@@ -32,14 +30,80 @@ import {Code} from "@tiptap/extension-code";
 import {BulletList} from "@tiptap/extension-bullet-list";
 import {Blockquote} from "@tiptap/extension-blockquote";
 import {Heading} from "@tiptap/extension-heading";
-import {PostWithRelations} from "../../../../entities/Types";
+import {CommentWithRelations, PostWithRelations} from "../../../../entities/Types";
+import {countComments, getBadgeColor, timeAgo} from "../../../../util/util";
+import classes from "../../../../component/Community/PostCard/PostCard.module.css";
+import {useSession} from "next-auth/react";
+import PostComment from "../../../../component/Community/Comment/Comment";
 
 export default function PostDetail() {
     const router = useRouter();
     const { id } = router.query;
+    const { data } = useSession()
     const [post, setPost] = useState<PostWithRelations>();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [comments, setComments] = useState<CommentWithRelations[]>([]);
+    const [newComment, setNewComment] = useState('');
+
+    async function fetchComments(postId: number) {
+        const response = await fetch(`/api/post/${postId}/comment`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch comments');
+        }
+        return response.json();
+    }
+
+    async function postComment(postId: number, content: string) {
+        const authorId = data?.user.id;
+        const response = await fetch(`/api/post/${postId}/comment`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ postId, authorId, content }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to post comment');
+        }
+
+        return response.json();
+    }
+
+
+    const fetchCommentsForPost = async () => {
+        try {
+            setLoading(true);
+            const commentsData = await fetchComments(Number(id));
+            setComments(commentsData);
+            setLoading(false);
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unexpected error occurred');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handlePostComment = async () => {
+        if (!newComment.trim()) return;  // Prevent posting empty comments
+
+        try {
+            await postComment(Number(id), newComment);
+            setNewComment(''); // Clear the textarea
+            fetchCommentsForPost(); // Refresh comments
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unexpected error occurred');
+            }
+        }
+    };
 
     useEffect(() => {
         if (!id) return;
@@ -63,6 +127,7 @@ export default function PostDetail() {
             }
         };
         fetchPost();
+        fetchCommentsForPost();
     }, [id]);
 
     const output = useMemo(() => {
@@ -102,26 +167,32 @@ export default function PostDetail() {
                 </Grid.Col>
                 <Grid.Col span={9}>
                     <Card padding={'xl'} mt={'3rem'}>
-                        <Anchor href={''} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'sm'}>
-                            {post?.community.name}
+                        <Anchor href={''} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'lg'}>
+                            <Badge
+                                bg={getBadgeColor(post?.community.id)}
+                                radius={'0'}
+                            >
+                                {post?.community.name}
+                            </Badge>
                         </Anchor>
-                        <Title size={'1.5rem'} mb={'xs'}>{post?.title}</Title>
-                        <Group justify={'space-between'}>
+                        <Title size={'1.5rem'} mb={'lg'}>{post?.title}</Title>
+                        <Group justify={'space-between'} mb={'lg'}>
                             <Group>
-                                {/*<TextMantine size={'sm'}>{post?.author.user.name}</TextMantine>*/}
-                                <TextMantine size={'sm'}>posted {post?.createdAt.toString()}</TextMantine>
+                                <TextMantine size={'sm'}>{post?.author.user.username}</TextMantine>
+                                <TextMantine size={'sm'}>posted {timeAgo(post?.createdAt.toString())}</TextMantine>
                             </Group>
-                            <Group>
-                                <TextMantine fw={'800'}>100 Likes</TextMantine>
-                                <ActionIcon variant='transparent' color="gray" size="1.5rem" radius="0">
-                                    <IconThumbUpFilled style={{width: '100%', height: '100%'}} stroke={1.5}/>
-                                </ActionIcon>
-                                <ActionIcon variant='transparent' color="gray" size="1.5rem" radius="0">
-                                    <IconBookmarkFilled style={{width: '100%', height: '100%'}} stroke={1.5}/>
-                                </ActionIcon>
-                                <ActionIcon variant='transparent' color="gray" size="1.5rem" radius="0">
-                                    <IconShare style={{width: '100%', height: '100%'}} stroke={1.5}/>
-                                </ActionIcon>
+                            <Group gap={10}>
+                                <Group mt="md" gap={0} className={classes.actions}>
+                                    <Button variant="subtle" c='gray' leftSection={<IconHeart size={16} />}>
+                                        100
+                                    </Button>
+                                    <Button variant="subtle" c='gray' leftSection={<IconBookmarkFilled size={16} />}>
+                                        Save
+                                    </Button>
+                                    <Button variant="subtle" c='gray' leftSection={<IconShare size={16} />}>
+                                        Share
+                                    </Button>
+                                </Group>
                             </Group>
                         </Group>
                         {/*TODO add image support*/}
@@ -142,7 +213,7 @@ export default function PostDetail() {
                         <div dangerouslySetInnerHTML={{__html: output}}/>
                         <Divider mt={'xl'} mb={'md'}/>
                         <div>
-                            <Title size={'md'}>{} comments</Title>
+                            <Title size={'md'}>{countComments(comments)} comments</Title>
                             <Space h='lg'/>
                             <Textarea
                                 variant="filled"
@@ -150,32 +221,20 @@ export default function PostDetail() {
                                 radius="0"
                                 placeholder="Add a comment"
                                 mb={'sm'}
+                                value={newComment}
+                                onChange={(event) => setNewComment(event.currentTarget.value)}
                             />
                             <Group justify={'flex-end'} mb={'lg'}>
-                                <Button variant="filled" size="sm" radius="xs" bg={'black'}>Cancel</Button>
-                                <Button variant="filled" size="sm" radius="xs" bg={'black'}>Post</Button>
+                                <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={() => setNewComment('')}>Cancel</Button>
+                                <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={handlePostComment}>Post</Button>
                             </Group>
-                            <PostComment username={'olee0814'}
-                                         avatarImgUrl={'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png'}
-                                         comment={'this is an example comment, blah blah bah'}/>
-                            <Card>
-                                <Grid>
-                                    <Grid.Col span={0.4}/>
-                                    <Grid.Col span={11.6}>
-                                        <PostComment username={'oteh'} avatarImgUrl={''} comment={'This is a reply'}/>
-                                    </Grid.Col>
-                                    <Grid.Col span={0.4}/>
-                                    <Grid.Col span={11.6}>
-                                        <PostComment username={'oteh'} avatarImgUrl={''}
-                                                     comment={'This is a second reply'}/>
-                                    </Grid.Col>
-                                </Grid>
-                            </Card>
-                            <PostComment username={'testuser01'}
-                                         avatarImgUrl={'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png'}
-                                         comment={'Enim sit amet venenatis urna cursus eget nunc scelerisque viverra. Enim tortor at auctor urna nunc id cursus metus aliquam. '}/>
-                            <PostComment username={'oteh'} avatarImgUrl={''}
-                                         comment={'Senectus et netus et malesuada fames ac turpis egestas maecenas. Non blandit massa enim nec dui.'}/>
+                            {comments.map((comment) => (
+                                <PostComment
+                                    key={comment.id}
+                                    comment={comment}
+                                    postAuthorId={post ? post?.authorId : ''}
+                                />
+                            ))}
                         </div>
                     </Card>
                 </Grid.Col>

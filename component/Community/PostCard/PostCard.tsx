@@ -1,36 +1,10 @@
-import {AspectRatio, Badge, Button, Card, Grid, Group, Image, Space, Text, Title} from "@mantine/core";
+import {AspectRatio, Badge, Button, Card, Grid, Group, Image, Popover, Space, Text, Title} from "@mantine/core";
 import {IconHeart, IconMessageCircle, IconShare} from "@tabler/icons-react";
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import classes from "./PostCard.module.css"
 import {PostWithRelations} from "../../../entities/Types";
-
-function getBadgeColor(tag: number) {
-    let tagColor = ''
-    switch (tag) {
-        case 1:
-            tagColor = 'blue';
-            break;
-        case 2:
-            tagColor = 'red';
-            break;
-        case 3:
-            tagColor = 'green';
-            break;
-        case 4:
-            tagColor = 'purple';
-            break;
-        case 5:
-            tagColor = 'pink';
-            break;
-        case 6:
-            tagColor = 'black';
-            break;
-        default:
-            tagColor = 'gray';
-    }
-    return tagColor;
-}
+import {getBadgeColor, timeAgo} from "../../../util/util";
 
 interface PostCardProps {
     post: PostWithRelations
@@ -92,14 +66,21 @@ export function PostCard(props: PostCardProps) {
                                     <Button variant="subtle" c='gray' leftSection={<IconMessageCircle size={16} />}>
                                         {/*{props.post.commentCount}*/}comments
                                     </Button>
-                                    <Button variant="subtle" c='gray' leftSection={<IconShare size={16} />}>
-                                        Share
-                                    </Button>
+                                    <Popover width={200} position="bottom" withArrow shadow="md">
+                                        <Popover.Target>
+                                            <Button variant="subtle" c='gray' leftSection={<IconShare size={16} />} >
+                                                Share
+                                            </Button>
+                                        </Popover.Target>
+                                        <Popover.Dropdown>
+                                            <Text size="xs">This is uncontrolled popover, it is opened when button is clicked</Text>
+                                        </Popover.Dropdown>
+                                    </Popover>
                                 </Group>
                             </Group>
                             <Group gap={10} pr={'lg'} mt={'lg'}>
                                 {/*<Text fw={'bold'} size={'xs'}>@{props.post.author.user.username}</Text>*/}
-                                <Text size={'xs'}>{props.post.createdAt.toString()}</Text>
+                                <Text size={'xs'}>{timeAgo(props.post.createdAt.toString())}</Text>
                             </Group>
                         </Group>
                     </div>

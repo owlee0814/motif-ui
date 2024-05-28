@@ -1,4 +1,4 @@
-import prisma from "../../../../prisma/prisma";
+import prisma from "../../../../../prisma/prisma";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
 
 export async function GET(req: Request, context: { params: Params}) {
@@ -6,7 +6,7 @@ export async function GET(req: Request, context: { params: Params}) {
 
     try {
         const posts = await prisma.post.findMany({
-            where: { authorId: id },
+            where: { communityId: id },
             include: {
                 author: {
                     include: {
