@@ -38,7 +38,7 @@ export function PostCard2(props: PostCard2Props) {
                                         123
                                     </Button>
                                     <Button variant="subtle" c='gray' size={'xs'} leftSection={<IconMessageCircle size={16} />}>
-                                        123
+                                        {props.post._count.comments}
                                     </Button>
                                 </Group>
                             </Stack>

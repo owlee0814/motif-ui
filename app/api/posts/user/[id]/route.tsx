@@ -7,6 +7,9 @@ export async function GET(req: Request, context: { params: Params}) {
     try {
         const posts = await prisma.post.findMany({
             where: { authorId: id },
+            orderBy: {
+                createdAt: 'desc',
+            },
             include: {
                 author: {
                     include: {
@@ -14,6 +17,9 @@ export async function GET(req: Request, context: { params: Params}) {
                     }
                 },
                 community: true,
+                _count: {
+                    select: { comments: true },
+                },
             },
         });
 

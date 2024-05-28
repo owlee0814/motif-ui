@@ -13,7 +13,10 @@ const postWithRelations = Prisma.validator<Prisma.PostDefaultArgs>()({
             include : {
                 user: true
             }
-        }
+        },
+        _count: {
+            select: { comments: true },
+        },
     },
 })
 
@@ -24,7 +27,7 @@ const commentWithRelations = Prisma.validator<Prisma.CommentDefaultArgs>()({
             include : {
                 user: true
             }
-        }
+        },
     },
 })
 

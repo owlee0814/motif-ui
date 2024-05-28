@@ -85,8 +85,8 @@ export function PostCard(props: PostCardProps) {
                                     <Button variant="subtle" c='gray' onClick={event => event.preventDefault()} leftSection={<IconHeart size={16} />}>
                                         0
                                     </Button>
-                                    <Button variant="subtle" c='gray' onClick={event => event.preventDefault()}  leftSection={<IconMessageCircle size={16} />}>
-                                        {/*{props.post.commentCount}*/}comments
+                                    <Button variant="subtle" c='gray' leftSection={<IconMessageCircle size={16} />}>
+                                        {props.post._count.comments} comments
                                     </Button>
                                     <Popover opened={opened} onChange={setOpened}>
                                         <Popover.Target>

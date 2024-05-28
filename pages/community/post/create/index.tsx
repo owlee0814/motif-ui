@@ -7,7 +7,7 @@ import TextAlign from '@tiptap/extension-text-align'
 import Superscript from '@tiptap/extension-superscript'
 import SubScript from '@tiptap/extension-subscript'
 import CharacterCount from '@tiptap/extension-character-count'
-import {Button, Card, Container, Grid, Group, Select, Space, TextInput, Title, Text} from "@mantine/core";
+import {Button, Card, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core";
 import React, {useEffect} from "react";
 import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
 import classes from "../../../../component/Community/ProfileNavBar/ProfileNavBar.module.css";
@@ -124,7 +124,7 @@ export default function Index() {
                                     <RichTextEditor.AlignJustify />
                                     <RichTextEditor.AlignRight />
                                 </RichTextEditor.ControlsGroup>
-
+                                
                                 <RichTextEditor.ControlsGroup>
                                     <RichTextEditor.Undo />
                                     <RichTextEditor.Redo />
@@ -138,7 +138,7 @@ export default function Index() {
                     <Group justify={'flex-end'}>
                         <Button mt={'0.2rem'} variant="filled" size="md" radius="xl" bg={'black'}
                             onClick={async () => {
-                                await fetch('/api/prisma', {
+                                await fetch('/api/post', {
                                     method: 'POST',
                                     body: JSON.stringify({
                                         communityId: Number(selectedCommunity),

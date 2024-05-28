@@ -5,7 +5,6 @@ import {HomeCarousel} from "../../component/HomeCarousel/HomeCarousel";
 import {PostCard2} from "../../component/Community/PostCard2/PostCard2";
 import {ProductListing2} from "../../component/Shop/ProductListing2";
 import {sampleProducts} from "../../entities/Product";
-import {samplePosts} from "../../entities/Post";
 import Autoplay from "embla-carousel-autoplay";
 import {PostWithRelations} from "../../entities/Types";
 

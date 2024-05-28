@@ -7,6 +7,9 @@ export async function GET(req: Request) {
         const limit = parseInt(searchParams.get('limit') || '5', 10);
 
         const posts = await prisma.post.findMany({
+            orderBy: {
+                createdAt: 'desc',
+            },
             skip: (page - 1) * limit,
             take: limit,
             include: {
@@ -16,6 +19,9 @@ export async function GET(req: Request) {
                     }
                 },
                 community: true,
+                _count: {
+                    select: { comments: true },
+                },
             },
         });
 

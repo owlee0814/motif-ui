@@ -10,6 +10,9 @@ export async function GET(req: Request, context: { params: Params}) {
 
         const posts = await prisma.post.findMany({
             where: { community : {name: communityName}},
+            orderBy: {
+                createdAt: 'desc',
+            },
             skip: (page - 1) * limit,
             take: limit,
             include: {
@@ -19,8 +22,13 @@ export async function GET(req: Request, context: { params: Params}) {
                     }
                 },
                 community: true,
+                _count: {
+                    select: { comments: true },
+                },
             },
         });
+
+        console.log(posts)
 
         if (!posts) {
             return new Response("Posts not found", { status: 404 });

@@ -41,7 +41,7 @@ export function timeAgo(timestamp: Date | string | undefined) {
     // @ts-ignore
     const secondsPast = Math.floor((now - new Date(timestamp)) / 1000);
 
-    if (secondsPast < 60) {
+    if (secondsPast < 300) {
         return `Just Now`;
     } else if (secondsPast < 3600) {
         const minutes = Math.floor(secondsPast / 60);
