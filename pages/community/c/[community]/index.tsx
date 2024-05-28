@@ -6,11 +6,15 @@ import Link from "next/link";
 import {PostWithRelations} from "../../../../entities/Types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {useRouter} from "next/router";
+import {useSession} from "next-auth/react";
+import {Post} from "@prisma/client";
 
 export default function Home() {
     const router = useRouter();
+    const { status, data } = useSession();
     const { community } = router.query;
     const [posts, setPosts] = useState<PostWithRelations[]>([]);
+    const [likedPosts, setLikedPosts] = useState<Post[]>([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [error, setError] = useState('');
@@ -20,6 +24,30 @@ export default function Home() {
         if(community !== undefined)
             community === 'all' ? fetchAllPosts(page) : fetchCommunityPosts(page)
     }, [community, page]);
+
+    useEffect(() => {
+        if(status === 'authenticated')
+            fetchLikedPosts()
+    }, [data]);
+
+    const fetchLikedPosts = async () => {
+        try {
+            const response = await fetch('/api/posts/user/' + data?.user.id + '/liked' );
+            if (!response.ok) {
+                throw new Error('Failed to fetch posts');
+            }
+            const res = await response.json();
+            setLikedPosts(res)
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unexpected error occurred');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const fetchAllPosts = async (page: number) => {
         try {
@@ -111,7 +139,7 @@ export default function Home() {
                     >
                         <Grid gutter={15}>
                             {posts.map((post) => (
-                                <PostCard post={post} key={post.id} />
+                                <PostCard post={post} likedPosts={likedPosts} key={post.id} />
                             ))}
                         </Grid>
                     </InfiniteScroll>

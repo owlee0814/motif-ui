@@ -15,7 +15,7 @@ const postWithRelations = Prisma.validator<Prisma.PostDefaultArgs>()({
             }
         },
         _count: {
-            select: { comments: true },
+            select: { comments: true, likes: true },
         },
     },
 })

@@ -35,7 +35,7 @@ export function PostCard2(props: PostCard2Props) {
                                 <Title size={'0.9rem'} pl={5} pt={5}>{props.post.title}</Title>
                                 <Group gap={0} className={classes.actions}>
                                     <Button variant="subtle" c='gray' size={'xs'} leftSection={<IconHeart size={16} />}>
-                                        123
+                                        {props.post._count.likes}
                                     </Button>
                                     <Button variant="subtle" c='gray' size={'xs'} leftSection={<IconMessageCircle size={16} />}>
                                         {props.post._count.comments}

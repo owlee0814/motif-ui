@@ -20,7 +20,7 @@ export async function GET(req: Request) {
                 },
                 community: true,
                 _count: {
-                    select: { comments: true },
+                    select: { comments: true, likes: true },
                 },
             },
         });

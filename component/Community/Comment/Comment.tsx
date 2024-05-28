@@ -45,7 +45,6 @@ export default function PostComment(props: PostCommentProps) {
             }
 
             const result = await response.json();
-            console.log("Reply posted:", result);
             // Optionally, you can handle the reply result, e.g., updating the UI
 
             setShowReplyForm(false);

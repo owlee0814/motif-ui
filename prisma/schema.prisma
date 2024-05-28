@@ -27,6 +27,7 @@ model UserSocial {
   userId    String @unique
   posts     Post[]
   comments  Comment[]
+  likes     Like[]
   user      User   @relation(fields: [userId], references: [id])
 }
 
@@ -101,6 +102,7 @@ model Post {
   author      UserSocial @relation(fields: [authorId], references: [id])
   community   Community  @relation(fields: [communityId], references: [id])
   comments    Comment[]
+  likes       Like[]
 }
 
 model Comment {
@@ -115,4 +117,15 @@ model Comment {
   replies   Comment[]  @relation("CommentToComment")
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+}
+
+model Like {
+  id        Int        @id @default(autoincrement())
+  userId    String
+  postId    Int
+  user      UserSocial @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime   @default(now())
+
+  @@unique([userId, postId]) // Ensure a user can like a post only once
 }

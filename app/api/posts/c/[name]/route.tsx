@@ -23,12 +23,10 @@ export async function GET(req: Request, context: { params: Params}) {
                 },
                 community: true,
                 _count: {
-                    select: { comments: true },
+                    select: { comments: true, likes: true },
                 },
             },
         });
-
-        console.log(posts)
 
         if (!posts) {
             return new Response("Posts not found", { status: 404 });

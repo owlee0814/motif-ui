@@ -34,7 +34,6 @@ export async function POST(req: Request, res: Response) {
     });
 
     if (!user) {
-        console.log('there is no user')
         // Create new user if not exist
         await prisma.user.update({
             where: {

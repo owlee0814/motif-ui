@@ -6,6 +6,7 @@ import Link from "next/link";
 import OotdCard from "../../component/Community/OotdCard/OotdCard";
 import {IconMessageCircle, IconPhoto, IconSettings} from "@tabler/icons-react";
 import {PostWithRelations} from "../../entities/Types";
+import {Post} from "@prisma/client";
 
 export default function Profile() {
     const { status, data} = useSession()
@@ -14,8 +15,12 @@ export default function Profile() {
     const [userPosts, setUserPosts] = useState<PostWithRelations[]>([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [likedPosts, setLikedPosts] = useState<PostWithRelations[]>([]);
 
     useEffect(() => {
+        if(status === 'authenticated')
+            fetchLikedPosts()
+
         const fetchGet = async () => {
             try {
                 const response = await fetch('/api/posts/user/' + data?.user.id);
@@ -37,6 +42,24 @@ export default function Profile() {
         fetchGet();
     }, [data]);
 
+    const fetchLikedPosts = async () => {
+        try {
+            const response = await fetch('/api/posts/user/' + data?.user.id + '/liked' );
+            if (!response.ok) {
+                throw new Error('Failed to fetch posts');
+            }
+            const res = await response.json();
+            setLikedPosts(res)
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unexpected error occurred');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     for (let i = 0; i < 20; i++) {
         ootds.push(
@@ -130,7 +153,7 @@ export default function Profile() {
                     <Tabs.Panel value="messages">
                         <Grid mt={'2rem'} gutter={15}>
                             {userPosts.map((post) => (
-                                <PostCard post={post} key={post.id}/>
+                                <PostCard post={post} likedPosts={likedPosts} key={post.id}/>
                             ))}
                         </Grid>
                     </Tabs.Panel>
@@ -140,7 +163,11 @@ export default function Profile() {
                     </Tabs.Panel>
 
                     <Tabs.Panel value="liked">
-                        Settings tab content
+                        <Grid mt={'2rem'} gutter={15}>
+                            {likedPosts.map((post) => (
+                                <PostCard likedPosts={likedPosts} post={post} key={post.id}/>
+                            ))}
+                        </Grid>
                     </Tabs.Panel>
                 </Tabs>
             </Container>

@@ -1,12 +1,18 @@
-import prisma from "../../../../../prisma/prisma";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
+import prisma from "../../../../../../prisma/prisma";
 
-export async function GET(req: Request, context: { params: Params}) {
-    const id = context.params.id
+export async function GET(req: Request, context: { params: Params }) {
+    const userId = context.params.id;
 
     try {
-        const posts = await prisma.post.findMany({
-            where: { authorId: id },
+        const likedPosts = await prisma.post.findMany({
+            where: {
+                likes: {
+                    some: {
+                        userId: userId
+                    }
+                }
+            },
             orderBy: {
                 createdAt: 'desc',
             },
@@ -23,11 +29,9 @@ export async function GET(req: Request, context: { params: Params}) {
             },
         });
 
-        if (!posts) {
-            return new Response("Post not found", { status: 404 });
-        }
-        return new Response(JSON.stringify(posts), { status: 200 });
+        return new Response(JSON.stringify(likedPosts), { status: 200 });
     } catch (error) {
+        console.error(error);
         return new Response("Internal Server Error", { status: 500 });
     }
 }
