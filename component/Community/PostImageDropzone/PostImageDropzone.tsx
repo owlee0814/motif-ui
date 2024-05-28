@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { ActionIcon, AspectRatio, Center, Group, Image, Overlay, Title } from '@mantine/core';
 import { IconPhoto, IconTrash, IconUpload, IconX } from '@tabler/icons-react';
-import styles from './PostImageDropZone.module.css';
+import classes from './PostImageDropZone.module.css';
 
 type FileWithPreview = {
     file: File;
@@ -66,8 +66,8 @@ export default function PostImageDropZone() {
                     height={dropzoneHeight}
                 />
             </AspectRatio>
-            <Overlay color="#000" backgroundOpacity={0.6} blur={15} className={styles.overlay}>
-                <Center className={styles.overlayContent}>
+            <Overlay color="#000" backgroundOpacity={0.6} blur={15} className={classes.overlay}>
+                <Center className={classes.overlayContent}>
                     <Image
                         src={file.preview}
                         alt={`preview ${index}`}
@@ -79,7 +79,7 @@ export default function PostImageDropZone() {
                         radius="xl"
                         size="lg"
                         onClick={() => handleRemove(index)}
-                        className={styles.actionIcon}
+                        className={classes.actionIcon}
                     >
                         <IconTrash size="60%" stroke={1.5} />
                     </ActionIcon>
@@ -96,14 +96,14 @@ export default function PostImageDropZone() {
                 onReject={(files) => console.log('rejected files', files)}
                 accept={IMAGE_MIME_TYPE}
                 disabled={!isDropzoneActive}
-                className={styles.dropzone}
+                className={classes.dropzone}
             >
                 {previews.length > 0 && (
-                    <div className={styles.previewsContainer}>
+                    <div className={classes.previewsContainer}>
                         {previews}
                     </div>
                 )}
-                <Group className={styles.group}>
+                <Group className={classes.group}>
                     <Dropzone.Accept>
                         <IconUpload size={30} stroke={1.5} />
                     </Dropzone.Accept>

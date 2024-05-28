@@ -163,8 +163,8 @@ export default function PostDetail() {
                 <Grid.Col span={{ sm: 0, md: 0, lg: 3 }}>
                     <CommunityNavBar currentCommunity={post?.community.name}/>
                 </Grid.Col>
-                <Grid.Col span={{ sm: 12, md: 12, lg: 9 }}>
-                    <Card padding={'xl'}>
+                <Grid.Col span={{ sm: 12, md: 12, lg: 9 }} pt={'6rem'}>
+                    <Card p={'xl'} radius={0}>
                         <Anchor href={'../c/' + post?.community.name} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'lg'}>
                             <Badge
                                 bg={getBadgeColor(post?.community.id)}

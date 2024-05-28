@@ -52,7 +52,7 @@ export function CommunityNavBar(props: CommunityNavBarProps) {
                 {navBarTitle}
             </Title>
             <Card radius="0" mt="1rem" className={classes.card}>
-                <Title size="xs" p="xs">COMMUNITY</Title>
+                <Title size="xs" p="xs" pb='lg'>COMMUNITY</Title>
                 <Group gap={0} ml="xs">
                     <NavLink
                         fw="600"
