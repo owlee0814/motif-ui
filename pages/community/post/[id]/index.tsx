@@ -12,7 +12,7 @@ import {
     Textarea,
     Title
 } from "@mantine/core";
-import {IconBookmarkFilled, IconHeart, IconShare} from "@tabler/icons-react";
+import {IconBookmark, IconBookmarkFilled, IconHeart, IconShare} from "@tabler/icons-react";
 import React, {useEffect, useMemo, useState} from "react";
 
 import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
@@ -35,6 +35,7 @@ import {countComments, getBadgeColor, timeAgo} from "../../../../util/util";
 import classes from "../../../../component/Community/PostCard/PostCard.module.css";
 import {useSession} from "next-auth/react";
 import PostComment from "../../../../component/Community/Comment/Comment";
+import {ShareButton} from "../../../../component/Community/ShareButton/ShareButton";
 
 export default function PostDetail() {
     const router = useRouter();
@@ -179,24 +180,20 @@ export default function PostDetail() {
                                 <TextMantine size={'sm'}>{post?.author.user.username}</TextMantine>
                                 <TextMantine size={'sm'}>posted {timeAgo(post?.createdAt.toString())}</TextMantine>
                             </Group>
-                            <Group gap={10}>
-                                <Group mt="md" gap={0} className={classes.actions}>
-                                    <Button variant="subtle" c='gray' leftSection={<IconHeart size={16} />}>
-                                        0
-                                    </Button>
-                                    <Button variant="subtle" c='gray' leftSection={<IconBookmarkFilled size={16} />}>
-                                        Save
-                                    </Button>
-                                    <Button variant="subtle" c='gray' leftSection={<IconShare size={16} />}>
-                                        Share
-                                    </Button>
-                                </Group>
+                            <Group mt="md" gap={5}>
+                                <Button variant="subtle" size='compact-sm' c='gray' leftSection={<IconHeart size={16} />}>
+                                    {post?._count.likes}
+                                </Button>
+                                <Button variant="subtle" size='compact-sm' c='gray' leftSection={<IconBookmark size={16} />}>
+                                    Save
+                                </Button>
+                                <ShareButton href={''} size={'compact-sm'}/>
                             </Group>
                         </Group>
                         <div dangerouslySetInnerHTML={{__html: output}}/>
                         <Divider mt={'xl'} mb={'md'}/>
                         <div>
-                            <Title size={'md'}>{countComments(comments)} comments</Title>
+                            <Title size={'md'}>{post?._count.comments} comments</Title>
                             <Space h='lg'/>
                             <Textarea
                                 variant="filled"

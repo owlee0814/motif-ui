@@ -18,6 +18,9 @@ export async function GET(req: Request, context: { params: Params}) {
                     }
                 },
                 community: true,
+                _count: {
+                    select: { likes: true, comments: true },
+                },
             },
         });
 

@@ -7,6 +7,7 @@ import {PostWithRelations} from "../../../entities/Types";
 import {getBadgeColor, timeAgo} from "../../../util/util";
 import {useSession} from "next-auth/react";
 import {Post} from "@prisma/client";
+import {ShareButton} from "../ShareButton/ShareButton";
 
 interface PostCardProps {
     post: PostWithRelations
@@ -19,18 +20,6 @@ export function PostCard(props: PostCardProps) {
     const [isLiked, setIsLiked] = useState(false);
     const [likes, setLikes] = useState(props.post._count.likes);// Add state for like status
     const { data, status } = useSession()
-
-    useEffect(() => {
-        let timeout: NodeJS.Timeout;
-        if (opened) {
-            timeout = setTimeout(() => {
-                setOpened(false);
-            }, 2000);
-        }
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [opened]);
 
     useEffect(() => {
         if (status === 'authenticated' && props.likedPosts) {
@@ -61,15 +50,6 @@ export function PostCard(props: PostCardProps) {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-
-    const ShareButton = () => {
-        const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-            e.stopPropagation();
-            // ... other click logic
-        };
-
-        return <Button onClick={clickHandler}>Text</Button>;
-    };
 
     const handleLikeClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault(); // Prevent the default link behavior
@@ -133,25 +113,7 @@ export function PostCard(props: PostCardProps) {
                                     <Button variant="subtle" c='gray' leftSection={<IconMessageCircle size={16} />}>
                                         {props.post._count.comments} comments
                                     </Button>
-                                    <Popover opened={opened} onChange={setOpened}>
-                                        <Popover.Target>
-                                            <Button variant="subtle" c='gray' leftSection={<IconShare size={16} />} onClick={(e) => {
-                                                navigator.clipboard.writeText(location.host.toString() + '/community/post/' + props.post.id)
-                                                setOpened((o) => !o)
-                                                e.preventDefault()
-                                            }}>
-                                                Share
-                                            </Button>
-                                        </Popover.Target>
-                                        <Popover.Dropdown>
-                                            <Group gap={'xs'}>
-                                                <IconLink color={'gray'} size={'16'}/>
-                                                <Text size={'sm'} fw={'bold'} c={'gray'}>
-                                                    Link Copied
-                                                </Text>
-                                            </Group>
-                                        </Popover.Dropdown>
-                                    </Popover>
+                                    <ShareButton href={location.host.toString() + '/community/post/' + props.post.id}/>
                                 </Group>
                             </Group>
                             <Group gap={5} pr={'lg'} mt={'lg'}>

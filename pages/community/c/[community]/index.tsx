@@ -134,7 +134,7 @@ export default function Home() {
                         next={loadMore}
                         hasMore={hasMore}
                         loader={<h4>Loading...</h4>}
-                        endMessage={<Title size={'xs'} mt={'xl'}>No more posts to show</Title>}
+                        endMessage={<Title size={'xs'} mt={'xl'}>No posts to display</Title>}
                         style={{ overflow: 'visible' }}
                     >
                         <Grid gutter={15}>

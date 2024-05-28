@@ -52,21 +52,38 @@ export function CommunityNavBar(props: CommunityNavBarProps) {
                 {navBarTitle}
             </Title>
             <Card radius="0" mt="1rem" className={classes.card}>
-                <Title size="xs" p="xs" pb='lg'>COMMUNITY</Title>
+                <Title size="xs" p="xs" pb='lg'>COMMUNITIES</Title>
                 <Group gap={0} ml="xs">
-                    <NavLink
-                        fw="600"
-                        label={'All'}
-                        href={'../../../../community/c/all'}
-                    />
-                    {communities.map((community, index) => (
+                    {
+                        navBarTitle === 'All' ?
                         <NavLink
-                            fw="600"
+                            fw="900"
+                            label={'All'}
+                            td="underline"
+                            href={'../../../../community/c/all'}
+                        /> :
+                        <NavLink
+                            fw="500"
+                            label={'All'}
+                            href={'../../../../community/c/all'}
+                        />
+                    }
+                    {communities.map((community, index) => {
+                        return navBarTitle === community.label ?
+                        <NavLink
+                            fw="900"
+                            label={community.label}
+                            td="underline"
+                            href={'../../../../community/c/' + community.name}
+                            key={index}
+                        /> :
+                        <NavLink
+                            fw="500"
                             label={community.label}
                             href={'../../../../community/c/' + community.name}
                             key={index}
                         />
-                    ))}
+                    })}
                 </Group>
             </Card>
 
