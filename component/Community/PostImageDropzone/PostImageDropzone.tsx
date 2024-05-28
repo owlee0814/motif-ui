@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { ActionIcon, AspectRatio, Center, Group, Image, Overlay, Title } from '@mantine/core';
-import { IconPhoto, IconTrash, IconUpload, IconX } from '@tabler/icons-react';
-import classes from './PostImageDropZone.module.css';
+import React, { useRef, useState } from 'react'
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
+import { ActionIcon, AspectRatio, Center, Group, Image, Overlay, Title } from '@mantine/core'
+import { IconPhoto, IconTrash, IconUpload, IconX } from '@tabler/icons-react'
+import classes from "./PostImageDropzone.module.css"
 
 type FileWithPreview = {
     file: File;
