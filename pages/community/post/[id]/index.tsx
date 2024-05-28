@@ -160,14 +160,12 @@ export default function PostDetail() {
     return (
         <Container size="90%" maw={{ base: '1550px', md: '1050px', lg: '1550px' }}>
             <Grid gutter={'xl'}>
-                <Grid.Col span={3}>
-                    <div style={{ paddingTop: '2rem' }}>
-                        <CommunityNavBar />
-                    </div>
+                <Grid.Col span={{ sm: 0, md: 0, lg: 3 }}>
+                    <CommunityNavBar currentCommunity={post?.community.name}/>
                 </Grid.Col>
-                <Grid.Col span={9}>
-                    <Card padding={'xl'} mt={'3rem'}>
-                        <Anchor href={''} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'lg'}>
+                <Grid.Col span={{ sm: 12, md: 12, lg: 9 }}>
+                    <Card padding={'xl'}>
+                        <Anchor href={'../c/' + post?.community.name} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'lg'}>
                             <Badge
                                 bg={getBadgeColor(post?.community.id)}
                                 radius={'0'}
@@ -184,7 +182,7 @@ export default function PostDetail() {
                             <Group gap={10}>
                                 <Group mt="md" gap={0} className={classes.actions}>
                                     <Button variant="subtle" c='gray' leftSection={<IconHeart size={16} />}>
-                                        100
+                                        0
                                     </Button>
                                     <Button variant="subtle" c='gray' leftSection={<IconBookmarkFilled size={16} />}>
                                         Save
@@ -195,21 +193,6 @@ export default function PostDetail() {
                                 </Group>
                             </Group>
                         </Group>
-                        {/*TODO add image support*/}
-                        {/*{*/}
-                        {/*    post?.postImgUrl ?*/}
-                        {/*        <>*/}
-                        {/*        <Space h='3rem'/>*/}
-                        {/*        <Center>*/}
-                        {/*        <Image*/}
-                        {/*            src={post?.postImgUrl}*/}
-                        {/*            w={400}*/}
-                        {/*            fallbackSrc="https://placehold.co/600x400?text=Placeholder"*/}
-                        {/*        />*/}
-                        {/*        </Center>*/}
-                        {/*        </> :*/}
-                        {/*        <></>*/}
-                        {/*}*/}
                         <div dangerouslySetInnerHTML={{__html: output}}/>
                         <Divider mt={'xl'} mb={'md'}/>
                         <div>

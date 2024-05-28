@@ -1,5 +1,5 @@
 import {AspectRatio, Badge, Button, Card, Grid, Group, Image, Popover, Space, Text, Title} from "@mantine/core";
-import {IconHeart, IconMessageCircle, IconShare} from "@tabler/icons-react";
+import {IconHeart, IconMessageCircle, IconShare, IconLink} from "@tabler/icons-react";
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import classes from "./PostCard.module.css"
@@ -12,6 +12,19 @@ interface PostCardProps {
 
 export function PostCard(props: PostCardProps) {
     const [substringLength, setSubstringLength] = useState(160);
+    const [opened, setOpened] = useState(false);
+
+    useEffect(() => {
+        let timeout: NodeJS.Timeout;
+        if (opened) {
+            timeout = setTimeout(() => {
+                setOpened(false);
+            }, 2000);
+        }
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [opened]);
 
     useEffect(() => {
         function handleResize() {
@@ -34,6 +47,15 @@ export function PostCard(props: PostCardProps) {
         };
     }, []);
 
+    const ShareButton = () => {
+        const clickHandler = (e: Event) => {
+            e.stopPropagation();
+            // ... other click logic
+        };
+
+        return <Button onClick={() => clickHandler}>Text</Button>;
+    };
+
     return (
         <Grid.Col span={12}>
             <Link
@@ -49,7 +71,7 @@ export function PostCard(props: PostCardProps) {
                                 bg={getBadgeColor(props.post.community.id)}
                                 radius={'0'}
                             >
-                                {props.post.community.name}
+                                {props.post.community.label}
                             </Badge>
                         </Group>
                         <Title size={'sm'} pl={'md'}>{props.post.title}</Title>
@@ -60,20 +82,30 @@ export function PostCard(props: PostCardProps) {
                         <Group justify='space-between'>
                             <Group gap={10}>
                                 <Group mt="md" gap={0} className={classes.actions}>
-                                    <Button variant="subtle" c='gray' leftSection={<IconHeart size={16} />}>
-                                        {/*{props.post.likes}*/}
+                                    <Button variant="subtle" c='gray' onClick={event => event.preventDefault()} leftSection={<IconHeart size={16} />}>
+                                        0
                                     </Button>
-                                    <Button variant="subtle" c='gray' leftSection={<IconMessageCircle size={16} />}>
+                                    <Button variant="subtle" c='gray' onClick={event => event.preventDefault()}  leftSection={<IconMessageCircle size={16} />}>
                                         {/*{props.post.commentCount}*/}comments
                                     </Button>
-                                    <Popover width={200} position="bottom" withArrow shadow="md">
+                                    <Popover opened={opened} onChange={setOpened}>
                                         <Popover.Target>
-                                            <Button variant="subtle" c='gray' leftSection={<IconShare size={16} />} >
+                                            <Button variant="subtle" c='gray' leftSection={<IconShare size={16} />} onClick={(e) => {
+                                                console.log(location.href)
+                                                navigator.clipboard.writeText(location.host.toString() + '/community/post/' + props.post.id)
+                                                setOpened((o) => !o)
+                                                e.preventDefault()
+                                            }}>
                                                 Share
                                             </Button>
                                         </Popover.Target>
                                         <Popover.Dropdown>
-                                            <Text size="xs">This is uncontrolled popover, it is opened when button is clicked</Text>
+                                            <Group gap={'xs'}>
+                                                <IconLink color={'gray'} size={'16'}/>
+                                                <Text size={'sm'} fw={'bold'} c={'gray'}>
+                                                    Link Copied
+                                                </Text>
+                                            </Group>
                                         </Popover.Dropdown>
                                     </Popover>
                                 </Group>

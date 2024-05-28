@@ -30,7 +30,7 @@ export function PostCard2(props: PostCard2Props) {
                                     radius={'0'}
                                     variant={'light'}
                                 >
-                                    {props.post.community.name}
+                                    {props.post.community.label}
                                 </Badge>
                                 <Title size={'0.9rem'} pl={5} pt={5}>{props.post.title}</Title>
                                 <Group gap={0} className={classes.actions}>

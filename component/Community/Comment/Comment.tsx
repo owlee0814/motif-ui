@@ -61,68 +61,67 @@ export default function PostComment(props: PostCommentProps) {
     return (
         <div>
             <Space h={'xs'}/>
-            <Grid>
-                <Grid.Col span={0.6}>
-                    <Avatar
-                        src={props.comment.author.user.image}
-                        alt={props.comment.author.user.username}
-                        radius="xl"
-                        color="indigo"
+            <Group display={'flex'}>
+            <Avatar
+                src={props.comment.author.user.image}
+                alt={props.comment.author.user.username}
+                radius="xl"
+                color="indigo"
+            />
+            <Card radius="0" pl='md' pr='md' pt='md' pb='xs' className={classes.card}>
+                <Group gap={'lg'}>
+                    <Group gap={6}>
+                        <Text size="sm">{props.comment.author.user.username}</Text>
+                        <Text size="xs" fw='bold' c={'red'}>{props.postAuthorId === props.comment.authorId ? 'OP' : ''}</Text>
+                    </Group>
+                    <Text size="xs" c="dimmed">
+                        {timeAgo(props.comment.createdAt)}
+                    </Text>
+                </Group>
+                <Text pt="5" size="sm">
+                    {props.comment.content}
+                </Text>
+                <Space h={'xs'}/>
+            </Card>
+            </Group>
+            <Group gap={0} p={'xs'}>
+                <Button leftSection={<IconMessage size={14} />} size={'compact-sm'} variant={'transparent'} fw={'500'} onClick={() => setShowReplyForm(true)}>
+                    Reply
+                </Button>
+            </Group>
+
+            {showReplyForm && (
+                <div>
+                    <Textarea
+                        variant="filled"
+                        size="md"
+                        radius="0"
+                        placeholder="Write your reply..."
+                        mb={'sm'}
+                        value={replyText}
+                        onChange={(event) => setReplyText(event.currentTarget.value)}
+                        disabled={loading}
                     />
-                </Grid.Col>
-                <Grid.Col span={11}>
-                    <Card radius="0" pl='md' pr='md' pt='md' pb='xs' className={classes.card}>
-                        <Group gap={'lg'}>
-                            <Group gap={6}>
-                                <Text size="sm">{props.comment.author.user.username}</Text>
-                                <Text size="xs" fw='bold' c={'red'}>{props.postAuthorId === props.comment.authorId ? 'OP' : ''}</Text>
-                            </Group>
-                            <Text size="xs" c="dimmed">
-                                {timeAgo(props.comment.createdAt)}
-                            </Text>
-                        </Group>
-                        <Text pt="5" size="sm">
-                            {props.comment.content}
-                        </Text>
-                        <Space h={'xs'}/>
-                    </Card>
-                    <Group gap={0} p={'xs'}>
-                        <Button leftSection={<IconMessage size={14} />} size={'compact-sm'} variant={'transparent'} fw={'500'} onClick={() => setShowReplyForm(true)}>
-                            Reply
+                    <Group justify={'flex-end'} mb={'lg'}>
+                        <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={() => setShowReplyForm(!showReplyForm)} >Cancel</Button>
+                        <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={handlePostReply} disabled={loading}>
+                            {loading ? 'Posting...' : 'Reply'}
                         </Button>
                     </Group>
-                    {showReplyForm && (
-                        <div>
-                            <Textarea
-                                variant="filled"
-                                size="md"
-                                radius="0"
-                                placeholder="Write your reply..."
-                                mb={'sm'}
-                                value={replyText}
-                                onChange={(event) => setReplyText(event.currentTarget.value)}
-                                disabled={loading}
-                            />
-                            <Group justify={'flex-end'} mb={'lg'}>
-                                <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={() => setShowReplyForm(!showReplyForm)} >Cancel</Button>
-                                <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={handlePostReply} disabled={loading}>
-                                    {loading ? 'Posting...' : 'Reply'}
-                                </Button>
-                            </Group>
-                        </div>
-                    )}
-                    {
-                        props.comment.replies ? props.comment.replies.map((reply, index) => (
-                            <PostComment
-                                key={reply.id}
-                                // @ts-ignore
-                                comment={reply}
-                                postAuthorId={props.postAuthorId}
-                            />
-                        )) : <></>
-                    }
-                </Grid.Col>
-            </Grid>
+                </div>
+            )}
+            {
+                props.comment.replies ? props.comment.replies.map((reply, index) => (
+                    <div style={{paddingLeft: '2rem', paddingRight: '1rem'}}>
+                        <PostComment
+                            key={reply.id}
+                            // @ts-ignore
+                            comment={reply}
+                            postAuthorId={props.postAuthorId}
+                        />
+                    </div>
+                )) : <></>
+            }
         </div>
     );
 }

@@ -6,14 +6,15 @@ import Underline from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import Superscript from '@tiptap/extension-superscript'
 import SubScript from '@tiptap/extension-subscript'
-import {Button, Card, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core";
+import CharacterCount from '@tiptap/extension-character-count'
+import {Button, Card, Container, Grid, Group, Select, Space, TextInput, Title, Text} from "@mantine/core";
 import React, {useEffect} from "react";
 import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
 import classes from "../../../../component/Community/ProfileNavBar/ProfileNavBar.module.css";
 import {useSession} from "next-auth/react";
 import {Community} from ".prisma/client";
-import {redirect} from "next/navigation";
 import {useRouter} from "next/router";
+import PostImageDropZone from "../../../../component/Community/PostImageDropzone/PostImageDropzone";
 
 export default function Index() {
     const editor = useEditor({
@@ -25,6 +26,9 @@ export default function Index() {
             SubScript,
             Highlight,
             TextAlign.configure({ types: ['heading', 'paragraph'] }),
+            CharacterCount.configure({
+                limit: 10000
+            }),
         ]
     });
 
@@ -53,30 +57,33 @@ export default function Index() {
     }, []);
 
     return (
-        <Container size={'98%'}>
+        <Container size="90%" maw={{ base: '1550px', md: '1050px', lg: '1550px' }}>
             <Space h={'xl'}/>
-            <Grid>
-                <Grid.Col span={2}>
+            <Grid gutter={'xl'}>
+                <Grid.Col span={{ sm: 0, md: 0, lg: 3 }}>
                     <CommunityNavBar/>
                 </Grid.Col>
-                <Grid.Col span={6.5}>
+                <Grid.Col span={{ sm: 12, md: 12, lg: 9 }}>
                     <Group justify={'space-between'}>
                         <Title>Create a Post</Title>
                     </Group>
-                    <Card radius={'xl'} padding={'xl'} mt={'1rem'} mr={'2rem'} className={classes.card}>
+                    <Card padding={'xl'} mt={'2rem'} mr={'2rem'} className={classes.card}>
                         <Title size={'xs'} mb={'sm'}>Select a Community</Title>
                         <Select
+                            size={'md'}
                             data={
                                 communities
                                     .filter((community) => community.name !== 'All' && community.name !== 'Announcements')
                                     .map((community) => {
-                                        return { value: community.id.toString(), label: community.name }
+                                        return { value: community.id.toString(), label: community.label }
                                     })
                             }
                             onChange={(_value) => { if(_value) setSelectedCommunity(_value)}}
                         />
                         <Space h={'md'}/>
                         <TextInput size='xl' placeholder={'Title'} onChange={(e) => setPostTitle(e.target.value)}/>
+                        <Space h={'xl'}/>
+                        <PostImageDropZone/>
                         <Space h={'xl'}/>
                         <RichTextEditor editor={editor}>
                             <RichTextEditor.Toolbar sticky stickyOffset={60}>

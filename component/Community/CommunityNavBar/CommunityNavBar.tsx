@@ -1,33 +1,69 @@
-import { Card, Group, NavLink, Text, Title } from "@mantine/core";
-import React, { useEffect, useState } from "react";
-import { sampleCommunities } from "../../../entities/Community";
-import { usePathname } from "next/navigation";
+import {Card, Group, NavLink, Text, Title} from "@mantine/core";
+import React, {useEffect} from "react";
+import {usePathname} from "next/navigation";
 import classes from "./CommunityNavBar.module.css";
+import {Community} from ".prisma/client";
+import {useRouter} from "next/router";
 
-export function CommunityNavBar() {
-    const [communityTitle, setCommunityTitle] = useState('');
+interface CommunityNavBarProps {
+    currentCommunity?: string | string[] | undefined;
+}
+
+export function CommunityNavBar(props: CommunityNavBarProps) {
+    const router = useRouter();
+    const [communities, setCommunities] = React.useState<Community[]>([]);
     const pathName = usePathname();
+    const [navBarTitle, setNavBarTitle] = React.useState('');
 
     useEffect(() => {
-        const result = sampleCommunities.find(
-            (community) => community.path === pathName
-        );
-        setCommunityTitle(result?.title || '');
-    }, [pathName]);
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/post', {
+                    method: 'GET'
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setCommunities(data);
+
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+        fetchData()
+    }, []);
+
+    useEffect(() => {
+        if (props.currentCommunity === 'all')
+            setNavBarTitle('All')
+        else {
+            const result = communities.find(
+                (community) => community.name === props.currentCommunity
+            );
+            setNavBarTitle(result?.label || '');
+        }
+    }, [communities, props.currentCommunity]);
 
     return (
         <div>
             <Title className={classes.title}>
-                {communityTitle}
+                {navBarTitle}
             </Title>
             <Card radius="0" mt="1rem" className={classes.card}>
                 <Title size="xs" p="xs">COMMUNITY</Title>
                 <Group gap={0} ml="xs">
-                    {sampleCommunities.map((community, index) => (
+                    <NavLink
+                        fw="600"
+                        label={'All'}
+                        href={'../../../../community/c/all'}
+                    />
+                    {communities.map((community, index) => (
                         <NavLink
                             fw="600"
-                            label={community.title}
-                            href={community.path}
+                            label={community.label}
+                            href={'../../../../community/c/' + community.name}
                             key={index}
                         />
                     ))}

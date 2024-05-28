@@ -21,6 +21,7 @@
     "@mantinex/mantine-logo": "^1.0.1",
     "@prisma/client": "^5.14.0",
     "@tabler/icons-react": "^3.2.0",
+    "@tiptap/extension-character-count": "^2.4.0",
     "@tiptap/extension-highlight": "^2.4.0",
     "@tiptap/extension-link": "^2.4.0",
     "@tiptap/extension-subscript": "^2.4.0",

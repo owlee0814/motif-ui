@@ -15,6 +15,7 @@ import {GetServerSideProps} from "next";
 import {useViewportSize} from "@mantine/hooks";
 import {MobileHeaderSimple} from "../component/Header/MobileHeaderSimple/MobileHeaderSimple";
 import {MantineEmotionProvider} from "@mantine/emotion";
+import '@mantine/dropzone/styles.css';
 
 const sen = Sen({weight: "700", subsets: ['latin']})
 
