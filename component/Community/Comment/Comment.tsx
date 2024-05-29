@@ -1,4 +1,4 @@
-import {Avatar, Button, Card, Grid, Group, Space, Text, Textarea} from "@mantine/core";
+import {Anchor, Avatar, Button, Card, Grid, Group, Space, Text, Textarea} from "@mantine/core";
 import React, {useEffect, useState} from "react";
 import {IconMessage} from "@tabler/icons-react";
 import {timeAgo} from "../../../util/util";
@@ -61,16 +61,25 @@ export default function PostComment(props: PostCommentProps) {
         <div>
             <Space h={'xs'}/>
             <Group display={'flex'}>
-            <Avatar
-                src={props.comment.author.user.image}
-                alt={props.comment.author.user.username}
-                radius="xl"
-                color="indigo"
-            />
+            <Anchor href={''}>
+                <Avatar
+                    src={props.comment.author.user.image}
+                    alt={props.comment.author.user.username}
+                    radius="xl"
+                    color="indigo"
+                />
+            </Anchor>
             <Card radius="0" pl='md' pr='md' pt='md' pb='xs' className={classes.card}>
                 <Group gap={'lg'}>
-                    <Group gap={6}>
-                        <Text size="sm">{props.comment.author.user.username}</Text>
+                    <Group gap={8}>
+                        <Anchor
+                            href={''}
+                            style={{
+                                color: 'inherit',
+                            }}
+                        >
+                            <Text size="sm">{props.comment.author.user.username}</Text>
+                        </Anchor>
                         <Text size="xs" fw='bold' c={'red'}>{props.postAuthorId === props.comment.authorId ? 'OP' : ''}</Text>
                     </Group>
                     <Text size="xs" c="dimmed">
