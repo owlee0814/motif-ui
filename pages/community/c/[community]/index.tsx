@@ -133,7 +133,7 @@ export default function Home() {
                         dataLength={posts.length}
                         next={loadMore}
                         hasMore={hasMore}
-                        loader={<h4>Loading...</h4>}
+                        loader={<Title size={'1.5rem'}>Loading...</Title>}
                         endMessage={<Title size={'xs'} mt={'xl'}>No posts to display</Title>}
                         style={{ overflow: 'visible' }}
                     >

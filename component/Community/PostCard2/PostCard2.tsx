@@ -1,4 +1,17 @@
-import {ActionIcon, Badge, Button, Card, Grid, Group, Image, Space, Stack, Text, Title} from "@mantine/core";
+import {
+    ActionIcon,
+    AspectRatio,
+    Badge,
+    Button,
+    Card,
+    Grid,
+    Group,
+    Image,
+    Space,
+    Stack,
+    Text,
+    Title
+} from "@mantine/core";
 import {IconHeart, IconMessageCircle, IconShare, IconThumbUpFilled} from "@tabler/icons-react";
 import React from "react";
 import Link from "next/link";
@@ -45,13 +58,15 @@ export function PostCard2(props: PostCard2Props) {
                         </Grid.Col>
                         <Grid.Col span={3}>
                             <Group justify={'flex-end'}>
-                                <Image
-                                    src={''}
-                                    h={100}
-                                    w={100}
-                                    radius={"0"}
-                                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-                                />
+                                <AspectRatio>
+                                    <Image
+                                        src={props.post.images.length > 0 ? props.post.images[0].imgUrl : ''}
+                                        h={100}
+                                        w={100}
+                                        radius={"0"}
+                                        fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+                                    />
+                                </AspectRatio>
                             </Group>
                         </Grid.Col>
                     </Grid>

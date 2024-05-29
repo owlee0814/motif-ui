@@ -1,18 +1,20 @@
 import {
     Anchor,
+    AspectRatio,
     Badge,
     Button,
-    Card,
+    Card, Center,
     Container,
     Divider,
     Grid,
     Group,
+    Image,
     Space,
     Text as TextMantine,
     Textarea,
     Title
 } from "@mantine/core";
-import {IconBookmark, IconBookmarkFilled, IconHeart, IconShare} from "@tabler/icons-react";
+import {IconBookmark} from "@tabler/icons-react";
 import React, {useEffect, useMemo, useState} from "react";
 
 import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
@@ -31,21 +33,24 @@ import {BulletList} from "@tiptap/extension-bullet-list";
 import {Blockquote} from "@tiptap/extension-blockquote";
 import {Heading} from "@tiptap/extension-heading";
 import {CommentWithRelations, PostWithRelations} from "../../../../entities/Types";
-import {countComments, getBadgeColor, timeAgo} from "../../../../util/util";
-import classes from "../../../../component/Community/PostCard/PostCard.module.css";
+import {getBadgeColor, timeAgo} from "../../../../util/util";
 import {useSession} from "next-auth/react";
 import PostComment from "../../../../component/Community/Comment/Comment";
 import {ShareButton} from "../../../../component/Community/ShareButton/ShareButton";
+import {LikeButton} from "../../../../component/Community/LikeButton/LikeButton";
+import {Post} from "@prisma/client";
+import ImageOverlay from "../../../../component/ImageOverlay/ImageOverlay";
 
 export default function PostDetail() {
     const router = useRouter();
     const { id } = router.query;
-    const { data } = useSession()
+    const { data, status } = useSession()
     const [post, setPost] = useState<PostWithRelations>();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
     const [comments, setComments] = useState<CommentWithRelations[]>([]);
     const [newComment, setNewComment] = useState('');
+    const [likedPosts, setLikedPosts] = useState<Post[]>([]);
 
     async function fetchComments(postId: number) {
         const response = await fetch(`/api/post/${postId}/comment`);
@@ -54,6 +59,30 @@ export default function PostDetail() {
         }
         return response.json();
     }
+
+    useEffect(() => {
+        if(status === 'authenticated')
+            fetchLikedPosts()
+    }, [data]);
+
+    const fetchLikedPosts = async () => {
+        try {
+            const response = await fetch('/api/posts/user/' + data?.user.id + '/liked' );
+            if (!response.ok) {
+                throw new Error('Failed to fetch posts');
+            }
+            const res = await response.json();
+            setLikedPosts(res)
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unexpected error occurred');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     async function postComment(postId: number, content: string) {
         const authorId = data?.user.id;
@@ -174,22 +203,27 @@ export default function PostDetail() {
                                 {post?.community.name}
                             </Badge>
                         </Anchor>
-                        <Title size={'1.5rem'} mb={'lg'}>{post?.title}</Title>
+                        <Title size={'1.5rem'}>{post?.title}</Title>
                         <Group justify={'space-between'} mb={'lg'}>
                             <Group>
                                 <TextMantine size={'sm'}>{post?.author.user.username}</TextMantine>
                                 <TextMantine size={'sm'}>posted {timeAgo(post?.createdAt.toString())}</TextMantine>
                             </Group>
                             <Group mt="md" gap={5}>
-                                <Button variant="subtle" size='compact-sm' c='gray' leftSection={<IconHeart size={16} />}>
-                                    {post?._count.likes}
-                                </Button>
+                                {post ?
+                                    <LikeButton post={post} userId={data?.user.id || ''} userStatus={status} likedPosts={likedPosts} /> : <></>
+                                }
                                 <Button variant="subtle" size='compact-sm' c='gray' leftSection={<IconBookmark size={16} />}>
                                     Save
                                 </Button>
                                 <ShareButton href={''} size={'compact-sm'}/>
                             </Group>
                         </Group>
+                        <Space h={'xl'}/>
+                        {post?.images.map((image, index) => (
+                            <ImageOverlay imgUrl={image.imgUrl} key={index}/>
+                        ))}
+                        <Space h={'xl'}/>
                         <div dangerouslySetInnerHTML={{__html: output}}/>
                         <Divider mt={'xl'} mb={'md'}/>
                         <div>

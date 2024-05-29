@@ -17,6 +17,7 @@ export async function GET(req: Request, context: { params: Params}) {
                         user: true
                     }
                 },
+                images: true,
                 community: true,
                 _count: {
                     select: { likes: true, comments: true },

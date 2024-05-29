@@ -1,20 +1,20 @@
 import {Link, RichTextEditor} from '@mantine/tiptap';
-import {useEditor} from '@tiptap/react'
-import Highlight from '@tiptap/extension-highlight'
-import StarterKit from '@tiptap/starter-kit'
-import Underline from '@tiptap/extension-underline'
-import TextAlign from '@tiptap/extension-text-align'
-import Superscript from '@tiptap/extension-superscript'
-import SubScript from '@tiptap/extension-subscript'
-import CharacterCount from '@tiptap/extension-character-count'
-import {Button, Card, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core";
-import React, {useEffect} from "react";
-import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
-import classes from "../../../../component/Community/ProfileNavBar/ProfileNavBar.module.css";
-import {useSession} from "next-auth/react";
-import {Community} from ".prisma/client";
-import {useRouter} from "next/router";
-import PostImageDropZone from "../../../../component/Community/PostImageDropzone/PostImageDropzone";
+import {useEditor} from '@tiptap/react';
+import Highlight from '@tiptap/extension-highlight';
+import StarterKit from '@tiptap/starter-kit';
+import Underline from '@tiptap/extension-underline';
+import TextAlign from '@tiptap/extension-text-align';
+import Superscript from '@tiptap/extension-superscript';
+import SubScript from '@tiptap/extension-subscript';
+import CharacterCount from '@tiptap/extension-character-count';
+import {Button, Card, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core"
+import React, {useEffect, useState} from "react"
+import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar"
+import classes from "../../../../component/Community/CommunityNavBar/CommunityNavBar.module.css"
+import {useSession} from "next-auth/react"
+import {Community} from ".prisma/client"
+import {useRouter} from "next/router"
+import PostImageDropZone from "../../../../component/Community/PostImageDropzone/PostImageDropzone"
 
 export default function Index() {
     const editor = useEditor({
@@ -34,9 +34,10 @@ export default function Index() {
 
     const { data } = useSession()
     const router = useRouter()
-    const [selectedCommunity, setSelectedCommunity] = React.useState('');
-    const [postTitle, setPostTitle] = React.useState('');
-    const [communities, setCommunities] = React.useState<Community[]>([]);
+    const [selectedCommunity, setSelectedCommunity] = useState('')
+    const [postTitle, setPostTitle] = useState('')
+    const [communities, setCommunities] = useState<Community[]>([])
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -47,8 +48,8 @@ export default function Index() {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const data = await response.json(); // Parse the response as JSON
-                setCommunities(data); // Log the JSON data
+                const data = await response.json()
+                setCommunities(data)
             } catch (error) {
                 console.error('Fetch error:', error);
             }
@@ -56,12 +57,43 @@ export default function Index() {
         fetchData()
     }, []);
 
+    const handlePost = async () => {
+        const formData = new FormData();
+
+        if (selectedFile) {
+            formData.append('file', selectedFile); // Append the file only if it is not null
+        }
+
+        formData.append('data', JSON.stringify({
+            communityId: Number(selectedCommunity),
+            postTitle: postTitle,
+            authorId: data?.user.id,
+            content: JSON.stringify(editor?.getJSON()),
+            text: editor?.getText()
+        }));
+
+        try {
+            const response = await fetch('/api/post', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create post');
+            }
+
+            router.push('../c/all');
+        } catch (error) {
+            console.error('Post creation error:', error);
+        }
+    };
+
     return (
         <Container size="90%" maw={{ base: '1550px', md: '1050px', lg: '1550px' }}>
-            <Space h={'xl'}/>
+            <Space h={'xl'} />
             <Grid gutter={'xl'}>
                 <Grid.Col span={{ sm: 0, md: 0, lg: 3 }}>
-                    <CommunityNavBar/>
+                    <CommunityNavBar />
                 </Grid.Col>
                 <Grid.Col span={{ sm: 12, md: 12, lg: 9 }}>
                     <Group justify={'space-between'}>
@@ -78,13 +110,13 @@ export default function Index() {
                                         return { value: community.id.toString(), label: community.label }
                                     })
                             }
-                            onChange={(_value) => { if(_value) setSelectedCommunity(_value)}}
+                            onChange={(_value) => { if (_value) setSelectedCommunity(_value) }}
                         />
-                        <Space h={'md'}/>
-                        <TextInput size='xl' placeholder={'Title'} onChange={(e) => setPostTitle(e.target.value)}/>
-                        <Space h={'xl'}/>
-                        <PostImageDropZone/>
-                        <Space h={'xl'}/>
+                        <Space h={'md'} />
+                        <TextInput size='xl' placeholder={'Title'} onChange={(e) => setPostTitle(e.target.value)} />
+                        <Space h={'xl'} />
+                        <PostImageDropZone onFileSelected={(file) => setSelectedFile(file)} />
+                        <Space h={'xl'} />
                         <RichTextEditor editor={editor}>
                             <RichTextEditor.Toolbar sticky stickyOffset={60}>
                                 <RichTextEditor.ControlsGroup>
@@ -124,32 +156,21 @@ export default function Index() {
                                     <RichTextEditor.AlignJustify />
                                     <RichTextEditor.AlignRight />
                                 </RichTextEditor.ControlsGroup>
-                                
+
                                 <RichTextEditor.ControlsGroup>
                                     <RichTextEditor.Undo />
                                     <RichTextEditor.Redo />
                                 </RichTextEditor.ControlsGroup>
                             </RichTextEditor.Toolbar>
-                            <RichTextEditor.Content style={{minHeight:'20vh'}}/>
+                            <RichTextEditor.Content style={{ minHeight: '20vh' }} />
                         </RichTextEditor>
-                        <Space h={'md'}/>
+                        <Space h={'md'} />
                     </Card>
-                    <Space h={'md'}/>
+                    <Space h={'md'} />
                     <Group justify={'flex-end'}>
                         <Button mt={'0.2rem'} variant="filled" size="md" radius="xl" bg={'black'}
-                            onClick={async () => {
-                                await fetch('/api/post', {
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        communityId: Number(selectedCommunity),
-                                        postTitle: postTitle,
-                                        authorId: data?.user.id,
-                                        content: JSON.stringify(editor?.getJSON()),
-                                        text: editor?.getText()
-                                    })
-                                }).then(() => router.push('../c/all'))
-                            }}
-                            >Post</Button>
+                                onClick={handlePost}
+                        >Post</Button>
                     </Group>
                 </Grid.Col>
             </Grid>

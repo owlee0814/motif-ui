@@ -9,7 +9,11 @@ type FileWithPreview = {
     preview: string;
 };
 
-export default function PostImageDropZone() {
+interface PostImageDropZoneProps {
+    onFileSelected: (file: File | null) => void;
+}
+
+export default function PostImageDropZone({ onFileSelected }: PostImageDropZoneProps) {
     const [files, setFiles] = useState<FileWithPreview[]>([]);
     const [dropzoneHeight, setDropzoneHeight] = useState(200);
     const [dropzoneWidth, setDropzoneWidth] = useState('100%');
@@ -24,6 +28,7 @@ export default function PostImageDropZone() {
         }));
         setFiles(newFiles);
         setIsDropzoneActive(false);
+        onFileSelected(acceptedFiles[0]); // Pass the first selected file to the parent
     };
 
     const handleImageLoad = () => {
@@ -49,6 +54,7 @@ export default function PostImageDropZone() {
         setFiles(files.filter((_, i) => i !== index));
         setIsDropzoneActive(true);
         setDropzoneHeight(200);
+        onFileSelected(null); // Pass null to the parent when the file is removed
     };
 
     const previews = files.map((file, index) => (

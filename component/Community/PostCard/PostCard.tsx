@@ -8,6 +8,7 @@ import {getBadgeColor, timeAgo} from "../../../util/util";
 import {useSession} from "next-auth/react";
 import {Post} from "@prisma/client";
 import {ShareButton} from "../ShareButton/ShareButton";
+import {LikeButton} from "../LikeButton/LikeButton";
 
 interface PostCardProps {
     post: PostWithRelations
@@ -16,19 +17,7 @@ interface PostCardProps {
 
 export function PostCard(props: PostCardProps) {
     const [substringLength, setSubstringLength] = useState(160);
-    const [opened, setOpened] = useState(false);
-    const [isLiked, setIsLiked] = useState(false);
-    const [likes, setLikes] = useState(props.post._count.likes);// Add state for like status
     const { data, status } = useSession()
-
-    useEffect(() => {
-        if (status === 'authenticated' && props.likedPosts) {
-            props.likedPosts.map((likedPost) => {
-                if (likedPost.id === props.post.id)
-                    setIsLiked(true);
-            })
-        }
-    }, [props.likedPosts, status]);
 
     useEffect(() => {
         function handleResize() {
@@ -50,31 +39,6 @@ export function PostCard(props: PostCardProps) {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-
-    const handleLikeClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault(); // Prevent the default link behavior
-        const postId = props.post.id;
-        const userId = data?.user.id
-
-        try {
-            const response = await fetch(`/api/post/${postId}/like/${isLiked ? 'remove' : 'create'}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ postId, userId })
-            });
-
-            if (response.ok) {
-                isLiked ? setLikes(likes - 1) : setLikes(likes + 1);
-                setIsLiked(!isLiked); // Toggle the like status
-            } else {
-                console.error('Failed to toggle like');
-            }
-        } catch (error) {
-            console.error('Error toggling like:', error);
-        }
-    };
 
     return (
         <Grid.Col span={12}>
@@ -102,14 +66,7 @@ export function PostCard(props: PostCardProps) {
                         <Group justify='space-between'>
                             <Group gap={10}>
                                 <Group mt="md" gap={0} className={classes.actions}>
-                                    <Button
-                                        variant="subtle"
-                                        c={isLiked ? 'pink' : 'gray'}
-                                        onClick={handleLikeClick}
-                                        leftSection={<IconHeart size={16} color={isLiked ? 'pink' : 'gray'} />}
-                                    >
-                                        {likes}
-                                    </Button>
+                                    <LikeButton post={props.post} userId={data?.user.id || ''} userStatus={status} likedPosts={props.likedPosts}/>
                                     <Button variant="subtle" c='gray' leftSection={<IconMessageCircle size={16} />}>
                                         {props.post._count.comments} comments
                                     </Button>
@@ -124,7 +81,7 @@ export function PostCard(props: PostCardProps) {
                         </Group>
                     </div>
                     <AspectRatio className={classes.imageContainer}>
-                        <Image src={''} alt="Post image" h={'205'} w={'250'} className={classes.image} fallbackSrc="https://placehold.co/600x400?text=Placeholder"/>
+                        <Image src={props.post.images.length > 0 ? props.post.images[0].imgUrl : ''} alt="Post image" h={'205'} w={'250'} className={classes.image} fallbackSrc="https://placehold.co/600x400?text=Placeholder"/>
                     </AspectRatio>
                 </Card>
             </Link>

@@ -9,6 +9,7 @@ const userSocialWithRelations = Prisma.validator<Prisma.UserSocialDefaultArgs>()
 const postWithRelations = Prisma.validator<Prisma.PostDefaultArgs>()({
     include: {
         community: true,
+        images: true,
         author: {
             include : {
                 user: true

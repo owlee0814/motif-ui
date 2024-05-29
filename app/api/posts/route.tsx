@@ -20,6 +20,7 @@ export async function GET(req: Request) {
                         user: true
                     }
                 },
+                images: true,
                 community: true,
                 _count: {
                     select: { comments: true, likes: true },

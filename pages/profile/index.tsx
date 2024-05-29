@@ -4,9 +4,16 @@ import React, {useEffect, useState} from "react";
 import {PostCard} from "../../component/Community/PostCard/PostCard";
 import Link from "next/link";
 import OotdCard from "../../component/Community/OotdCard/OotdCard";
-import {IconMessageCircle, IconPhoto, IconSettings} from "@tabler/icons-react";
+import {
+    IconAward,
+    IconBulbFilled,
+    IconDiamondFilled,
+    IconMessageCircle,
+    IconPhoto,
+    IconSettings,
+    IconTrophyFilled
+} from "@tabler/icons-react";
 import {PostWithRelations} from "../../entities/Types";
-import {Post} from "@prisma/client";
 
 export default function Profile() {
     const { status, data} = useSession()
@@ -91,9 +98,13 @@ export default function Profile() {
                                 />
                             </div>
                             <Stack gap={5}>
-                                <Title>
-                                    {data?.user?.username}
-                                </Title>
+                                <Group>
+                                    <Title>
+                                        {data?.user?.username}
+                                    </Title>
+                                    <IconAward size={'1.7rem'} color={'#00abfb'}/>
+                                </Group>
+
                                 <Title size={'1rem'} fw={'100'} c={'gray'}>
                                     this is a description about myself, asdmflaksmdflamsdflkadm
                                 </Title>
