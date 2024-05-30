@@ -66,6 +66,13 @@ export async function POST(req: Request) {
                 content,
                 authorId,
                 postId
+            },
+            include : {
+                author: {
+                    include : {
+                        user: true
+                    }
+                }
             }
         });
 

@@ -53,6 +53,7 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
     const [newComment, setNewComment] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [comments, setComments] = useState<CommentWithRelations[]>(props.comments);
 
     const handlePostComment = async () => {
         if (!newComment.trim()) return;  // Prevent posting empty comments
@@ -66,12 +67,13 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                 body: JSON.stringify({ postId: props.post.id, authorId: props.userSession.user.id, content: newComment }),
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to post comment');
+            if (response.ok) {
+                const res = await response.json()
+                setComments(comments => [...comments, res]);
+            } else {
+                setError('Failed to post comment');
             }
-
-            setNewComment(''); // Clear the textarea
-            window.location.reload(); // Refresh the page to show the new comment
+            setNewComment('');
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message);
@@ -79,6 +81,31 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                 setError('An unexpected error occurred');
             }
         }
+    };
+
+    const handleAddReply = (parentId: number, reply: CommentWithRelations) => {
+        setComments(prevComments => {
+            const updateComments = (comments: CommentWithRelations[]): CommentWithRelations[] => {
+                return comments.map(comment => {
+                    if (comment.id === parentId) {
+                        return {
+                            ...comment,
+                            replies: [...(comment.replies || []), reply],
+                        };
+                    } else if (comment.replies) {
+                        return {
+                            ...comment,
+                            // @ts-ignore
+                            replies: updateComments(comment.replies),
+                        };
+                    } else {
+                        return comment;
+                    }
+                });
+            };
+
+            return updateComments(prevComments);
+        });
     };
 
     const output = useMemo(() => {
@@ -172,12 +199,13 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                                 <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={() => setNewComment('')}>Cancel</Button>
                                 <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={handlePostComment}>Post</Button>
                             </Group>
-                            {props.comments.map((comment) => (
+                            {comments.map((comment) => (
                                 <PostComment
                                     key={comment.id}
                                     comment={comment}
-                                    postAuthorId={props.post ? props.post?.authorId : ''}
+                                    author={comment.author}
                                     session={props.userSession}
+                                    onAddReply={handleAddReply} // Pass down the function to add replies
                                 />
                             ))}
                         </div>
@@ -214,9 +242,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             communities = await communitiesResponse.json();
         }
 
-        // Fetch liked posts if authenticated
-        // Assuming you have a way to fetch liked posts without session in SSR
-        // const likedResponse = await fetch(`${process.env.API_URL}/api/posts/user/liked`, { cache: 'no-store' });
         if ( session ) {
             const likedResponse = await fetch(`${process.env.API_URL}/api/posts/user/${session.user.id}/liked`, {cache: 'no-store'});
             if (likedResponse.ok) {

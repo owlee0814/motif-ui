@@ -1,15 +1,16 @@
-import {Anchor, Avatar, Button, Card, Grid, Group, Space, Text, Textarea} from "@mantine/core";
+import {Anchor, Avatar, Button, Card, Group, Space, Text, Textarea} from "@mantine/core";
 import React, {useEffect, useState} from "react";
 import {IconMessage} from "@tabler/icons-react";
 import {timeAgo} from "../../../util/util";
 import classes from "./Comment.module.css";
-import {CommentWithRelations} from "../../../entities/Types";
+import {CommentWithRelations, UserWithRelations} from "../../../entities/Types";
 import {Session} from "next-auth";
 
 interface PostCommentProps {
     comment: CommentWithRelations
-    postAuthorId: string
+    author: UserWithRelations
     session: Session
+    onAddReply: (parentId: number, reply: CommentWithRelations) => void // Add this prop
 }
 
 export default function PostComment(props: PostCommentProps) {
@@ -44,8 +45,8 @@ export default function PostComment(props: PostCommentProps) {
                 throw new Error('Failed to post reply');
             }
 
-            const result = await response.json();
-            // Optionally, you can handle the reply result, e.g., updating the UI
+            const reply = await response.json();
+            props.onAddReply(props.comment.id, reply); // Update the state in the parent component
 
             setShowReplyForm(false);
             setReplyText("");
@@ -56,41 +57,40 @@ export default function PostComment(props: PostCommentProps) {
         }
     };
 
-    // @ts-ignore
     return (
         <div>
             <Space h={'xs'}/>
             <Group display={'flex'}>
-            <Anchor href={'../../../../user/' + props.comment.author.user.username}>
-                <Avatar
-                    src={props.comment.author.user.image}
-                    alt={props.comment.author.user.username}
-                    radius="xl"
-                    color="indigo"
-                />
-            </Anchor>
-            <Card radius="0" pl='md' pr='md' pt='md' pb='xs' className={classes.card}>
-                <Group gap={'lg'}>
-                    <Group gap={8}>
-                        <Anchor
-                            href={'../../../../user/' + props.comment.author.user.username}
-                            style={{
-                                color: 'inherit',
-                            }}
-                        >
-                            <Text size="sm">{props.comment.author.user.username}</Text>
-                        </Anchor>
-                        <Text size="xs" fw='bold' c={'red'}>{props.postAuthorId === props.comment.authorId ? 'OP' : ''}</Text>
+                <Anchor href={'../../../../user/' + props.author.user.username}>
+                    <Avatar
+                        src={props.comment.author.user.image}
+                        alt={props.comment.author.user.username}
+                        radius="xl"
+                        color="indigo"
+                    />
+                </Anchor>
+                <Card radius="0" pl='md' pr='md' pt='md' pb='xs' className={classes.card}>
+                    <Group gap={'lg'}>
+                        <Group gap={8}>
+                            <Anchor
+                                href={'../../../../user/' + props.comment.author.user.username}
+                                style={{
+                                    color: 'inherit',
+                                }}
+                            >
+                                <Text size="sm">{props.comment.author.user.username}</Text>
+                            </Anchor>
+                            <Text size="xs" fw='bold' c={'red'}>{props.author.id === props.comment.authorId ? 'OP' : ''}</Text>
+                        </Group>
+                        <Text size="xs" c="dimmed">
+                            {timeAgo(props.comment.createdAt)}
+                        </Text>
                     </Group>
-                    <Text size="xs" c="dimmed">
-                        {timeAgo(props.comment.createdAt)}
+                    <Text pt="5" size="sm">
+                        {props.comment.content}
                     </Text>
-                </Group>
-                <Text pt="5" size="sm">
-                    {props.comment.content}
-                </Text>
-                <Space h={'xs'}/>
-            </Card>
+                    <Space h={'xs'}/>
+                </Card>
             </Group>
             <Group gap={0} p={'xs'}>
                 <Button leftSection={<IconMessage size={14} />} ml={'2.5rem'} size={'compact-sm'} variant={'subtle'} fw={'500'} onClick={() => setShowReplyForm(true)}>
@@ -125,8 +125,9 @@ export default function PostComment(props: PostCommentProps) {
                             key={reply.id}
                             // @ts-ignore
                             comment={reply}
-                            postAuthorId={props.postAuthorId}
                             session={props.session}
+                            onAddReply={props.onAddReply} // Pass down the function to handle adding replies
+                            author={props.author}
                         />
                     </div>
                 )) : <></>
