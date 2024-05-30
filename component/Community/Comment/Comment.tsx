@@ -93,7 +93,7 @@ export default function PostComment(props: PostCommentProps) {
             </Card>
             </Group>
             <Group gap={0} p={'xs'}>
-                <Button leftSection={<IconMessage size={14} />} size={'compact-sm'} variant={'transparent'} fw={'500'} onClick={() => setShowReplyForm(true)}>
+                <Button leftSection={<IconMessage size={14} />} ml={'2.5rem'} size={'compact-sm'} variant={'subtle'} fw={'500'} onClick={() => setShowReplyForm(true)}>
                     Reply
                 </Button>
             </Group>

@@ -63,6 +63,13 @@ export function timeAgo(timestamp: Date | string | undefined) {
     }
 }
 
+export function convertDateToYearMonth(isoString: string | Date) {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so we add 1
+    return `${year}.${month}`;
+}
+
 export const countComments = (comments: CommentWithRelations[]): number => {
     let count = comments.length;
     for (const comment of comments) {

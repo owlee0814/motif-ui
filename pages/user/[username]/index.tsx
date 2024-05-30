@@ -9,6 +9,7 @@ import OotdCard from "../../../component/Community/OotdCard/OotdCard";
 import {PostCard} from "../../../component/Community/PostCard/PostCard";
 import {authOptions} from "../../api/auth/[...nextauth]";
 import {User} from "@prisma/client";
+import {convertDateToYearMonth} from "../../../util/util";
 
 interface ProfileProps {
     userPosts : PostWithRelations[],
@@ -58,7 +59,7 @@ export default function Profile(props: ProfileProps) {
                                     this is a description about myself, asdmflaksmdflamsdflkadm
                                 </Title>
                                 <Title size={'0.9rem'} fw={'100'} c={'gray'}>
-                                    EST. 2024.05
+                                    EST. {convertDateToYearMonth(props.user.createdAt)}
                                 </Title>
                                 <Space h={'xs'} />
                                 <Group gap={'xl'}>

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {
     Anchor,
     Badge,
@@ -116,18 +116,27 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                 </Grid.Col>
                 <Grid.Col span={{ sm: 12, md: 12, lg: 9 }} pt={'6rem'}>
                     <Card p={'xl'} radius={0}>
-                        <Anchor href={'../c/' + props.post?.community.name} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'lg'}>
-                            <Badge
-                                bg={getBadgeColor(props.post?.community.id)}
-                                radius={'0'}
-                            >
-                                {props.post?.community.name}
-                            </Badge>
-                        </Anchor>
+                        <Group>
+                            <Anchor href={'../c/' + props.post?.community.name} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'lg'}>
+                                <Badge
+                                    bg={getBadgeColor(props.post?.community.id)}
+                                    radius={'0'}
+                                >
+                                    {props.post?.community.name}
+                                </Badge>
+                            </Anchor>
+                        </Group>
                         <Title size={'1.5rem'}>{props.post?.title}</Title>
                         <Group justify={'space-between'} mb={'lg'}>
                             <Group>
-                                <TextMantine size={'sm'}>{props.post?.author.user.username}</TextMantine>
+                                <Anchor
+                                    href={'../../../../user/' + props.post?.author.user.username}
+                                    style={{
+                                        color: 'inherit',
+                                    }}
+                                >
+                                    <TextMantine size={'sm'}>{props.post?.author.user.username}</TextMantine>
+                                </Anchor>
                                 <TextMantine size={'sm'}>posted {timeAgo(props.post?.createdAt.toString())}</TextMantine>
                             </Group>
                             <Group mt="md" gap={5}>
