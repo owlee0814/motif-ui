@@ -1,5 +1,5 @@
-import { Link, RichTextEditor } from '@mantine/tiptap';
-import { useEditor } from '@tiptap/react';
+import {Link, RichTextEditor} from '@mantine/tiptap';
+import {useEditor} from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -7,17 +7,20 @@ import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import CharacterCount from '@tiptap/extension-character-count';
-import { Button, Card, Container, Grid, Group, Select, Space, TextInput, Title } from "@mantine/core";
-import React, { useState } from "react";
-import { CommunityNavBar } from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
+import {Button, Card, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core";
+import React, {useState} from "react";
+import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
 import classes from "../../../../component/Community/CommunityNavBar/CommunityNavBar.module.css";
-import { useSession } from "next-auth/react";
-import { Community } from ".prisma/client";
-import { useRouter } from "next/router";
+import {Community} from ".prisma/client";
+import {useRouter} from "next/router";
 import PostImageDropZone from "../../../../component/Community/PostImageDropzone/PostImageDropzone";
+import {getServerSession, Session} from "next-auth";
+import {authOptions} from "../../../api/auth/[...nextauth]";
+import {GetServerSideProps} from "next";
 
 interface PostCreateProps {
-    communities: Community[]
+    communities: Community[],
+    userSession: Session
 }
 
 export default function Index(props: PostCreateProps) {
@@ -36,7 +39,6 @@ export default function Index(props: PostCreateProps) {
         ]
     });
 
-    const { data } = useSession();
     const router = useRouter();
     const [selectedCommunity, setSelectedCommunity] = useState('');
     const [postTitle, setPostTitle] = useState('');
@@ -52,7 +54,7 @@ export default function Index(props: PostCreateProps) {
         formData.append('data', JSON.stringify({
             communityId: Number(selectedCommunity),
             postTitle: postTitle,
-            authorId: data?.user.id,
+            authorId: props.userSession?.user.id,
             content: JSON.stringify(editor?.getJSON()),
             text: editor?.getText()
         }));
@@ -163,8 +165,19 @@ export default function Index(props: PostCreateProps) {
     );
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
+        const session = await getServerSession(context.req, context.res, authOptions);
+
+        if (!session) {
+            return {
+                redirect: {
+                    destination: '/auth/signin',
+                    permanent: false,
+                },
+            };
+        }
+
         const response = await fetch(`${process.env.API_URL}/api/post`, {
             method: 'GET'
         });
@@ -177,7 +190,8 @@ export async function getServerSideProps() {
 
         return {
             props: {
-                communities: initialCommunities
+                communities: initialCommunities,
+                userSession: session,
             }
         };
     } catch (error) {
