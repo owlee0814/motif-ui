@@ -61,7 +61,7 @@ export default function PostComment(props: PostCommentProps) {
         <div>
             <Space h={'xs'}/>
             <Group display={'flex'}>
-            <Anchor href={''}>
+            <Anchor href={'../../../../user/' + props.comment.author.user.username}>
                 <Avatar
                     src={props.comment.author.user.image}
                     alt={props.comment.author.user.username}
@@ -73,7 +73,7 @@ export default function PostComment(props: PostCommentProps) {
                 <Group gap={'lg'}>
                     <Group gap={8}>
                         <Anchor
-                            href={''}
+                            href={'../../../../user/' + props.comment.author.user.username}
                             style={{
                                 color: 'inherit',
                             }}
@@ -126,6 +126,7 @@ export default function PostComment(props: PostCommentProps) {
                             // @ts-ignore
                             comment={reply}
                             postAuthorId={props.postAuthorId}
+                            session={props.session}
                         />
                     </div>
                 )) : <></>

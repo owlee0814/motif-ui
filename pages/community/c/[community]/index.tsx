@@ -29,6 +29,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
     const [hasMore, setHasMore] = useState(props.initialHasMore);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const { status } = useSession();
 
     const fetchPosts = async () => {
         setLoading(true);
@@ -83,7 +84,10 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
                                     placeholder="Search"
                                 />
                             </div>
-                            <Button variant="filled" size="sm" radius="0" bg={'black'} component={Link} href="../post/create">
+                            <Button variant="filled" size="sm" radius="0" bg={'black'}
+                                    component={Link}
+                                    href={status === 'authenticated' ? "../post/create" : '../../api/auth/signin'}
+                            >
                                 Create a Post
                             </Button>
                         </Group>

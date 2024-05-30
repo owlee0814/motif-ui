@@ -36,7 +36,7 @@ interface HeaderSimpleProps {
 }
 
 export function HeaderSimple(props : HeaderSimpleProps) {
-    const { status} = useSession()
+    const { status, data} = useSession()
 
     const mainLinks = [
         {link: '/home', label: 'HOME'},
@@ -45,7 +45,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
         {link: '', label: '|', disabled: true},
         {link: '/community/c/all', label: 'COMMUNITY'},
         {link: '/inspo', label: 'INSPIRATION'},
-        {link: status === "unauthenticated" ? '/api/auth/signin' : '/profile', label: 'PROFILE'},
+        {link: status === "unauthenticated" ? '/api/auth/signin' : `/user/${data?.user.username}`, label: 'PROFILE'},
     ];
 
     const pathname = usePathname()

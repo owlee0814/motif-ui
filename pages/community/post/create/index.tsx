@@ -1,5 +1,5 @@
-import {Link, RichTextEditor} from '@mantine/tiptap';
-import {useEditor} from '@tiptap/react';
+import { Link, RichTextEditor } from '@mantine/tiptap';
+import { useEditor } from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -7,16 +7,20 @@ import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import CharacterCount from '@tiptap/extension-character-count';
-import {Button, Card, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core"
-import React, {useEffect, useState} from "react"
-import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar"
-import classes from "../../../../component/Community/CommunityNavBar/CommunityNavBar.module.css"
-import {useSession} from "next-auth/react"
-import {Community} from ".prisma/client"
-import {useRouter} from "next/router"
-import PostImageDropZone from "../../../../component/Community/PostImageDropzone/PostImageDropzone"
+import { Button, Card, Container, Grid, Group, Select, Space, TextInput, Title } from "@mantine/core";
+import React, { useState } from "react";
+import { CommunityNavBar } from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
+import classes from "../../../../component/Community/CommunityNavBar/CommunityNavBar.module.css";
+import { useSession } from "next-auth/react";
+import { Community } from ".prisma/client";
+import { useRouter } from "next/router";
+import PostImageDropZone from "../../../../component/Community/PostImageDropzone/PostImageDropzone";
 
-export default function Index() {
+interface PostCreateProps {
+    communities: Community[]
+}
+
+export default function Index(props: PostCreateProps) {
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -32,36 +36,17 @@ export default function Index() {
         ]
     });
 
-    const { data } = useSession()
-    const router = useRouter()
-    const [selectedCommunity, setSelectedCommunity] = useState('')
-    const [postTitle, setPostTitle] = useState('')
-    const [communities, setCommunities] = useState<Community[]>([])
+    const { data } = useSession();
+    const router = useRouter();
+    const [selectedCommunity, setSelectedCommunity] = useState('');
+    const [postTitle, setPostTitle] = useState('');
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch('/api/post', {
-                    method: 'GET'
-                });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json()
-                setCommunities(data)
-            } catch (error) {
-                console.error('Fetch error:', error);
-            }
-        }
-        fetchData()
-    }, []);
 
     const handlePost = async () => {
         const formData = new FormData();
 
         if (selectedFile) {
-            formData.append('file', selectedFile); // Append the file only if it is not null
+            formData.append('file', selectedFile);
         }
 
         formData.append('data', JSON.stringify({
@@ -93,7 +78,7 @@ export default function Index() {
             <Space h={'xl'} />
             <Grid gutter={'xl'}>
                 <Grid.Col span={{ sm: 0, md: 0, lg: 3 }}>
-                    <CommunityNavBar />
+                    <CommunityNavBar communities={props.communities} currentCommunity={'All'}/>
                 </Grid.Col>
                 <Grid.Col span={{ sm: 12, md: 12, lg: 9 }}>
                     <Group justify={'space-between'}>
@@ -104,7 +89,7 @@ export default function Index() {
                         <Select
                             size={'md'}
                             data={
-                                communities
+                                props.communities
                                     .filter((community) => community.name !== 'All' && community.name !== 'Announcements')
                                     .map((community) => {
                                         return { value: community.id.toString(), label: community.label }
@@ -176,4 +161,31 @@ export default function Index() {
             </Grid>
         </Container>
     );
+}
+
+export async function getServerSideProps() {
+    try {
+        const response = await fetch(`${process.env.API_URL}/api/post`, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const initialCommunities : Community[] = await response.json();
+
+        return {
+            props: {
+                communities: initialCommunities
+            }
+        };
+    } catch (error) {
+        console.error('Fetch error:', error);
+        return {
+            props: {
+                communities: []
+            }
+        };
+    }
 }

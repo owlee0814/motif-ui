@@ -1,24 +1,24 @@
 import {Avatar, Button, Container, Grid, Group, rem, Space, Stack, Tabs, Text, Title} from "@mantine/core";
 import React, {useEffect, useState} from "react";
-import {PostCard} from "../../component/Community/PostCard/PostCard";
 import Link from "next/link";
-import OotdCard from "../../component/Community/OotdCard/OotdCard";
 import {IconAward, IconMessageCircle, IconPhoto, IconSettings} from "@tabler/icons-react";
-import {PostWithRelations} from "../../entities/Types";
 import {GetServerSideProps} from "next";
 import {getServerSession, Session} from "next-auth";
-import {authOptions} from "../api/auth/[...nextauth]";
+import {PostWithRelations} from "../../../entities/Types";
+import OotdCard from "../../../component/Community/OotdCard/OotdCard";
+import {PostCard} from "../../../component/Community/PostCard/PostCard";
+import {authOptions} from "../../api/auth/[...nextauth]";
+import {User} from "@prisma/client";
 
 interface ProfileProps {
     userPosts : PostWithRelations[],
     likedPosts : PostWithRelations[],
-    userSession: Session,
-    test: any
+    user: User,
+    userSession: Session
 }
 
 export default function Profile(props: ProfileProps) {
     const ootds = [];
-    const [error, setError] = useState('');
 
     useEffect(() => {
         console.log(props)
@@ -39,7 +39,7 @@ export default function Profile(props: ProfileProps) {
                         <Group>
                             <div style={{ padding: '4rem', paddingRight: '6rem' }}>
                                 <Avatar
-                                    src={props.userSession.user.image}
+                                    src={props.user.image}
                                     alt={'username'}
                                     radius={200}
                                     size={'9rem'}
@@ -49,7 +49,7 @@ export default function Profile(props: ProfileProps) {
                             <Stack gap={5}>
                                 <Group>
                                     <Title>
-                                        {props.userSession.user.username}
+                                        {props.user.username}
                                     </Title>
                                     <IconAward size={'1.7rem'} color={'#00abfb'} />
                                 </Group>
@@ -79,12 +79,15 @@ export default function Profile(props: ProfileProps) {
                         </Group>
                     </Grid.Col>
                     <Grid.Col span={4}>
-                        <Group justify={'flex-end'} pt={'3.8rem'}>
-                            <Button variant="filled" size="sm" radius="0" bg={'black'} component={Link}
-                                    href="community/post/create">
-                                Upload
-                            </Button>
-                        </Group>
+                        {
+                            (props.userSession && props.userSession.user.id === props.user.id) &&
+                            <Group justify={'flex-end'} pt={'3.8rem'}>
+                                <Button variant="filled" size="sm" radius="0" bg={'black'} component={Link}
+                                        href="community/post/create">
+                                    Upload
+                                </Button>
+                            </Group>
+                        }
                     </Grid.Col>
                 </Grid>
 
@@ -96,12 +99,16 @@ export default function Profile(props: ProfileProps) {
                         <Tabs.Tab value="messages" leftSection={<IconMessageCircle style={{ width: rem(12), height: rem(12) }} />}>
                             Posts
                         </Tabs.Tab>
-                        <Tabs.Tab value="saved" leftSection={<IconSettings style={{ width: rem(12), height: rem(12) }} />}>
-                            Saved
-                        </Tabs.Tab>
-                        <Tabs.Tab value="liked" leftSection={<IconSettings style={{ width: rem(12), height: rem(12) }} />}>
-                            Liked
-                        </Tabs.Tab>
+                        {
+                            (props.userSession && props.userSession.user.id === props.user.id) &&
+                            <><Tabs.Tab value="saved"
+                                        leftSection={<IconSettings style={{width: rem(12), height: rem(12)}}/>}>
+                                Saved
+                            </Tabs.Tab><Tabs.Tab value="liked" leftSection={<IconSettings
+                                style={{width: rem(12), height: rem(12)}}/>}>
+                                Liked
+                            </Tabs.Tab></>
+                        }
                     </Tabs.List>
 
                     <Tabs.Panel value="gallery">
@@ -117,18 +124,19 @@ export default function Profile(props: ProfileProps) {
                             ))}
                         </Grid>
                     </Tabs.Panel>
-
-                    <Tabs.Panel value="settings">
-                        Settings tab content
-                    </Tabs.Panel>
-
-                    <Tabs.Panel value="liked">
-                        <Grid mt={'2rem'} gutter={15}>
-                            {props.likedPosts.map((post) => (
-                                <PostCard likedPosts={props.likedPosts} post={post} key={post.id} session={props.userSession}/>
-                            ))}
-                        </Grid>
-                    </Tabs.Panel>
+                    {
+                        (props.userSession && props.userSession.user.id === props.user.id) &&
+                        <><Tabs.Panel value="settings">
+                            Settings tab content
+                        </Tabs.Panel><Tabs.Panel value="liked">
+                            <Grid mt={'2rem'} gutter={15}>
+                                {props.likedPosts.map((post) => (
+                                    <PostCard likedPosts={props.likedPosts} post={post} key={post.id}
+                                              session={props.userSession}/>
+                                ))}
+                            </Grid>
+                        </Tabs.Panel></>
+                    }
                 </Tabs>
             </Container>
     );
@@ -137,19 +145,19 @@ export default function Profile(props: ProfileProps) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
         const session = await getServerSession(context.req, context.res, authOptions);
+        const { username } = context.query
 
-        if (!session) {
-            return {
-                redirect: {
-                    destination: '/api/auth/signin',
-                    permanent: false,
-                },
-            };
+        const userRes = await fetch(`${process.env.API_URL}/api/user?username=${username}`);
+
+        if (!userRes.ok) {
+            throw new Error('Failed to get user');
         }
 
+        const user = await userRes.json();
+
         const [userPostsRes, likedPostsRes] = await Promise.all([
-            fetch(`${process.env.API_URL}/api/posts/user/${session.user.id}`),
-            fetch(`${process.env.API_URL}/api/posts/user/${session.user.id}/liked`)
+            fetch(`${process.env.API_URL}/api/posts/user/${user.id}`),
+            fetch(`${process.env.API_URL}/api/posts/user/${user.id}/liked`)
         ]);
 
         if (!userPostsRes.ok || !likedPostsRes.ok) {
@@ -165,6 +173,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             props: {
                 userPosts,
                 likedPosts,
+                user,
                 userSession: session,
             },
         };
