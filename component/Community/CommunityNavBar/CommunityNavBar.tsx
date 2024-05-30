@@ -6,45 +6,25 @@ import {Community} from ".prisma/client";
 import {useRouter} from "next/router";
 
 interface CommunityNavBarProps {
-    currentCommunity?: string | string[] | undefined;
+    currentCommunity: string,
+    communities: Community[]
 }
 
 export function CommunityNavBar(props: CommunityNavBarProps) {
     const router = useRouter();
-    const [communities, setCommunities] = React.useState<Community[]>([]);
     const pathName = usePathname();
     const [navBarTitle, setNavBarTitle] = React.useState('');
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch('/api/post', {
-                    method: 'GET'
-                });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setCommunities(data);
-
-
-            } catch (error) {
-                console.error('Fetch error:', error);
-            }
-        }
-        fetchData()
-    }, []);
 
     useEffect(() => {
         if (props.currentCommunity === 'all')
             setNavBarTitle('All')
         else {
-            const result = communities.find(
+            const result = props.communities.find(
                 (community) => community.name === props.currentCommunity
             );
             setNavBarTitle(result?.label || '');
         }
-    }, [communities, props.currentCommunity]);
+    }, [props.communities, props.currentCommunity]);
 
     return (
         <div>
@@ -68,7 +48,7 @@ export function CommunityNavBar(props: CommunityNavBarProps) {
                             href={'../../../../community/c/all'}
                         />
                     }
-                    {communities.map((community, index) => {
+                    {props.communities.map((community, index) => {
                         return navBarTitle === community.label ?
                         <NavLink
                             fw="900"

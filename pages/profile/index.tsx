@@ -1,108 +1,57 @@
-import {Avatar, Button, Center, Container, Grid, Group, rem, Space, Stack, Tabs, Text, Title} from "@mantine/core";
-import {useSession} from "next-auth/react";
+import {Avatar, Button, Container, Grid, Group, rem, Space, Stack, Tabs, Text, Title} from "@mantine/core";
 import React, {useEffect, useState} from "react";
 import {PostCard} from "../../component/Community/PostCard/PostCard";
 import Link from "next/link";
 import OotdCard from "../../component/Community/OotdCard/OotdCard";
-import {
-    IconAward,
-    IconBulbFilled,
-    IconDiamondFilled,
-    IconMessageCircle,
-    IconPhoto,
-    IconSettings,
-    IconTrophyFilled
-} from "@tabler/icons-react";
+import {IconAward, IconMessageCircle, IconPhoto, IconSettings} from "@tabler/icons-react";
 import {PostWithRelations} from "../../entities/Types";
+import {GetServerSideProps} from "next";
+import {getServerSession, Session} from "next-auth";
+import {authOptions} from "../api/auth/[...nextauth]";
 
-export default function Profile() {
-    const { status, data} = useSession()
+interface ProfileProps {
+    userPosts : PostWithRelations[],
+    likedPosts : PostWithRelations[],
+    userSession: Session,
+    test: any
+}
 
+export default function Profile(props: ProfileProps) {
     const ootds = [];
-    const [userPosts, setUserPosts] = useState<PostWithRelations[]>([]);
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [likedPosts, setLikedPosts] = useState<PostWithRelations[]>([]);
 
     useEffect(() => {
-        if(status === 'authenticated')
-            fetchLikedPosts()
-
-        const fetchGet = async () => {
-            try {
-                const response = await fetch('/api/posts/user/' + data?.user.id);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch post');
-                }
-                const res = await response.json();
-                setUserPosts(res);
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError('An unexpected error occurred');
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchGet();
-    }, [data]);
-
-    const fetchLikedPosts = async () => {
-        try {
-            const response = await fetch('/api/posts/user/' + data?.user.id + '/liked' );
-            if (!response.ok) {
-                throw new Error('Failed to fetch posts');
-            }
-            const res = await response.json();
-            setLikedPosts(res)
-        } catch (error) {
-            if (error instanceof Error) {
-                setError(error.message);
-            } else {
-                setError('An unexpected error occurred');
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
+        console.log(props)
+    }, []);
 
     for (let i = 0; i < 20; i++) {
         ootds.push(
             <Grid.Col key={i} span={{ base: 12, md: 6, lg: 3 }}>
-                <OotdCard/>
+                <OotdCard />
             </Grid.Col>
         );
     }
 
     return (
-        (status !== "authenticated") ? (
-            <Container>
-                <Center h={600}>
-                    <Title> PLEASE LOGIN TO ACCESS </Title>
-                </Center>
-            </Container>
-        ) : (
-            <Container size="90%" maw={{base: '1550px', md: '1050px', lg: '1550px'}}>
+            <Container size="90%" maw={{ base: '1550px', md: '1050px', lg: '1550px' }}>
                 <Grid>
                     <Grid.Col span={8}>
                         <Group>
-                            <div style={{padding: '4rem', paddingRight: '6rem'}}>
+                            <div style={{ padding: '4rem', paddingRight: '6rem' }}>
                                 <Avatar
-                                    src={data?.user.image}
+                                    src={props.userSession.user.image}
                                     alt={'username'}
                                     radius={200}
                                     size={'9rem'}
-                                    style={{border: '5px solid'}}
+                                    style={{ border: '5px solid' }}
                                 />
                             </div>
                             <Stack gap={5}>
                                 <Group>
                                     <Title>
-                                        {data?.user?.username}
+                                        {props.userSession.user.username}
                                     </Title>
-                                    <IconAward size={'1.7rem'} color={'#00abfb'}/>
+                                    <IconAward size={'1.7rem'} color={'#00abfb'} />
                                 </Group>
 
                                 <Title size={'1rem'} fw={'100'} c={'gray'}>
@@ -111,7 +60,7 @@ export default function Profile() {
                                 <Title size={'0.9rem'} fw={'100'} c={'gray'}>
                                     EST. 2024.05
                                 </Title>
-                                <Space h={'xs'}/>
+                                <Space h={'xs'} />
                                 <Group gap={'xl'}>
                                     <Stack gap={10} align={'center'}>
                                         <Text mb={'.1rem'} size={'md'} fw={'bold'}>21 </Text>
@@ -163,8 +112,8 @@ export default function Profile() {
 
                     <Tabs.Panel value="messages">
                         <Grid mt={'2rem'} gutter={15}>
-                            {userPosts.map((post) => (
-                                <PostCard post={post} likedPosts={likedPosts} key={post.id}/>
+                            {props.userPosts.map((post) => (
+                                <PostCard post={post} likedPosts={props.likedPosts} key={post.id} session={props.userSession}/>
                             ))}
                         </Grid>
                     </Tabs.Panel>
@@ -175,13 +124,57 @@ export default function Profile() {
 
                     <Tabs.Panel value="liked">
                         <Grid mt={'2rem'} gutter={15}>
-                            {likedPosts.map((post) => (
-                                <PostCard likedPosts={likedPosts} post={post} key={post.id}/>
+                            {props.likedPosts.map((post) => (
+                                <PostCard likedPosts={props.likedPosts} post={post} key={post.id} session={props.userSession}/>
                             ))}
                         </Grid>
                     </Tabs.Panel>
                 </Tabs>
             </Container>
-        )
     );
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    try {
+        const session = await getServerSession(context.req, context.res, authOptions);
+
+        if (!session) {
+            return {
+                redirect: {
+                    destination: '/api/auth/signin',
+                    permanent: false,
+                },
+            };
+        }
+
+        const [userPostsRes, likedPostsRes] = await Promise.all([
+            fetch(`${process.env.API_URL}/api/posts/user/${session.user.id}`),
+            fetch(`${process.env.API_URL}/api/posts/user/${session.user.id}/liked`)
+        ]);
+
+        if (!userPostsRes.ok || !likedPostsRes.ok) {
+            throw new Error('Failed to fetch posts');
+        }
+
+        const [userPosts, likedPosts] = await Promise.all([
+            userPostsRes.json(),
+            likedPostsRes.json()
+        ]);
+
+        return {
+            props: {
+                userPosts,
+                likedPosts,
+                userSession: session,
+            },
+        };
+    } catch (error) {
+        return {
+            props: {
+                userPosts: [],
+                likedPosts: [],
+                error: error instanceof Error ? error.message : '',
+            },
+        };
+    }
 }

@@ -1,57 +1,42 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Button, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core";
 import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
 import {PostCard} from "../../../../component/Community/PostCard/PostCard";
 import Link from "next/link";
 import {PostWithRelations} from "../../../../entities/Types";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
 import {Post} from "@prisma/client";
+import {GetServerSideProps} from "next";
+import {getServerSession, Session} from "next-auth";
+import {authOptions} from "../../../api/auth/[...nextauth]";
+import {Community} from ".prisma/client";
 
-export default function Home() {
-    const router = useRouter();
-    const { status, data } = useSession();
-    const { community } = router.query;
-    const [posts, setPosts] = useState<PostWithRelations[]>([]);
-    const [likedPosts, setLikedPosts] = useState<Post[]>([]);
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
+interface HomeProps {
+    initialPosts: PostWithRelations[];
+    initialLikedPosts: Post[];
+    community: string;
+    communities: Community[];
+    initialPage: number;
+    initialHasMore: boolean;
+    userSession: Session
+}
+
+const Home: React.FC<HomeProps> = (props: HomeProps) => {
+    const [posts, setPosts] = useState<PostWithRelations[]>(props.initialPosts);
+    const [likedPosts, setLikedPosts] = useState<Post[]>(props.initialLikedPosts);
+    const [page, setPage] = useState(props.initialPage);
+    const [hasMore, setHasMore] = useState(props.initialHasMore);
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        if(community !== undefined)
-            community === 'all' ? fetchAllPosts(page) : fetchCommunityPosts(page)
-    }, [community, page]);
-
-    useEffect(() => {
-        if(status === 'authenticated')
-            fetchLikedPosts()
-    }, [data]);
-
-    const fetchLikedPosts = async () => {
+    const fetchPosts = async () => {
+        setLoading(true);
         try {
-            const response = await fetch('/api/posts/user/' + data?.user.id + '/liked' );
-            if (!response.ok) {
-                throw new Error('Failed to fetch posts');
-            }
-            const res = await response.json();
-            setLikedPosts(res)
-        } catch (error) {
-            if (error instanceof Error) {
-                setError(error.message);
-            } else {
-                setError('An unexpected error occurred');
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const fetchAllPosts = async (page: number) => {
-        try {
-            const response = await fetch(`/api/posts?page=${page}&limit=5`, { cache: 'no-store' });
+            const response = await fetch(
+                `/api/posts?page=${page + 1}&limit=5`,
+                { cache: 'no-store' }
+            );
             if (!response.ok) {
                 throw new Error('Failed to fetch posts');
             }
@@ -60,6 +45,7 @@ export default function Home() {
                 setHasMore(false);
             }
             setPosts((prevPosts) => [...prevPosts, ...res]);
+            setPage((prevPage) => prevPage + 1);
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message);
@@ -69,39 +55,13 @@ export default function Home() {
         } finally {
             setLoading(false);
         }
-    };
-
-    const fetchCommunityPosts = async (page: number) => {
-        try {
-            const response = await fetch(`/api/posts/c/${community}/?page=${page}&limit=5`, { cache: 'no-store' });
-            if (!response.ok) {
-                throw new Error('Failed to fetch posts');
-            }
-            const res = await response.json();
-            if (res.length < 5) {
-                setHasMore(false);
-            }
-            setPosts((prevPosts) => [...prevPosts, ...res]);
-        } catch (error) {
-            if (error instanceof Error) {
-                setError(error.message);
-            } else {
-                setError('An unexpected error occurred');
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const loadMore = () => {
-        setPage((prevPage) => prevPage + 1);
     };
 
     return (
         <Container size="90%" maw={{ base: '1550px', md: '1050px', lg: '1550px' }} style={{ overflowX: 'hidden', overflowY: 'hidden' }}>
             <Grid gutter={'xl'}>
                 <Grid.Col span={{ sm: 0, md: 0, lg: 3 }}>
-                    <CommunityNavBar currentCommunity={community} />
+                    <CommunityNavBar currentCommunity={props.community}  communities={props.communities}/>
                 </Grid.Col>
                 <Grid.Col span={{ sm: 12, md: 12, lg: 9 }}>
                     <Space h={'xs'} />
@@ -131,7 +91,7 @@ export default function Home() {
                     <Space h={'1.45rem'} />
                     <InfiniteScroll
                         dataLength={posts.length}
-                        next={loadMore}
+                        next={fetchPosts}
                         hasMore={hasMore}
                         loader={<Title size={'1.5rem'}>Loading...</Title>}
                         endMessage={<Title size={'xs'} mt={'xl'}>No posts to display</Title>}
@@ -139,12 +99,64 @@ export default function Home() {
                     >
                         <Grid gutter={15}>
                             {posts.map((post) => (
-                                <PostCard post={post} likedPosts={likedPosts} key={post.id} />
+                                <PostCard post={post} likedPosts={likedPosts} key={post.id}  session={props.userSession}/>
                             ))}
                         </Grid>
                     </InfiniteScroll>
                 </Grid.Col>
             </Grid>
         </Container>
-    )
-}
+    );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getServerSession(context.req, context.res, authOptions);
+    const { community } = context.query;
+    const page = 1;
+
+    let initialPosts = [];
+    let initialLikedPosts = [];
+    let communities = [];
+    let initialHasMore = true;
+
+    try {
+        const postsResponse = await fetch(
+            community === 'all'
+                ? `${process.env.API_URL}/api/posts?page=${page}&limit=5`
+                : `${process.env.API_URL}/api/posts/c/${community}/?page=${page}&limit=5`,
+            { cache: 'no-store' }
+        );
+        if (postsResponse.ok) {
+            initialPosts = await postsResponse.json();
+            initialHasMore = initialPosts.length >= 5;
+        }
+
+        const communitiesResponse = await fetch(`${process.env.API_URL}/api/post`, { cache: 'no-store' });
+        if (communitiesResponse.ok) {
+            communities = await communitiesResponse.json();
+        }
+
+        // Fetch liked posts on the server side
+        const likedResponse = await fetch(`${process.env.API_URL}/api/posts/user/liked`, { cache: 'no-store' });
+        if (likedResponse.ok) {
+            initialLikedPosts = await likedResponse.json();
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    return {
+        props: {
+            initialPosts,
+            initialLikedPosts,
+            community: community || 'all',
+            communities: communities,
+            initialPage: page,
+            initialHasMore,
+            userSession: session,
+
+        },
+    };
+};
+
+export default Home;

@@ -11,7 +11,6 @@ import {SessionProvider} from "next-auth/react"
 import {usePathname} from "next/navigation";
 import '@mantine/tiptap/styles.css';
 import AuthWrapper from "../component/Auth/AuthWrapper/AuthWrapper";
-import {GetServerSideProps} from "next";
 import {useViewportSize} from "@mantine/hooks";
 import {MobileHeaderSimple} from "../component/Header/MobileHeaderSimple/MobileHeaderSimple";
 import {MantineEmotionProvider} from "@mantine/emotion";
@@ -112,14 +111,3 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
         </SessionProvider>
     );
 }
-
-export const getServerSideProps: GetServerSideProps = async () => {
-    // Fetch data from an API or database
-    const data = 'Hello from the server side!';
-
-    return {
-        props: {
-            data,
-        },
-    };
-};

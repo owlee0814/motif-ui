@@ -4,18 +4,18 @@ import {IconMessage} from "@tabler/icons-react";
 import {timeAgo} from "../../../util/util";
 import classes from "./Comment.module.css";
 import {CommentWithRelations} from "../../../entities/Types";
-import {useSession} from "next-auth/react";
+import {Session} from "next-auth";
 
 interface PostCommentProps {
     comment: CommentWithRelations
     postAuthorId: string
+    session: Session
 }
 
 export default function PostComment(props: PostCommentProps) {
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [replyText, setReplyText] = useState("");
     const [loading, setLoading] = useState(false);
-    const { data } = useSession()
 
     const handleReplyClick = () => {
         setShowReplyForm(!showReplyForm);
@@ -34,7 +34,7 @@ export default function PostComment(props: PostCommentProps) {
                 },
                 body: JSON.stringify({
                     postId: props.comment.postId,
-                    authorId: data?.user.id,
+                    authorId: props.session.user.id,
                     content: replyText,
                     parentId: props.comment.id // Assuming you have a commentId prop
                 })

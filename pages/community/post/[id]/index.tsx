@@ -1,25 +1,21 @@
+import React, {useMemo, useState} from "react";
 import {
     Anchor,
-    AspectRatio,
     Badge,
     Button,
-    Card, Center,
+    Card,
     Container,
     Divider,
     Grid,
     Group,
-    Image,
     Space,
     Text as TextMantine,
     Textarea,
     Title
 } from "@mantine/core";
 import {IconBookmark} from "@tabler/icons-react";
-import React, {useEffect, useMemo, useState} from "react";
 
-import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
-import {useRouter} from "next/router";
-import {generateHTML} from '@tiptap/html'
+import {generateHTML} from '@tiptap/html';
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
 import {Text} from '@tiptap/extension-text';
@@ -34,98 +30,48 @@ import {Blockquote} from "@tiptap/extension-blockquote";
 import {Heading} from "@tiptap/extension-heading";
 import {CommentWithRelations, PostWithRelations} from "../../../../entities/Types";
 import {getBadgeColor, timeAgo} from "../../../../util/util";
-import {useSession} from "next-auth/react";
 import PostComment from "../../../../component/Community/Comment/Comment";
 import {ShareButton} from "../../../../component/Community/ShareButton/ShareButton";
 import {LikeButton} from "../../../../component/Community/LikeButton/LikeButton";
 import {Post} from "@prisma/client";
 import ImageOverlay from "../../../../component/ImageOverlay/ImageOverlay";
+import {GetServerSideProps} from "next";
+import {getServerSession, Session} from "next-auth";
+import {authOptions} from "../../../api/auth/[...nextauth]";
+import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
+import {Community} from ".prisma/client";
 
-export default function PostDetail() {
-    const router = useRouter();
-    const { id } = router.query;
-    const { data, status } = useSession()
-    const [post, setPost] = useState<PostWithRelations>();
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [comments, setComments] = useState<CommentWithRelations[]>([]);
+interface PostDetailProps {
+    post: PostWithRelations
+    comments: CommentWithRelations[]
+    likedPosts: Post[]
+    userSession: Session
+    communities: Community[]
+}
+
+const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
     const [newComment, setNewComment] = useState('');
-    const [likedPosts, setLikedPosts] = useState<Post[]>([]);
-
-    async function fetchComments(postId: number) {
-        const response = await fetch(`/api/post/${postId}/comment`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch comments');
-        }
-        return response.json();
-    }
-
-    useEffect(() => {
-        if(status === 'authenticated')
-            fetchLikedPosts()
-    }, [data]);
-
-    const fetchLikedPosts = async () => {
-        try {
-            const response = await fetch('/api/posts/user/' + data?.user.id + '/liked' );
-            if (!response.ok) {
-                throw new Error('Failed to fetch posts');
-            }
-            const res = await response.json();
-            setLikedPosts(res)
-        } catch (error) {
-            if (error instanceof Error) {
-                setError(error.message);
-            } else {
-                setError('An unexpected error occurred');
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    async function postComment(postId: number, content: string) {
-        const authorId = data?.user.id;
-        const response = await fetch(`/api/post/${postId}/comment`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ postId, authorId, content }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to post comment');
-        }
-
-        return response.json();
-    }
-
-
-    const fetchCommentsForPost = async () => {
-        try {
-            setLoading(true);
-            const commentsData = await fetchComments(Number(id));
-            setComments(commentsData);
-            setLoading(false);
-        } catch (error) {
-            if (error instanceof Error) {
-                setError(error.message);
-            } else {
-                setError('An unexpected error occurred');
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handlePostComment = async () => {
         if (!newComment.trim()) return;  // Prevent posting empty comments
 
         try {
-            await postComment(Number(id), newComment);
+            const response = await fetch(`/api/post/${props.post.id}/comment`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ postId: props.post.id, authorId: props.userSession.user.id, content: newComment }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to post comment');
+            }
+
             setNewComment(''); // Clear the textarea
-            fetchCommentsForPost(); // Refresh comments
+            window.location.reload(); // Refresh the page to show the new comment
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message);
@@ -135,100 +81,75 @@ export default function PostDetail() {
         }
     };
 
-    useEffect(() => {
-        if (!id) return;
-
-        const fetchPost = async () => {
-            try {
-                const response = await fetch(`/api/post/${id}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch post');
-                }
-                const data = await response.json();
-                setPost(data);
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError('An unexpected error occurred');
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchPost();
-        fetchCommentsForPost();
-    }, [id]);
-
     const output = useMemo(() => {
         return generateHTML(
-            post ? JSON.parse(post?.content) : {
-            type: 'doc',
-            content: [
-                {
-                    type: 'paragraph',
-                    content: [],
-                },
-            ],
-        }, [
-            Document,
-            Paragraph,
-            Text,
-            Bold,
-            Underline,
-            Strike,
+            props.post ? JSON.parse(props.post?.content) : {
+                type: 'doc',
+                content: [
+                    {
+                        type: 'paragraph',
+                        content: [],
+                    },
+                ],
+            }, [
+                Document,
+                Paragraph,
+                Text,
+                Bold,
+                Underline,
+                Strike,
                 ListItem,
                 Italic,
                 Code,
                 BulletList,
                 Blockquote,
                 Heading,
-            // other extensions …
-        ])
-    }, [post])
+            ]
+        )
+    }, [props.post])
 
     return (
         <Container size="90%" maw={{ base: '1550px', md: '1050px', lg: '1550px' }}>
             <Grid gutter={'xl'}>
                 <Grid.Col span={{ sm: 0, md: 0, lg: 3 }}>
-                    <CommunityNavBar currentCommunity={post?.community.name}/>
+                    <CommunityNavBar currentCommunity={props.post?.community.name}  communities={props.communities}/>
                 </Grid.Col>
                 <Grid.Col span={{ sm: 12, md: 12, lg: 9 }} pt={'6rem'}>
                     <Card p={'xl'} radius={0}>
-                        <Anchor href={'../c/' + post?.community.name} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'lg'}>
+                        <Anchor href={'../c/' + props.post?.community.name} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'lg'}>
                             <Badge
-                                bg={getBadgeColor(post?.community.id)}
+                                bg={getBadgeColor(props.post?.community.id)}
                                 radius={'0'}
                             >
-                                {post?.community.name}
+                                {props.post?.community.name}
                             </Badge>
                         </Anchor>
-                        <Title size={'1.5rem'}>{post?.title}</Title>
+                        <Title size={'1.5rem'}>{props.post?.title}</Title>
                         <Group justify={'space-between'} mb={'lg'}>
                             <Group>
-                                <TextMantine size={'sm'}>{post?.author.user.username}</TextMantine>
-                                <TextMantine size={'sm'}>posted {timeAgo(post?.createdAt.toString())}</TextMantine>
+                                <TextMantine size={'sm'}>{props.post?.author.user.username}</TextMantine>
+                                <TextMantine size={'sm'}>posted {timeAgo(props.post?.createdAt.toString())}</TextMantine>
                             </Group>
                             <Group mt="md" gap={5}>
-                                {post ?
-                                    <LikeButton post={post} userId={data?.user.id || ''} userStatus={status} likedPosts={likedPosts} /> : <></>
+                                {props.post ?
+                                    <LikeButton post={props.post} session={props.userSession} likedPosts={props.likedPosts} /> : <></>
                                 }
                                 <Button variant="subtle" size='compact-sm' c='gray' leftSection={<IconBookmark size={16} />}>
                                     Save
                                 </Button>
-                                <ShareButton href={''} size={'compact-sm'}/>
+                                <ShareButton href={''} size={'compact-sm'} />
                             </Group>
                         </Group>
-                        <Space h={'xl'}/>
-                        {post?.images.map((image, index) => (
-                            <ImageOverlay imgUrl={image.imgUrl} key={index}/>
+                        <Space h={'xl'} />
+                        {props.post?.images.map((image, index) => (
+                            <ImageOverlay imgUrl={image.imgUrl} key={index} />
                         ))}
-                        <Space h={'xl'}/>
-                        <div dangerouslySetInnerHTML={{__html: output}}/>
-                        <Divider mt={'xl'} mb={'md'}/>
+                        <Space h={'xl'} />
+                        <div dangerouslySetInnerHTML={{ __html: output }} />
+                        <Divider mt={'xl'} mb={'md'} />
                         <div>
-                            <Title size={'md'}>{post?._count.comments} comments</Title>
-                            <Space h='lg'/>
+                            <Title size={'md'}>{props.post?._count.comments} comments</Title>
+                            <Space h='lg' />
                             <Textarea
                                 variant="filled"
                                 size="md"
@@ -242,11 +163,12 @@ export default function PostDetail() {
                                 <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={() => setNewComment('')}>Cancel</Button>
                                 <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={handlePostComment}>Post</Button>
                             </Group>
-                            {comments.map((comment) => (
+                            {props.comments.map((comment) => (
                                 <PostComment
                                     key={comment.id}
                                     comment={comment}
-                                    postAuthorId={post ? post?.authorId : ''}
+                                    postAuthorId={props.post ? props.post?.authorId : ''}
+                                    session={props.userSession}
                                 />
                             ))}
                         </div>
@@ -256,3 +178,55 @@ export default function PostDetail() {
         </Container>
     );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getServerSession(context.req, context.res, authOptions);
+
+    const { id } = context.query;
+
+    let post = null;
+    let comments = [];
+    let communities = [];
+    let likedPosts= [];
+
+    try {
+        const postResponse = await fetch(`${process.env.API_URL}/api/post/${id}`, { cache: 'no-store' });
+        if (postResponse.ok) {
+            post = await postResponse.json();
+        }
+
+        const commentsResponse = await fetch(`${process.env.API_URL}/api/post/${id}/comment`, { cache: 'no-store' });
+        if (commentsResponse.ok) {
+            comments = await commentsResponse.json();
+        }
+
+        const communitiesResponse = await fetch(`${process.env.API_URL}/api/post`, { cache: 'no-store' });
+        if (communitiesResponse.ok) {
+            communities = await communitiesResponse.json();
+        }
+
+        // Fetch liked posts if authenticated
+        // Assuming you have a way to fetch liked posts without session in SSR
+        // const likedResponse = await fetch(`${process.env.API_URL}/api/posts/user/liked`, { cache: 'no-store' });
+        if ( session ) {
+            const likedResponse = await fetch(`${process.env.API_URL}/api/posts/user/${session.user.id}/liked`, {cache: 'no-store'});
+            if (likedResponse.ok) {
+                likedPosts = await likedResponse.json();
+            }
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    return {
+        props: {
+            post,
+            comments,
+            likedPosts,
+            communities,
+            userSession: await getServerSession(context.req, context.res, authOptions),
+        },
+    };
+};
+
+export default PostDetail;

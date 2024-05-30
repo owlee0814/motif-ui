@@ -1,23 +1,23 @@
-import {AspectRatio, Badge, Button, Card, Grid, Group, Image, Popover, Space, Text, Title} from "@mantine/core";
-import {IconHeart, IconMessageCircle, IconShare, IconLink} from "@tabler/icons-react";
+import {AspectRatio, Badge, Button, Card, Grid, Group, Image, Space, Text, Title} from "@mantine/core";
+import {IconMessageCircle} from "@tabler/icons-react";
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import classes from "./PostCard.module.css";
 import {PostWithRelations} from "../../../entities/Types";
 import {getBadgeColor, timeAgo} from "../../../util/util";
-import {useSession} from "next-auth/react";
 import {Post} from "@prisma/client";
 import {ShareButton} from "../ShareButton/ShareButton";
 import {LikeButton} from "../LikeButton/LikeButton";
+import {Session} from "next-auth";
 
 interface PostCardProps {
     post: PostWithRelations
+    session: Session
     likedPosts?: Post[]
 }
 
 export function PostCard(props: PostCardProps) {
     const [substringLength, setSubstringLength] = useState(160);
-    const { data, status } = useSession()
 
     useEffect(() => {
         function handleResize() {
@@ -66,11 +66,11 @@ export function PostCard(props: PostCardProps) {
                         <Group justify='space-between'>
                             <Group gap={10}>
                                 <Group mt="md" gap={0} className={classes.actions}>
-                                    <LikeButton post={props.post} userId={data?.user.id || ''} userStatus={status} likedPosts={props.likedPosts}/>
+                                    <LikeButton post={props.post} likedPosts={props.likedPosts} session={props.session}/>
                                     <Button variant="subtle" c='gray' leftSection={<IconMessageCircle size={16} />}>
                                         {props.post._count.comments} comments
                                     </Button>
-                                    <ShareButton href={location.host.toString() + '/community/post/' + props.post.id}/>
+                                    <ShareButton href={process.env.API_URL + '/community/post/' + props.post.id}/>
                                 </Group>
                             </Group>
                             <Group gap={5} pr={'lg'} mt={'lg'}>
