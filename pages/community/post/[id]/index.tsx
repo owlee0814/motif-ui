@@ -259,8 +259,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             likedPosts,
             communities,
             userSession: await getServerSession(context.req, context.res, authOptions),
-        },
-        revalidate: 0
+        }
     };
 };
 

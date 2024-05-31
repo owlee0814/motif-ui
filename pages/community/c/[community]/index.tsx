@@ -158,8 +158,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             initialPage: page,
             initialHasMore,
             userSession: session,
-        },
-        revalidate: 0
+        }
     };
 };
 
