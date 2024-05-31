@@ -7,7 +7,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import CharacterCount from '@tiptap/extension-character-count';
-import {Button, Card, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core";
+import {Button, Card, Container, Grid, Group, Select, Space, Text, TextInput, Title} from "@mantine/core";
 import React, {useState} from "react";
 import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
 import classes from "../../../../component/Community/CommunityNavBar/CommunityNavBar.module.css";
@@ -43,8 +43,30 @@ export default function Index(props: PostCreateProps) {
     const [selectedCommunity, setSelectedCommunity] = useState('');
     const [postTitle, setPostTitle] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+    const [titleError, setTitleError] = useState('');
+    const [selectCommunityError, setSelectCommunityError] = useState('');
+    const [editorError, setEditorError] = useState('');
 
     const handlePost = async () => {
+        const content = editor?.getText() || '';
+
+        console.log(selectedCommunity)
+
+        if(selectedCommunity === '') {
+            setSelectCommunityError('Please select a community.');
+            return;
+        }
+
+        if (!postTitle.trim()) {
+            setTitleError('Title is required.');
+            return;
+        }
+
+        if (!content.trim()) {
+            setEditorError('Content is required.');
+            return;
+        }
+
         const formData = new FormData();
 
         selectedFiles.forEach((file, index) => {
@@ -56,7 +78,7 @@ export default function Index(props: PostCreateProps) {
             postTitle: postTitle,
             authorId: props.userSession?.user.id,
             content: JSON.stringify(editor?.getJSON()),
-            text: editor?.getText()
+            text: content
         }));
 
         try {
@@ -72,6 +94,7 @@ export default function Index(props: PostCreateProps) {
             router.push('../c/all');
         } catch (error) {
             console.error('Post creation error:', error);
+            setError('Failed to create post. Please try again later.');
         }
     };
 
@@ -97,14 +120,18 @@ export default function Index(props: PostCreateProps) {
                                         return { value: community.id.toString(), label: community.label }
                                     })
                             }
-                            onChange={(_value) => { if (_value) setSelectedCommunity(_value) }}
+                            onChange={(_value) => {
+                                setSelectCommunityError('')
+                                if (_value) setSelectedCommunity(_value) }
+                            }
+                            error={selectCommunityError}
                         />
                         <Space h={'md'} />
-                        <TextInput size='xl' placeholder={'Title'} onChange={(e) => setPostTitle(e.target.value)} />
+                        <TextInput size='xl' error={titleError} onInput={() => setTitleError('')} placeholder={'Title'} onChange={(e) => setPostTitle(e.target.value)} />
                         <Space h={'xl'} />
                         <PostImageDropZone onFilesSelected={(files) => setSelectedFiles(files)} />
                         <Space h={'xl'} />
-                        <RichTextEditor editor={editor}>
+                        <RichTextEditor editor={editor} onInput={() => setEditorError('')}>
                             <RichTextEditor.Toolbar sticky stickyOffset={60}>
                                 <RichTextEditor.ControlsGroup>
                                     <RichTextEditor.Bold />
@@ -152,6 +179,7 @@ export default function Index(props: PostCreateProps) {
                             <RichTextEditor.Content style={{ minHeight: '20vh' }} />
                         </RichTextEditor>
                         <Space h={'md'} />
+                        {editorError && <div style={{ color: 'red' }}>{editorError}</div>}
                     </Card>
                     <Space h={'md'} />
                     <Group justify={'flex-end'}>
