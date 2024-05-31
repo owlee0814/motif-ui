@@ -94,7 +94,7 @@ export default function Index(props: PostCreateProps) {
             router.push('../c/all');
         } catch (error) {
             console.error('Post creation error:', error);
-            setError('Failed to create post. Please try again later.');
+            setEditorError('Failed to create post. Please try again later.');
         }
     };
 
