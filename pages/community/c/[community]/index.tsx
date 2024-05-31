@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Container, Grid, Group, Select, Space, TextInput, Title} from "@mantine/core";
 import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
 import {PostCard} from "../../../../component/Community/PostCard/PostCard";
@@ -19,7 +19,7 @@ interface HomeProps {
     communities: Community[];
     initialPage: number;
     initialHasMore: boolean;
-    userSession: Session
+    userSession: Session;
 }
 
 const Home: React.FC<HomeProps> = (props: HomeProps) => {
@@ -29,15 +29,20 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
     const [hasMore, setHasMore] = useState(props.initialHasMore);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [sortOption, setSortOption] = useState('Newest');
     const { status } = useSession();
+
+    useEffect(() => {
+        fetchPosts()
+    }, [sortOption]);
 
     const fetchPosts = async () => {
         setLoading(true);
         try {
             const response = await fetch(
                 props.community === 'all' ?
-                    `/api/posts?page=${page + 1}&limit=5` :
-                    `/api/posts/c/${props.community}?page=${page + 1}&limit=5`,
+                    `/api/posts?page=${page + 1}&limit=5&sort=${sortOption.toLowerCase()}` :
+                    `/api/posts/c/${props.community}?page=${page + 1}&limit=5&sort=${sortOption.toLowerCase()}`,
                 { cache: 'no-store' }
             );
             if (!response.ok) {
@@ -76,6 +81,11 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
                             variant='unstyled'
                             w={'10%'}
                             comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}
+                            onChange={(_value) => {
+                                setPage(0)
+                                setPosts([])
+                                setSortOption(_value || 'Newest')
+                            }}
                         />
                         <Group justify={'flex-end'}>
                             <div style={{ width: '15rem' }}>
@@ -105,7 +115,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
                     >
                         <Grid gutter={15}>
                             {posts.map((post) => (
-                                <PostCard post={post} likedPosts={likedPosts} key={post.id}  session={props.userSession}/>
+                                <PostCard post={post} likedPosts={likedPosts} key={post.id} session={props.userSession} />
                             ))}
                         </Grid>
                     </InfiniteScroll>

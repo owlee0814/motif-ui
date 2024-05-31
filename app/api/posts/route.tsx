@@ -1,4 +1,5 @@
 import prisma from "../../../prisma/prisma";
+import {Prisma} from "@prisma/client";
 
 export const dynamic = 'force-dynamic'
 
@@ -7,11 +8,16 @@ export async function GET(req: Request) {
         const { searchParams } = new URL(req.url);
         const page = parseInt(searchParams.get('page') || '1', 10);
         const limit = parseInt(searchParams.get('limit') || '5', 10);
+        const sortOption = searchParams.get('sort') || 'newest';
+
+        const sortOptions = {
+            newest: { createdAt: Prisma.SortOrder.desc },
+            oldest: { createdAt: Prisma.SortOrder.asc },
+            likes: { likes: { _count: Prisma.SortOrder.desc}},
+        };
 
         const posts = await prisma.post.findMany({
-            orderBy: {
-                createdAt: 'desc',
-            },
+            orderBy: sortOptions[sortOption as keyof typeof sortOptions],
             skip: (page - 1) * limit,
             take: limit,
             include: {
