@@ -91,7 +91,8 @@ export default function Index(props: PostCreateProps) {
                 throw new Error('Failed to create post');
             }
 
-            router.push('../c/all');
+            const resJson = await response.json();
+            router.push(`../post/${resJson.id}`);
         } catch (error) {
             console.error('Post creation error:', error);
             setEditorError('Failed to create post. Please try again later.');
