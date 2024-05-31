@@ -260,6 +260,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             communities,
             userSession: await getServerSession(context.req, context.res, authOptions),
         },
+        revalidate: 0
     };
 };
 
