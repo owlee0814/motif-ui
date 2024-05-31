@@ -42,14 +42,14 @@ export default function Index(props: PostCreateProps) {
     const router = useRouter();
     const [selectedCommunity, setSelectedCommunity] = useState('');
     const [postTitle, setPostTitle] = useState('');
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
     const handlePost = async () => {
         const formData = new FormData();
 
-        if (selectedFile) {
-            formData.append('file', selectedFile);
-        }
+        selectedFiles.forEach((file, index) => {
+            formData.append(`files[${index}]`, file);
+        });
 
         formData.append('data', JSON.stringify({
             communityId: Number(selectedCommunity),
@@ -102,7 +102,7 @@ export default function Index(props: PostCreateProps) {
                         <Space h={'md'} />
                         <TextInput size='xl' placeholder={'Title'} onChange={(e) => setPostTitle(e.target.value)} />
                         <Space h={'xl'} />
-                        <PostImageDropZone onFileSelected={(file) => setSelectedFile(file)} />
+                        <PostImageDropZone onFilesSelected={(files) => setSelectedFiles(files)} />
                         <Space h={'xl'} />
                         <RichTextEditor editor={editor}>
                             <RichTextEditor.Toolbar sticky stickyOffset={60}>

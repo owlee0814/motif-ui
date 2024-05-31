@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { ActionIcon, AspectRatio, Center, Group, Image, Overlay, Title, Text } from '@mantine/core';
+import React, { useRef, useState } from 'react';
+import { Dropzone } from '@mantine/dropzone';
+import { ActionIcon, AspectRatio, Center, Group, Image, Overlay, Text } from '@mantine/core';
 import { IconPhoto, IconTrash, IconUpload, IconX } from '@tabler/icons-react';
 import classes from "./PostImageDropzone.module.css";
 import { Carousel } from "@mantine/carousel";
@@ -11,10 +11,10 @@ type FileWithPreview = {
 };
 
 interface PostImageDropZoneProps {
-    onFileSelected: (file: File | null) => void;
+    onFilesSelected: (files: File[]) => void;
 }
 
-export default function PostImageDropZone({ onFileSelected }: PostImageDropZoneProps) {
+export default function PostImageDropZone({ onFilesSelected }: PostImageDropZoneProps) {
     const [files, setFiles] = useState<FileWithPreview[]>([]);
     const [dropzoneHeight, setDropzoneHeight] = useState(200);
     const [error, setError] = useState<string | null>(null);
@@ -22,7 +22,6 @@ export default function PostImageDropZone({ onFileSelected }: PostImageDropZoneP
 
     const handleDrop = (acceptedFiles: File[]) => {
         if (files.length + acceptedFiles.length > 5) {
-            console.log('asdf')
             setError('You can only upload up to 5 images.');
             return;
         }
@@ -32,16 +31,17 @@ export default function PostImageDropZone({ onFileSelected }: PostImageDropZoneP
             preview: URL.createObjectURL(file),
         }));
         setDropzoneHeight(500);
-        files.length === 0 ? setFiles(newFiles) : setFiles(files => [...files, ...newFiles]);
-        onFileSelected(acceptedFiles[0]); // Pass the first selected file to the parent
+        setFiles(prevFiles => [...prevFiles, ...newFiles]);
+        onFilesSelected([...files.map(f => f.file), ...acceptedFiles]); // Pass all selected files to the parent
         setError(null);
     };
 
     const handleRemove = (index: number) => {
         setError(null);
-        setFiles(files.filter((_, i) => i !== index));
-        files.length === 1 ? setDropzoneHeight(200) : setDropzoneHeight(500);
-        onFileSelected(null);
+        const newFiles = files.filter((_, i) => i !== index);
+        setFiles(newFiles);
+        setDropzoneHeight(newFiles.length === 0 ? 200 : 500);
+        onFilesSelected(newFiles.map(f => f.file));
     };
 
     const previews = files.map((file, index) => (

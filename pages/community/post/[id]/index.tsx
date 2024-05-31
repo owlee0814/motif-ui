@@ -40,6 +40,7 @@ import {getServerSession, Session} from "next-auth";
 import {authOptions} from "../../../api/auth/[...nextauth]";
 import {CommunityNavBar} from "../../../../component/Community/CommunityNavBar/CommunityNavBar";
 import {Community} from ".prisma/client";
+import {Carousel} from "@mantine/carousel";
 
 interface PostDetailProps {
     post: PostWithRelations
@@ -177,9 +178,11 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                             </Group>
                         </Group>
                         <Space h={'xl'} />
+                        <Carousel withIndicators>
                         {props.post?.images.map((image, index) => (
                             <ImageOverlay imgUrl={image.imgUrl} key={index} />
                         ))}
+                        </Carousel>
                         <Space h={'xl'} />
                         <div dangerouslySetInnerHTML={{ __html: output }} />
                         <Divider mt={'xl'} mb={'md'} />

@@ -41,7 +41,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
     const mainLinks = [
         {link: '/home', label: 'HOME'},
         {link: '/brands', label: 'BRANDS'},
-        {link: '/products', label: 'SHOP'},
+        // {link: '/products', label: 'SHOP'},
         {link: '', label: '|', disabled: true},
         {link: '/community/c/all', label: 'COMMUNITY'},
         {link: '/inspo', label: 'INSPIRATION'},
@@ -212,7 +212,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                     <Card
                         className={classes.nav}
                         radius={'xl'}
-                        style={{...transitionStyle, display: 'inline-block', position: 'absolute', left:'34rem'}}
+                        style={{...transitionStyle, display: 'inline-block', position: 'absolute', left:'28rem'}}
                         onMouseEnter={() => {
                             // setShopSubLinksVisible(true)
                             setInspoLinksCardTransition(true)
