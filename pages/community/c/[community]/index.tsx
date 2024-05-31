@@ -35,7 +35,9 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `/api/posts/c/${props.community}?page=${page + 1}&limit=5`,
+                props.community === 'all' ?
+                    `/api/posts?page=${page + 1}&limit=5` :
+                    `/api/posts/c/${props.community}?page=${page + 1}&limit=5`,
                 { cache: 'no-store' }
             );
             if (!response.ok) {
@@ -69,8 +71,8 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
                     <Group justify={'space-between'}>
                         <Select
                             style={{ paddingTop: '10px' }}
-                            placeholder="Hot"
-                            data={['Hot', 'New', 'Likes']}
+                            placeholder='Newest'
+                            data={['Newest', 'Oldest', 'Likes']}
                             variant='unstyled'
                             w={'10%'}
                             comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}
