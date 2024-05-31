@@ -141,9 +141,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
 
         // Fetch liked posts on the server side
-        const likedResponse = await fetch(`${process.env.API_URL}/api/posts/user/liked`, { cache: 'no-store' });
-        if (likedResponse.ok) {
-            initialLikedPosts = await likedResponse.json();
+        if ( session ) {
+            const likedResponse = await fetch(`${process.env.API_URL}/api/posts/user/${session.user.id}/liked`, {cache: 'no-store'});
+            if (likedResponse.ok) {
+                initialLikedPosts = await likedResponse.json();
+            }
         }
     } catch (error) {
         console.error(error);
