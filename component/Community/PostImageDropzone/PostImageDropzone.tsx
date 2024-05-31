@@ -88,8 +88,15 @@ export default function PostImageDropZone({ onFileSelected }: PostImageDropZoneP
                     ref={dropzoneRef}
                     onDrop={handleDrop}
                     onReject={(files) => console.log('rejected files', files)}
-                    accept={IMAGE_MIME_TYPE}
+                    accept={[
+                        'image/png',
+                        'image/jpeg',
+                        'image/webp',
+                        'image/heic',
+                    ]}
                     className={classes.dropzone}
+                    maxFiles={5}
+                    maxSize={5 * 1024 ** 2}
                 >
                     <div className={classes.previewsContainer}>
                         <Carousel
@@ -116,7 +123,14 @@ export default function PostImageDropZone({ onFileSelected }: PostImageDropZoneP
                         <Dropzone.Idle>
                             <IconPhoto size={30} stroke={1.5} />
                         </Dropzone.Idle>
-                        <Title size="1.25rem">Drag images here or click to select files (up to 5) </Title>
+                        <div>
+                            <Text size="xl" inline>
+                                Drag images here or click to select files
+                            </Text>
+                            <Text size="sm" c="dimmed" inline mt={7}>
+                                You can upload up to 5 images, each file should not exceed 5mb
+                            </Text>
+                        </div>
                     </Group>
                 </Dropzone>
             </div>
