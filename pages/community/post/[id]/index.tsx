@@ -178,7 +178,7 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                             </Group>
                         </Group>
                         <Space h={'xl'} />
-                        <Carousel withIndicators>
+                        <Carousel withControls={props.post?.images.length > 1} withIndicators={props.post?.images.length > 1}>
                         {props.post?.images.map((image, index) => (
                             <ImageOverlay imgUrl={image.imgUrl} key={index} />
                         ))}
