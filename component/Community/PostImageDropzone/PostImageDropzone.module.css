@@ -1,5 +1,5 @@
 .dropzone {
-    border: 2px dashed gray;
+    border: 2px dashed light-dark(rgb(207,212,218), rgb(66,66,66));
     border-radius: 8px;
     padding: 20px;
     text-align: center;

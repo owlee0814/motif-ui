@@ -41,7 +41,7 @@ export default function Profile(props: ProfileProps) {
                             <div style={{ padding: '4rem', paddingRight: '6rem' }}>
                                 <Avatar
                                     src={props.user.image}
-                                    alt={'username'}
+                                    alt={''}
                                     radius={200}
                                     size={'9rem'}
                                     style={{ border: '5px solid' }}
@@ -63,18 +63,18 @@ export default function Profile(props: ProfileProps) {
                                 </Title>
                                 <Space h={'xs'} />
                                 <Group gap={'xl'}>
-                                    <Stack gap={10} align={'center'}>
-                                        <Text mb={'.1rem'} size={'md'} fw={'bold'}>21 </Text>
-                                        <Text mb={'.1rem'} size={'sm'}>Followers</Text>
-                                    </Stack>
-                                    <Stack gap={10} align={'center'}>
-                                        <Text mb={'.1rem'} size={'md'} fw={'bold'}>28 </Text>
-                                        <Text mb={'.1rem'} size={'sm'}>Following</Text>
-                                    </Stack>
-                                    <Stack gap={10} align={'center'}>
-                                        <Text mb={'.1rem'} size={'md'} fw={'bold'}>101</Text>
-                                        <Text mb={'.1rem'} size={'sm'}>Likes</Text>
-                                    </Stack>
+                                    {/*<Stack gap={10} align={'center'}>*/}
+                                    {/*    <Text mb={'.1rem'} size={'md'} fw={'bold'}>21 </Text>*/}
+                                    {/*    <Text mb={'.1rem'} size={'sm'}>Followers</Text>*/}
+                                    {/*</Stack>*/}
+                                    {/*<Stack gap={10} align={'center'}>*/}
+                                    {/*    <Text mb={'.1rem'} size={'md'} fw={'bold'}>28 </Text>*/}
+                                    {/*    <Text mb={'.1rem'} size={'sm'}>Following</Text>*/}
+                                    {/*</Stack>*/}
+                                    {/*<Stack gap={10} align={'center'}>*/}
+                                    {/*    <Text mb={'.1rem'} size={'md'} fw={'bold'}>101</Text>*/}
+                                    {/*    <Text mb={'.1rem'} size={'sm'}>Likes</Text>*/}
+                                    {/*</Stack>*/}
                                 </Group>
                             </Stack>
                         </Group>
@@ -102,10 +102,12 @@ export default function Profile(props: ProfileProps) {
                         </Tabs.Tab>
                         {
                             (props.userSession && props.userSession.user.id === props.user.id) &&
-                            <><Tabs.Tab value="saved"
-                                        leftSection={<IconSettings style={{width: rem(12), height: rem(12)}}/>}>
-                                Saved
-                            </Tabs.Tab><Tabs.Tab value="liked" leftSection={<IconSettings
+                            <>
+                                {/*<Tabs.Tab value="saved"*/}
+                                {/*        leftSection={<IconSettings style={{width: rem(12), height: rem(12)}}/>}>*/}
+                                {/*Saved*/}
+                                {/* </Tabs.Tab>*/}
+                                <Tabs.Tab value="liked" leftSection={<IconSettings
                                 style={{width: rem(12), height: rem(12)}}/>}>
                                 Liked
                             </Tabs.Tab></>
@@ -127,16 +129,19 @@ export default function Profile(props: ProfileProps) {
                     </Tabs.Panel>
                     {
                         (props.userSession && props.userSession.user.id === props.user.id) &&
-                        <><Tabs.Panel value="settings">
-                            Settings tab content
-                        </Tabs.Panel><Tabs.Panel value="liked">
-                            <Grid mt={'2rem'} gutter={15}>
-                                {props.likedPosts.map((post) => (
-                                    <PostCard likedPosts={props.likedPosts} post={post} key={post.id}
-                                              session={props.userSession}/>
-                                ))}
-                            </Grid>
-                        </Tabs.Panel></>
+                        <>
+                            {/*<Tabs.Panel value="settings">*/}
+                            {/*    Settings tab content*/}
+                            {/*</Tabs.Panel>*/}
+                            <Tabs.Panel value="liked">
+                                <Grid mt={'2rem'} gutter={15}>
+                                    {props.likedPosts.map((post) => (
+                                        <PostCard likedPosts={props.likedPosts} post={post} key={post.id}
+                                                  session={props.userSession}/>
+                                    ))}
+                                </Grid>
+                            </Tabs.Panel>
+                        </>
                     }
                 </Tabs>
             </Container>
