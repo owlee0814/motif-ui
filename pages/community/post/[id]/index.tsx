@@ -174,7 +174,7 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                                 <Button variant="subtle" size='compact-sm' c='gray' leftSection={<IconBookmark size={16} />}>
                                     Save
                                 </Button>
-                                <ShareButton href={''} size={'compact-sm'} />
+                                <ShareButton href={window.location.href} size={'compact-sm'} />
                             </Group>
                         </Group>
                         <Space h={'xl'} />

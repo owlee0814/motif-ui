@@ -9,6 +9,7 @@ import {Post} from "@prisma/client";
 import {ShareButton} from "../ShareButton/ShareButton";
 import {LikeButton} from "../LikeButton/LikeButton";
 import {Session} from "next-auth";
+import {router} from "next/client";
 
 interface PostCardProps {
     post: PostWithRelations
@@ -70,7 +71,12 @@ export function PostCard(props: PostCardProps) {
                                     <Button variant="subtle" c='gray' leftSection={<IconMessageCircle size={16} />}>
                                         {props.post._count.comments} comments
                                     </Button>
-                                    <ShareButton href={process.env.API_URL + '/community/post/' + props.post.id}/>
+                                    <ShareButton
+                                        href= {
+                                        (typeof window !== 'undefined' && window.location.origin ? window.location.origin : '')
+                                            + '/community/post/' + props.post.id
+                                        }
+                                    />
                                 </Group>
                             </Group>
                             <Group gap={5} pr={'lg'} mt={'lg'}>

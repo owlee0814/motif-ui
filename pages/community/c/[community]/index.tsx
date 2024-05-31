@@ -35,7 +35,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `/api/posts?page=${page + 1}&limit=5`,
+                `/api/posts/c/${props.community}?page=${page + 1}&limit=5`,
                 { cache: 'no-store' }
             );
             if (!response.ok) {
