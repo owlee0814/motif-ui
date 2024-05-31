@@ -37,6 +37,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
     }, [sortOption]);
 
     const fetchPosts = async () => {
+        console.log(hasMore)
         setLoading(true);
         try {
             const response = await fetch(
@@ -84,6 +85,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
                             onChange={(_value) => {
                                 setPage(0)
                                 setPosts([])
+                                setHasMore(true)
                                 setSortOption(_value || 'Newest')
                             }}
                         />
