@@ -91,8 +91,7 @@ export default function PostImageDropZone({ onFilesSelected }: PostImageDropZone
                     accept={[
                         'image/png',
                         'image/jpeg',
-                        'image/webp',
-                        'image/heic',
+                        'image/webp'
                     ]}
                     className={classes.dropzone}
                     maxFiles={5}
@@ -115,20 +114,23 @@ export default function PostImageDropZone({ onFilesSelected }: PostImageDropZone
                     </div>
                     <Group className={classes.group}>
                         <Dropzone.Accept>
-                            <IconUpload size={30} stroke={1.5} />
+                            <IconUpload size={40} stroke={1.5} />
                         </Dropzone.Accept>
                         <Dropzone.Reject>
-                            <IconX size={30} stroke={1.5} />
+                            <IconX size={40} stroke={1.5} />
                         </Dropzone.Reject>
                         <Dropzone.Idle>
-                            <IconPhoto size={30} stroke={1.5} />
+                            <IconPhoto size={40} stroke={1.5} />
                         </Dropzone.Idle>
                         <div>
                             <Text size="xl" inline>
                                 Drag images here or click to select files
                             </Text>
-                            <Text size="sm" c="dimmed" inline mt={7}>
+                            <Text size="sm" c="dimmed" inline mt={'sm'}>
                                 You can upload up to 5 images, each file should not exceed 5mb
+                            </Text>
+                            <Text size="sm" c="dimmed" inline mt={5}>
+                                Accepted image formats: .png .jpeg .webp
                             </Text>
                         </div>
                     </Group>
