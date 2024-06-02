@@ -58,7 +58,7 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
     try {
-        const communities = await prisma.community.findMany();
+        const communities = await prisma.community.findMany({ where: { hidden: false }});
         return new Response(JSON.stringify(communities), { status: 200 });
     } catch (error) {
         console.error(error);

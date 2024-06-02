@@ -72,9 +72,9 @@ export function PostCard(props: PostCardProps) {
                                         {props.post._count.comments} comments
                                     </Button>
                                     <ShareButton
-                                        href= {
-                                        (typeof window !== 'undefined' && window.location.origin ? window.location.origin : '')
-                                            + '/community/post/' + props.post.id
+                                        href= {''
+                                        // (typeof window !== 'undefined' && window.location.origin ? window.location.origin : '')
+                                        //     + '/community/post/' + props.post.id
                                         }
                                     />
                                 </Group>

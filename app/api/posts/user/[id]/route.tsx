@@ -8,7 +8,10 @@ export async function GET(req: Request, context: { params: Params}) {
 
     try {
         const posts = await prisma.post.findMany({
-            where: { authorId: id },
+            where: {
+                authorId: id ,
+                communityId: { not: 7 }
+            },
             orderBy: {
                 createdAt: 'desc',
             },

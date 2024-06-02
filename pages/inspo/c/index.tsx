@@ -1,27 +1,20 @@
 import React from "react";
-import {Center, Container, Divider, Grid, Space, Text, Title} from "@mantine/core";
-import {Carousel} from "@mantine/carousel";
-import OotdCard from "../../../component/Community/OotdCard/OotdCard";
+import {Button, Center, Container, Divider, Grid, Group, Space, Text, Title} from "@mantine/core";
+import InspoCard from "../../../component/Community/InspoCard/InspoCard";
+import Link from "next/link";
+import {useSession} from "next-auth/react";
+import {GetServerSideProps} from "next";
+import {getServerSession, Session} from "next-auth";
+import {authOptions} from "../../api/auth/[...nextauth]";
+import {PostWithRelations} from "../../../entities/Types";
 
-export default function index() {
-    const topOotds = [];
-    const ootds = [];
+interface InsposProps {
+    inspos : PostWithRelations[],
+    userSession: Session
+}
 
-    for (let i = 0; i < 10; i++) {
-        topOotds.push(
-            <Carousel.Slide>
-                <OotdCard/>
-            </Carousel.Slide>
-        );
-    }
-
-    for (let i = 0; i < 12; i++) {
-        ootds.push(
-            <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
-                <OotdCard/>
-            </Grid.Col>
-        );
-    }
+export default function Inspos(props: InsposProps) {
+    const { status } = useSession()
 
     return (
         <>
@@ -29,24 +22,55 @@ export default function index() {
                 <Title size={'1.5rem'} fw={700}>
                     Inspirations from you
                 </Title>
-                <Text size="sm" pt={'md'} pb={'md'}>
-                    Discover fit pics from the community
-                </Text>
+                <Group justify={'space-between'}>
+                    <Text size="sm" pt={'md'} pb={'md'}>
+                        Discover fit pics from the community
+                    </Text>
+                    <Button variant="filled" size="sm" radius="0" bg={'black'}
+                            component={Link}
+                            href={status === 'authenticated' ? "../inspo/create" : '../../api/auth/signin'}
+                    >
+                        Upload
+                    </Button>
+                </Group>
                 <Divider size="xl" pb={'lg'} />
-                <Title size="1.25rem">Monthly Most Liked</Title>
-                <Space h={'lg'}/>
-                <Carousel draggable={false} align="start" slideGap="10" slideSize={{ base: '100%', md: '50%', lg: '25%' }} loop >
-                    {topOotds}
-                </Carousel>
-                <Space h={'lg'}/>
-                <Title size="1.25rem">Latest</Title>
                 <Space h={'lg'}/>
                 <Center>
                     <Grid gutter={'xs'}>
-                        {ootds}
+                    {
+                        props.inspos.map( (inspo, index) => (
+                        <Grid.Col key={index} span={{base: 12, md: 6, lg: 3}}>
+                            <InspoCard post={inspo} session={props.userSession}/>
+                        </Grid.Col>
+                    ))}
                     </Grid>
                 </Center>
             </Container>
         </>
     )
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getServerSession(context.req, context.res, authOptions);
+    const { community } = context.query;
+    const page = 1;
+
+    let inspos = [];
+
+    try {
+        const postsResponse = await fetch(`${process.env.API_URL}/api/inspos?page=${page}&limit=12`, { cache: 'no-store' });
+        if (postsResponse.ok) {
+            inspos = await postsResponse.json();
+        }
+
+    } catch (error) {
+        console.error(error);
+    }
+
+    return {
+        props: {
+            inspos,
+            userSession: session,
+        }
+    };
+};

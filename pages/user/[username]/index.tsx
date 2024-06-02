@@ -5,7 +5,7 @@ import {IconAward, IconMessageCircle, IconPhoto, IconSettings} from "@tabler/ico
 import {GetServerSideProps} from "next";
 import {getServerSession, Session} from "next-auth";
 import {PostWithRelations} from "../../../entities/Types";
-import OotdCard from "../../../component/Community/OotdCard/OotdCard";
+import InspoCard from "../../../component/Community/InspoCard/InspoCard";
 import {PostCard} from "../../../component/Community/PostCard/PostCard";
 import {authOptions} from "../../api/auth/[...nextauth]";
 import {User} from "@prisma/client";
@@ -28,7 +28,7 @@ export default function Profile(props: ProfileProps) {
     for (let i = 0; i < 20; i++) {
         ootds.push(
             <Grid.Col key={i} span={{ base: 12, md: 6, lg: 3 }}>
-                <OotdCard />
+                {/*<InspoCard />*/}
             </Grid.Col>
         );
     }

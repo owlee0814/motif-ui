@@ -44,7 +44,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
         // {link: '/products', label: 'SHOP'},
         {link: '', label: '|', disabled: true},
         {link: '/community/c/all', label: 'COMMUNITY'},
-        {link: '/inspo', label: 'INSPIRATION'},
+        {link: '/inspo/c', label: 'INSPIRATION'},
         {link: status === "unauthenticated" ? '/api/auth/signin' : `/user/${data?.user.username}`, label: 'PROFILE'},
     ];
 
@@ -67,7 +67,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                     setShopLinksCardTransition(true)
                 if (link.link == '/brands')
                     setBrandLinksCardTransition(true)
-                if (link.link == '/inspo')
+                if (link.link == '/inspo/c')
                     setInspoLinksCardTransition(true)
             }}
             onMouseLeave={() => {
@@ -75,7 +75,7 @@ export function HeaderSimple(props : HeaderSimpleProps) {
                     setShopLinksCardTransition(false)
                 if (link.link == '/brands')
                     setBrandLinksCardTransition(false)
-                if (link.link == '/inspo')
+                if (link.link == '/inspo/c')
                     setInspoLinksCardTransition(false)
             }}
         >

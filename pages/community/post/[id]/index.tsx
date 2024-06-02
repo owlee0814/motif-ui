@@ -171,9 +171,9 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                                 {props.post ?
                                     <LikeButton post={props.post} session={props.userSession} likedPosts={props.likedPosts} /> : <></>
                                 }
-                                <Button variant="subtle" size='compact-sm' c='gray' leftSection={<IconBookmark size={16} />}>
-                                    Save
-                                </Button>
+                                {/*<Button variant="subtle" size='compact-sm' c='gray' leftSection={<IconBookmark size={16} />}>*/}
+                                {/*    Save*/}
+                                {/*</Button>*/}
                                 <ShareButton href={window.location.href} size={'compact-sm'} />
                             </Group>
                         </Group>

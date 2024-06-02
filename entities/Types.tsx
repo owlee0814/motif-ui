@@ -32,6 +32,23 @@ const commentWithRelations = Prisma.validator<Prisma.CommentDefaultArgs>()({
     },
 })
 
+export type Flip = {
+    horizontal: boolean;
+    vertical: boolean;
+};
+
+export type PixelCrop = {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+};
+
+export type FileWithPreview = {
+    file: File;
+    preview: string;
+};
+
 export type PostWithRelations = Prisma.PostGetPayload<typeof postWithRelations>
 
 export type CommentWithRelations = Prisma.CommentGetPayload<typeof commentWithRelations>

@@ -18,7 +18,7 @@ export async function GET(req: Request) {
 
         const posts = await prisma.post.findMany({
             where: {
-              community: { hidden: false }
+              community: { name: 'inspo' }
             },
             orderBy: sortOptions[sortOption as keyof typeof sortOptions],
             skip: (page - 1) * limit,

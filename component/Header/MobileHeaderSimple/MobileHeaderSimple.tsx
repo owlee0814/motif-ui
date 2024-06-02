@@ -39,7 +39,7 @@ export function MobileHeaderSimple() {
         {link: '/products', label: 'SHOP'},
         {link: '', label: '|', disabled: true},
         {link: '/community/c/all', label: 'COMMUNITY'},
-        {link: '/inspo', label: 'INSPIRATION'},
+        {link: '/inspo/c', label: 'INSPIRATION'},
         {link: status === "unauthenticated" ? '/api/auth/signin' : '/profile', label: 'PROFILE'},
     ];
 
@@ -61,7 +61,7 @@ export function MobileHeaderSimple() {
                     setShopLinksCardTransition(true)
                 if (link.link == '/brands')
                     setBrandLinksCardTransition(true)
-                if (link.link == '/inspo')
+                if (link.link == '/inspo/c')
                     setInspoLinksCardTransition(true)
             }}
             onMouseLeave={() => {
@@ -69,7 +69,7 @@ export function MobileHeaderSimple() {
                     setShopLinksCardTransition(false)
                 if (link.link == '/brands')
                     setBrandLinksCardTransition(false)
-                if (link.link == '/inspo')
+                if (link.link == '/inspo/c')
                     setInspoLinksCardTransition(false)
             }}
         >

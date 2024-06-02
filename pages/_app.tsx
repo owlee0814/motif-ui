@@ -40,7 +40,7 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
         <SessionProvider session={session}>
             <MantineProvider
                 theme={{
-                    headings: {fontFamily: sen.style.fontFamily},
+                    headings: {fontFamily: sen.style.fontFamily}
                 }}
             >
                 <MantineEmotionProvider>
