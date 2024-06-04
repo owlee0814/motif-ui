@@ -62,7 +62,7 @@ export default function PostInspoDropzone({ onFileSelected }: PostImageDropZoneP
             file: acceptedFiles[0],
             preview: URL.createObjectURL(acceptedFiles[0]),
         };
-        setDropzoneHeight(800);
+        setDropzoneHeight(795);
         setFile(newFile);
         onFileSelected(newFile); // Pass all selected files to the parent
         setError(null);
@@ -124,12 +124,12 @@ export default function PostInspoDropzone({ onFileSelected }: PostImageDropZoneP
                                             min={1}
                                             max={3}
                                             step={0.1}
-                                            color={'white'}
+                                            color={'gray'}
                                             onChange={setZoom}
                                             className="zoom-range"
                                         />
                                     </div>
-                                    <Button variant="filled" ml='lg' radius="0" bg={'black'}
+                                    <Button variant={'filled'} ml='lg' radius="md" color={'black'}
                                             onClick={showCroppedImage}
                                     >Confirm</Button>
                                 </Group>

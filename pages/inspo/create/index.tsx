@@ -4,6 +4,7 @@ import PostInspoDropzone from "../../../component/Community/PostInspoDropzone/Po
 import { useSession } from "next-auth/react";
 import { FileWithPreview } from "../../../entities/Types";
 import {useRouter} from "next/router";
+import classes from "../../../component/Community/CommunityNavBar/CommunityNavBar.module.css";
 
 export default function InspoUpload() {
     const [selectedFile, setSelectedFile] = useState<FileWithPreview | null>(null);
@@ -12,12 +13,18 @@ export default function InspoUpload() {
     const [bottom, setBottom] = useState('');
     const [shoes, setShoes] = useState('');
     const [accessories, setAccessories] = useState('');
+    const [textAreaError, setTextAreaError] = useState(false);
     const { data } = useSession();
     const router = useRouter();
 
     const handleUpload = async () => {
         if (!selectedFile) {
             alert("Please select a file");
+            return;
+        }
+
+        if (!caption || caption.length === 0) {
+            setTextAreaError(true);
             return;
         }
 
@@ -70,7 +77,7 @@ export default function InspoUpload() {
                         <PostInspoDropzone onFileSelected={(file) => setSelectedFile(file)} />
                     </Grid.Col>
                     <Grid.Col span={3.5}>
-                        <Card p={'lg'} pb={'xl'}>
+                        <Card p={'lg'} pb={'xl'} style={{backgroundColor: 'light-dark(rgb(240,240,240), rgb(21,22,25))'}}>
                             <Group>
                                 <Avatar
                                     src={data?.user.image}
@@ -82,16 +89,16 @@ export default function InspoUpload() {
                                     {data?.user.username}
                                 </Title>
                             </Group>
-                            <Textarea
-                                mt={'lg'}
-                                size='md'
-                                placeholder={'Write a caption...'}
-                                variant={'filled'}
-                                autosize
-                                minRows={12}
-                                value={caption}
-                                onChange={(event) => setCaption(event.currentTarget.value)}
-                            />
+                                <Textarea
+                                    mt={'lg'}
+                                    size='sm'
+                                    placeholder={'Write a caption...'}
+                                    autosize
+                                    minRows={14}
+                                    maxRows={14}
+                                    value={caption}
+                                    onChange={(event) => setCaption(event.currentTarget.value)}
+                                />
                             <Group mt='xs' justify={'flex-end'}>
                                 <Text size={'xs'}>{caption.length}/1000</Text>
                             </Group>

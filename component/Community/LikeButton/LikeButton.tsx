@@ -9,6 +9,7 @@ interface LikeButtonInterface {
     session: Session,
     post: PostWithRelations
     likedPosts?: Post[]
+    size? : number
 }
 
 export function LikeButton(props: LikeButtonInterface) {
@@ -58,7 +59,7 @@ export function LikeButton(props: LikeButtonInterface) {
             variant="subtle"
             c={isLiked ? 'pink' : 'gray'}
             onClick={handleLikeClick}
-            leftSection={<IconHeart size={16} color={isLiked ? 'pink' : 'gray'} />}
+            leftSection={<IconHeart size={props.size ? props.size : 16} color={isLiked ? 'pink' : 'gray'} />}
         >
             {likes}
         </Button>

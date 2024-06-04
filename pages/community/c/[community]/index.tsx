@@ -90,15 +90,21 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
                             }}
                         />
                         <Group justify={'flex-end'}>
-                            <div style={{ width: '15rem' }}>
+                            <div style={{ width: '15rem', backgroundColor: 'light-dark(rgb(240,240,240), rgb(21,22,25))' }}>
                                 <TextInput
-                                    variant="filled"
+                                    variant={'transparent'}
                                     size="md"
                                     radius="0"
                                     placeholder="Search"
                                 />
                             </div>
-                            <Button variant="filled" size="sm" radius="0" bg={'black'}
+                            <Button darkHidden variant="filled" size="sm" radius="0" bg={'black'}
+                                    component={Link}
+                                    href={status === 'authenticated' ? "../post/create" : '../../api/auth/signin'}
+                            >
+                                Create a Post
+                            </Button>
+                            <Button lightHidden variant="outline" size="sm" radius="0" color={'var(--mantine-color-dark-1)'}
                                     component={Link}
                                     href={status === 'authenticated' ? "../post/create" : '../../api/auth/signin'}
                             >

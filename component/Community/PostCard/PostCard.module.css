@@ -1,11 +1,11 @@
 .card {
     display: flex;
     flex-direction: row;
-    background-color: light-dark(rgb(240,240,240), rgb(46,46,46))
+    background-color: light-dark(rgb(240,240,240), rgb(21,22,25))
 }
 
 .card:hover {
-    background-color: light-dark(rgb(220,220,220), rgb(59,59,59))
+    background-color: light-dark(rgb(220,220,220), rgb(30,30,32))
 }
 
 .content {

@@ -43,7 +43,7 @@ export default function Inspo() {
             <Text size="sm" pt={'md'} pb={'md'}>
                 Discover fit pics taken by our team
             </Text>
-            <Divider size="xl" pb={'lg'} />
+            <Divider pb={'lg'} color={'light-dark(rgb(220,220,220), rgb(59,59,59))'} />
             <Grid gutter={'xs'}>
                 {paginatedOutfits.map((outfit, index) => (
                     <Grid.Col key={index} span={{ base: 12, md: 6, lg: 3 }}>

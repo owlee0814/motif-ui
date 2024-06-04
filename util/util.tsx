@@ -80,3 +80,21 @@ export const countComments = (comments: CommentWithRelations[]): number => {
     }
     return count;
 };
+
+export function convertDateToTimeMonthYear(isoString: string | Date) {
+    const date = new Date(isoString);
+
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'pm  ' : 'am  ';
+
+    const formattedHours = hours % 12 || 12; // Convert 0 to 12 for midnight
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${formattedHours}:${formattedMinutes} ${ampm} · ${month} ${day} ${year}`;
+}

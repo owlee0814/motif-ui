@@ -143,7 +143,12 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                     <CommunityNavBar currentCommunity={props.post?.community.name}  communities={props.communities}/>
                 </Grid.Col>
                 <Grid.Col span={{ sm: 12, md: 12, lg: 9 }} pt={'6rem'}>
-                    <Card p={'xl'} radius={0}>
+                    <Card
+                        p={'xl'} radius={0}
+                        style={{
+                            backgroundColor: 'light-dark(rgb(255,255, 255), rgb(21,22,25))'
+                        }}
+                    >
                         <Group>
                             <Anchor href={'../c/' + props.post?.community.name} style={{ color: 'inherit.inherit' }} fw={'800'} pb={'lg'}>
                                 <Badge
@@ -189,18 +194,27 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                         <div>
                             <Title size={'md'}>{props.post?._count.comments} comments</Title>
                             <Space h='lg' />
-                            <Textarea
-                                variant="filled"
-                                size="md"
-                                radius="0"
-                                placeholder="Add a comment"
-                                mb={'sm'}
-                                value={newComment}
-                                onChange={(event) => setNewComment(event.currentTarget.value)}
-                            />
-                            <Group justify={'flex-end'} mb={'lg'}>
-                                <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={() => setNewComment('')}>Cancel</Button>
-                                <Button variant="filled" size="sm" radius="xs" bg={'black'} onClick={handlePostComment}>Post</Button>
+                            <div
+                                style={{
+                                    backgroundColor: 'light-dark(rgb(240,240,240), rgb(21,22,25))',
+                                    border: '2px solid light-dark(rgb(255,255,255), rgb(66,66,66))'}}
+                            >
+                                <Textarea
+                                    variant="transparent"
+                                    size="md"
+                                    radius="0"
+                                    placeholder="Add a comment"
+                                    mb={'sm'}
+                                    value={newComment}
+                                    onChange={(event) => setNewComment(event.currentTarget.value)}
+                                />
+                            </div>
+                            <Group justify={'flex-end'} mb={'lg'} mt={'md'}>
+                                <Button darkHidden variant="filled" size="sm" radius="xs" bg={'black'} onClick={() => setNewComment('')}>Cancel</Button>
+                                <Button lightHidden variant="outline" size="sm" radius="xs" color={'var(--mantine-color-dark-1)'} onClick={() => setNewComment('')}>Cancel</Button>
+
+                                <Button darkHidden variant="filled" size="sm" radius="xs" bg={'black'} onClick={handlePostComment}>Post</Button>
+                                <Button lightHidden variant="outline" size="sm" radius="xs" color={'var(--mantine-color-dark-1)'} onClick={handlePostComment}>Post</Button>
                             </Group>
                             {comments.map((comment) => (
                                 <PostComment

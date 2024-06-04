@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 interface ShareButtonInterface {
     href: string
     size?: string
+    iconSize?: number
 }
 
 export function ShareButton(props: ShareButtonInterface) {
@@ -25,7 +26,7 @@ export function ShareButton(props: ShareButtonInterface) {
     return (
         <Popover opened={opened} onChange={setOpened}>
             <Popover.Target>
-                <Button variant="subtle" c='gray' size={props.size ? props.size : 'sm'} leftSection={<IconShare size={16} />} onClick={(e) => {
+                <Button variant="subtle" c='gray' size={props.size ? props.size : 'sm'} leftSection={<IconShare color='gray' size={props.iconSize ? props.iconSize : 16} />} onClick={(e) => {
                     navigator.clipboard.writeText(props.href)
                     setOpened((o) => !o)
                     e.preventDefault()

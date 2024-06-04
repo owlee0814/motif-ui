@@ -1,5 +1,5 @@
 import React from "react";
-import {ActionIcon, Group, Title, useComputedColorScheme, useMantineColorScheme} from '@mantine/core';
+import {ActionIcon, Divider, Group, Title, useComputedColorScheme, useMantineColorScheme} from '@mantine/core';
 import Link from "next/link";
 import {IconBell, IconMoon, IconShoppingBag, IconSun} from "@tabler/icons-react";
 import cx from 'clsx';
@@ -72,6 +72,7 @@ export function TitleHeader(props : TitleHeaderProps) {
                     </ActionIcon>
                 </Group>
             </Group>
+            <Divider lightHidden mt='4' h={0} style={{marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)'}}/>
         </div>
     );
 }

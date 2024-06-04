@@ -1,4 +1,4 @@
 .card {
-    background-color: light-dark(rgb(240,240,240), rgb(59,59,59));
+    background-color: light-dark(rgb(240,240,240), rgb(12,13,15));
     flex-grow: 1;
 }

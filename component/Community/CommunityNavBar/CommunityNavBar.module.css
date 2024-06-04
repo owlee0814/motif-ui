@@ -10,7 +10,8 @@
 }
 
 .card {
-    background-color: light-dark(rgb(240,240,240), rgb(46,46,46))
+    background-color: light-dark(rgb(240,240,240), rgb(21,22,25));
+
 }
 
 .navbar {

@@ -31,7 +31,7 @@ export function CommunityNavBar(props: CommunityNavBarProps) {
             <Title className={classes.title}>
                 {navBarTitle}
             </Title>
-            <Card radius="0" mt="1rem" className={classes.card}>
+            <Card radius="0" mt="1rem" pt='2rem' pb='2rem' pr="2.5rem" pl="2.5rem" className={classes.card}>
                 <Title size="xs" p="xs" pb='lg'>COMMUNITIES</Title>
                 <Group gap={0} ml="xs">
                     {

@@ -119,7 +119,7 @@ export default function index() {
             <Text size="sm" pt={'md'} pb={'md'}>
                 Curated albums to help you to find your style
             </Text>
-            <Divider size="xl" pb={'lg'} />
+            <Divider pb={'lg'} color={'light-dark(rgb(220,220,220), rgb(59,59,59))'} />
             <Grid gutter='xs'>
                 {inspos}
             </Grid>

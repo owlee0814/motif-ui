@@ -13,7 +13,8 @@ export async function GET(req: Request, context: { params: Params }) {
                     some: {
                         userId: userId
                     }
-                }
+                },
+                communityId: { not: 7 },
             },
             orderBy: {
                 createdAt: 'desc',

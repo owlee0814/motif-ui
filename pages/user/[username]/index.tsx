@@ -83,7 +83,13 @@ export default function Profile(props: ProfileProps) {
                         {
                             (props.userSession && props.userSession.user.id === props.user.id) &&
                             <Group justify={'flex-end'} pt={'3.8rem'}>
-                                <Button variant="filled" size="sm" radius="0" bg={'black'} component={Link}
+                                <Button darkHidden variant="filled" size="sm" radius="0" mb={'md'} bg={'black'}
+                                        component={Link}
+                                        href="community/post/create">
+                                    Upload
+                                </Button>
+                                <Button lightHidden variant="outline" size="sm" radius="0" mb={'md'} color={'var(--mantine-color-dark-1)'}
+                                        component={Link}
                                         href="community/post/create">
                                     Upload
                                 </Button>

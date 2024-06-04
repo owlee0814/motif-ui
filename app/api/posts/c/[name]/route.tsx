@@ -19,7 +19,7 @@ export async function GET(req: Request, context: { params: Params}) {
         };
 
         const posts = await prisma.post.findMany({
-            where: { community : {name: communityName}},
+            where: { community : {name: communityName}, communityId: { not: 7 }},
             orderBy: sortOptions[sortOption as keyof typeof sortOptions],
             skip: (page - 1) * limit,
             take: limit,

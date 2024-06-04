@@ -1,6 +1,15 @@
 import "@mantine/core/styles.css";
 import Head from "next/head";
-import {AppShell, Group, MantineProvider, Space, Title} from "@mantine/core";
+import {
+    AppShell,
+    createTheme,
+    CSSVariablesResolver,
+    Group,
+    MantineProvider,
+    Space,
+    Title,
+    useMantineTheme
+} from "@mantine/core";
 import {HeaderSimple} from "../component/Header/HeaderSimple/HeaderSimple";
 import React, {useEffect, useState} from "react";
 import {TitleHeader} from "../component/Header/TitleHeader/TitleHeader";
@@ -35,13 +44,24 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
         };
     }, []);
 
+    const resolver: CSSVariablesResolver = (theme) => ({
+        variables: {},
+        light: {},
+        dark: {
+            '--mantine-color-body': 'rgb(16,17,19)',
+        },
+    });
+
+    const theme = createTheme({
+        headings: {fontFamily: sen.style.fontFamily},
+    });
+
     // @ts-ignore
     return (
         <SessionProvider session={session}>
             <MantineProvider
-                theme={{
-                    headings: {fontFamily: sen.style.fontFamily}
-                }}
+                theme={theme}
+                cssVariablesResolver={resolver}
             >
                 <MantineEmotionProvider>
                 <Head>
@@ -98,8 +118,8 @@ export default function App({Component, pageProps: {session, ...pageProps}}: any
                                     )}
                                 </div>
                             </AppShell.Header>
-                            <AppShell.Main>
-                                <Component {...pageProps} />
+                            <AppShell.Main >
+                                <Component {...pageProps}/>
                                 <Space h={'5rem'}/>
                                 <FooterSocial/>
                             </AppShell.Main>

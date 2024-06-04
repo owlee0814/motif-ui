@@ -1,8 +1,7 @@
-import {Anchor, Avatar, Button, Card, Group, Space, Text, Textarea} from "@mantine/core";
-import React, {useEffect, useState} from "react";
-import {IconMessage} from "@tabler/icons-react";
+import {Anchor, Avatar, Button, Card, Divider, Grid, Group, Space, Text, Textarea} from "@mantine/core";
+import React, {useState} from "react";
 import {timeAgo} from "../../../util/util";
-import classes from "./Comment.module.css";
+import classes from "./InspoComment.module.css";
 import {CommentWithRelations, UserWithRelations} from "../../../entities/Types";
 import {Session} from "next-auth";
 
@@ -13,7 +12,7 @@ interface PostCommentProps {
     onAddReply: (parentId: number, reply: CommentWithRelations) => void // Add this prop
 }
 
-export default function PostComment(props: PostCommentProps) {
+export default function InspoComment(props: PostCommentProps) {
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [replyText, setReplyText] = useState("");
     const [loading, setLoading] = useState(false);
@@ -59,18 +58,29 @@ export default function PostComment(props: PostCommentProps) {
 
     return (
         <div>
-            <Space h={'xs'}/>
-            <Group display={'flex'}>
-                <Anchor href={'../../../../user/' + props.author.user.username}>
-                    <Avatar
-                        src={props.comment.author.user.image}
-                        alt={props.comment.author.user.username}
-                        radius="xl"
-                        color="indigo"
-                    />
-                </Anchor>
-                <Card radius="0" pl='md' pr='md' pt='md' pb='xs' className={classes.card}>
-                    <Group gap={'lg'}>
+            <Grid gutter={0} p={0} pb={'xs'}>
+                <Grid.Col span={1.5} pt={5}>
+                    <Anchor href={'../../../../user/' + props.author.user.username}>
+                        <div
+                            style={{
+                                borderRadius: '50%',
+                                background: 'linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)',
+                                width: '42px',
+                                height: '42px',
+                            }}>
+                            <Avatar
+                                src={props.comment.author.user.image}
+                                alt={props.comment.author.user.username}
+                                radius="xl"
+                                color="indigo"
+                                style={{position: 'relative', top: '5%', left: '5%'}}
+                            />
+                        </div>
+                    </Anchor>
+                </Grid.Col>
+                <Grid.Col span={10.5}>
+                <Card radius="0" p={0} pl='sm' pt={0} className={classes.card} >
+                    <Group gap={'lg'} justify={'space-between'}>
                         <Group gap={8}>
                             <Anchor
                                 href={'../../../../user/' + props.comment.author.user.username}
@@ -86,46 +96,40 @@ export default function PostComment(props: PostCommentProps) {
                             {timeAgo(props.comment.createdAt)}
                         </Text>
                     </Group>
-                    <Text pt="5" size="sm">
-                        {props.comment.content}
-                    </Text>
-                    <Space h={'xs'}/>
+                    <Textarea variant={'unstyled'} autosize>
+                        {props.comment.content.trim()}
+                    </Textarea>
                 </Card>
-            </Group>
-            <Group gap={0} p={'xs'}>
-                <Button leftSection={<IconMessage size={14} />} ml={'2.5rem'} size={'compact-sm'} variant={'subtle'} fw={'500'} onClick={() => setShowReplyForm(true)}>
+                <Button size={'xs'} pt={0} h={18} variant={'transparent'} fw={'500'} onClick={() => setShowReplyForm(true)}>
                     Reply
                 </Button>
-            </Group>
+                {showReplyForm && (
+                    <div>
+                        <Textarea
+                            variant="filled"
+                            size="sm"
+                            radius="0"
+                            placeholder="Write your reply..."
+                            mb={'sm'}
+                            value={replyText}
+                            onChange={(event) => setReplyText(event.currentTarget.value)}
+                            disabled={loading}
+                        />
+                        <Group justify={'flex-end'} mb={'lg'}>
+                            <Button variant="filled" size="xs" radius="xs" bg={'black'} onClick={() => setShowReplyForm(!showReplyForm)} >Cancel</Button>
+                            <Button variant="filled" size="xs" radius="xs" bg={'black'} onClick={handlePostReply} disabled={loading}>
+                                {loading ? 'Posting...' : 'Reply'}
+                            </Button>
+                        </Group>
+                    </div>
+                )}
+                </Grid.Col>
+            </Grid>
 
-            {showReplyForm && (
-                <div>
-                    <Textarea
-                        variant="filled"
-                        size="md"
-                        radius="0"
-                        placeholder="Write your reply..."
-                        mb={'sm'}
-                        value={replyText}
-                        onChange={(event) => setReplyText(event.currentTarget.value)}
-                        disabled={loading}
-                    />
-                    <Group justify={'flex-end'} mb={'lg'}>
-                        <Button darkHidden variant="filled" size="sm" radius="xs" bg={'black'} onClick={() => setShowReplyForm(!showReplyForm)} >Cancel</Button>
-                        <Button lightHidden variant="outline" size="sm" radius="xs" color={'var(--mantine-color-dark-1)'} onClick={() => setShowReplyForm(!showReplyForm)} >Cancel</Button>
-                        <Button darkHidden variant="filled" size="sm" radius="xs" bg={'black'} onClick={handlePostReply} disabled={loading}>
-                            {loading ? 'Posting...' : 'Reply'}
-                        </Button>
-                        <Button lightHidden variant="outline" size="sm" radius="xs" color={'var(--mantine-color-dark-1)'} onClick={handlePostReply} disabled={loading}>
-                            {loading ? 'Posting...' : 'Reply'}
-                        </Button>
-                    </Group>
-                </div>
-            )}
             {
                 props.comment.replies ? props.comment.replies.map((reply, index) => (
-                    <div style={{paddingLeft: '2rem', paddingRight: '1rem'}}>
-                        <PostComment
+                    <div style={{paddingLeft: '1rem'}}>
+                        <InspoComment
                             key={reply.id}
                             // @ts-ignore
                             comment={reply}

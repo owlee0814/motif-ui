@@ -7,6 +7,7 @@
     height: 100%;
     position: relative;
     overflow: hidden;
+    background-color: light-dark(rgb(255,255,255), rgb(16,17,19));
 }
 
 .previewsContainer {
