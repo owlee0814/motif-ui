@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Button, Center, Container, Divider, Grid, Group, Space, Text, Title} from "@mantine/core";
 import InspoCard from "../../../component/Community/InspoCard/InspoCard";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import {useSession} from "next-auth/react";
 import {GetServerSideProps} from "next";
 import {getServerSession, Session} from "next-auth";
 import {authOptions} from "../../api/auth/[...nextauth]";
-import {CommentWithRelations, PostWithRelations} from "../../../entities/Types";
+import {PostWithRelations} from "../../../entities/Types";
 import InspoDetail from "../../../component/InspoDetail/inspoDetail";
 import {useRouter} from "next/router";
 import {useDisclosure} from "@mantine/hooks";
@@ -55,7 +55,7 @@ export default function Inspos(props: InsposProps) {
                     {
                         props.inspos.map( (inspo, index) => (
                         <Grid.Col key={index} span={{base: 12, md: 6, lg: 3}}>
-                            <Link href={`/inspo/c?image=${inspo.id}`} onClick={open}>
+                            <Link href={`/inspo/c?image=${inspo.id}`} onClick={open} scroll={false}>
                                 <InspoCard post={inspo} session={props.userSession} />
                             </Link>
                         </Grid.Col>

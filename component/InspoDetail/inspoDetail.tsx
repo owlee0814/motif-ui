@@ -143,14 +143,25 @@ export default function InspoDetail(props: InspoDetailInterface) {
 
     return props.opened && loading ? (
         <>
-            <Overlay blur={40} zIndex={10000}>
+            <Modal
+                opened
+                onClose={()=>{}}
+                overlayProps={{
+                    blur: 40,
+                }}
+                withCloseButton={false}
+                centered
+                styles={{
+                    content: {
+                        backgroundColor: 'transparent',
+                        boxShadow: 'none'
+                    }
+                }}
+            >
                 <Center>
-                    <Loader
-                        color="blue"
-                        style={{position: 'absolute', top: '50%'}}
-                    />
+                    <Loader/>
                 </Center>
-            </Overlay>
+            </Modal>
         </>
         ) : (
         <>
@@ -162,6 +173,11 @@ export default function InspoDetail(props: InspoDetailInterface) {
                     position: 'relative',
                     right: 250,
                 }}
+                styles={{
+                    content: {
+                        flex: 'none'
+                    }
+                }}
                 overlayProps={{
                     blur: 40,
                 }}
@@ -171,7 +187,7 @@ export default function InspoDetail(props: InspoDetailInterface) {
                 radius={0}
             >
                 <AspectRatio ratio={7/10}>
-                    <Image src={inspo && inspo.images[0].imgUrl}/>
+                    <Image src={inspo && inspo.images[0].imgUrl} h={'80dvh'}/>
                 </AspectRatio>
             </Modal>
             <Modal
@@ -305,7 +321,7 @@ export default function InspoDetail(props: InspoDetailInterface) {
                         </Stack>
                     </Center>
                 }
-                <ScrollArea h={'48vh'} scrollbarSize={8}>
+                <ScrollArea h={'33dvh'} scrollbarSize={8}>
                     <Container>
                         {comments.map((comment) => (
                             <InspoComment
@@ -318,7 +334,7 @@ export default function InspoDetail(props: InspoDetailInterface) {
                         ))}
                     </Container>
                 </ScrollArea>
-                <div style={{position: 'fixed', bottom: 25, width: '93%', padding: '0'}}>
+                <div style={{position: 'fixed', bottom: 10, width: '93%', padding: '0'}}>
                     <Divider/>
                     <Card radius={0} padding={0} pt={5} style={{ backgroundColor: 'light-dark(rgb(240,240,240), rgb(21,22,25))' }}>
                         <Textarea radius={0} size='md' variant={'unstyled'} placeholder={'Add a comment...'}
