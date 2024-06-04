@@ -1,5 +1,5 @@
 import { Avatar, Button, Card, Container, Grid, Group, Text, Stack, Textarea, TextInput, Title } from '@mantine/core';
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PostInspoDropzone from "../../../component/Community/PostInspoDropzone/PostInspoDropzone";
 import { useSession } from "next-auth/react";
 import { FileWithPreview } from "../../../entities/Types";
@@ -17,13 +17,20 @@ export default function InspoUpload() {
     const { data } = useSession();
     const router = useRouter();
 
+    useEffect(() => {
+        if(caption.length > 0 && caption.length < 1000)
+            setTextAreaError(false)
+        if(caption.length > 1000)
+            setTextAreaError(true)
+    }, [caption]);
+
     const handleUpload = async () => {
         if (!selectedFile) {
-            alert("Please select a file");
+            alert("Please upload an image");
             return;
         }
 
-        if (!caption || caption.length === 0) {
+        if (!caption || caption.length === 0 || caption.length > 1000) {
             setTextAreaError(true);
             return;
         }
@@ -97,7 +104,10 @@ export default function InspoUpload() {
                                     minRows={14}
                                     maxRows={14}
                                     value={caption}
-                                    onChange={(event) => setCaption(event.currentTarget.value)}
+                                    onChange={(event) => {
+                                        setCaption(event.currentTarget.value)
+                                    }}
+                                    error={textAreaError}
                                 />
                             <Group mt='xs' justify={'flex-end'}>
                                 <Text size={'xs'}>{caption.length}/1000</Text>

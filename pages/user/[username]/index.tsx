@@ -1,19 +1,20 @@
-import {Avatar, Button, Container, Grid, Group, rem, Space, Stack, Tabs, Text, Title} from "@mantine/core";
-import React, {useEffect, useState} from "react";
+import {Avatar, Button, Container, Grid, Group, rem, Space, Stack, Tabs, Title} from "@mantine/core";
+import React, {useEffect} from "react";
 import Link from "next/link";
 import {IconAward, IconMessageCircle, IconPhoto, IconSettings} from "@tabler/icons-react";
 import {GetServerSideProps} from "next";
 import {getServerSession, Session} from "next-auth";
 import {PostWithRelations} from "../../../entities/Types";
-import InspoCard from "../../../component/Community/InspoCard/InspoCard";
 import {PostCard} from "../../../component/Community/PostCard/PostCard";
 import {authOptions} from "../../api/auth/[...nextauth]";
 import {User} from "@prisma/client";
 import {convertDateToYearMonth} from "../../../util/util";
+import InspoCard from "../../../component/Community/InspoCard/InspoCard";
 
 interface ProfileProps {
     userPosts : PostWithRelations[],
     likedPosts : PostWithRelations[],
+    userInspos : PostWithRelations[],
     user: User,
     userSession: Session
 }
@@ -81,19 +82,21 @@ export default function Profile(props: ProfileProps) {
                     </Grid.Col>
                     <Grid.Col span={4}>
                         {
+                            //TODO ADD DROP DOWN MENU FOR SETTING, UPLOAD, AND OTHER USER AUTHENTICATED ACTIONS
                             (props.userSession && props.userSession.user.id === props.user.id) &&
-                            <Group justify={'flex-end'} pt={'3.8rem'}>
-                                <Button darkHidden variant="filled" size="sm" radius="0" mb={'md'} bg={'black'}
-                                        component={Link}
-                                        href="community/post/create">
-                                    Upload
-                                </Button>
-                                <Button lightHidden variant="outline" size="sm" radius="0" mb={'md'} color={'var(--mantine-color-dark-1)'}
-                                        component={Link}
-                                        href="community/post/create">
-                                    Upload
-                                </Button>
-                            </Group>
+                            <></>
+                            // <Group justify={'flex-end'} pt={'3.8rem'}>
+                            //     <Button darkHidden variant="filled" size="sm" radius="0" mb={'md'} bg={'black'}
+                            //             component={Link}
+                            //             href="community/post/create">
+                            //         Upload
+                            //     </Button>
+                            //     <Button lightHidden variant="outline" size="sm" radius="0" mb={'md'} color={'var(--mantine-color-dark-1)'}
+                            //             component={Link}
+                            //             href="community/post/create">
+                            //         Upload
+                            //     </Button>
+                            // </Group>
                         }
                     </Grid.Col>
                 </Grid>
@@ -101,7 +104,7 @@ export default function Profile(props: ProfileProps) {
                 <Tabs defaultValue="gallery" color="gray">
                     <Tabs.List>
                         <Tabs.Tab value="gallery" leftSection={<IconPhoto style={{ width: rem(12), height: rem(12) }} />}>
-                            Gallery
+                            Inspos
                         </Tabs.Tab>
                         <Tabs.Tab value="messages" leftSection={<IconMessageCircle style={{ width: rem(12), height: rem(12) }} />}>
                             Posts
@@ -121,8 +124,13 @@ export default function Profile(props: ProfileProps) {
                     </Tabs.List>
 
                     <Tabs.Panel value="gallery">
-                        <Grid mt={'2rem'}>
-                            {ootds}
+                        <Grid mt={'2rem'} gutter={'xs'}>
+                            {
+                                props.userInspos.map( (inspo, index) => (
+                                    <Grid.Col key={index} span={{base: 12, md: 6, lg: 3}}>
+                                        <InspoCard post={inspo} session={props.userSession} />
+                                    </Grid.Col>
+                                ))}
                         </Grid>
                     </Tabs.Panel>
 
@@ -167,24 +175,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
         const user = await userRes.json();
 
-        const [userPostsRes, likedPostsRes] = await Promise.all([
+        const [userPostsRes, likedPostsRes, userInsposRes] = await Promise.all([
             fetch(`${process.env.API_URL}/api/posts/user/${user.id}`),
-            fetch(`${process.env.API_URL}/api/posts/user/${user.id}/liked`)
+            fetch(`${process.env.API_URL}/api/posts/user/${user.id}/liked`),
+            fetch(`${process.env.API_URL}/api/inspos/user/${user.id}`),
         ]);
 
-        if (!userPostsRes.ok || !likedPostsRes.ok) {
+        if (!userPostsRes.ok || !likedPostsRes.ok || !userInsposRes.ok) {
             throw new Error('Failed to fetch posts');
         }
 
-        const [userPosts, likedPosts] = await Promise.all([
+        const [userPosts, likedPosts, userInspos] = await Promise.all([
             userPostsRes.json(),
-            likedPostsRes.json()
+            likedPostsRes.json(),
+            userInsposRes.json(),
         ]);
 
         return {
             props: {
                 userPosts,
                 likedPosts,
+                userInspos,
                 user,
                 userSession: session,
             },

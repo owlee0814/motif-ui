@@ -1,0 +1,16 @@
+.content {
+    background-color: light-dark(rgb(240,240,240), rgb(16,17,19));
+    position: absolute;
+    right: 0;
+    min-height: 100%;
+    min-width: 450px;
+    max-width: 14vw;
+}
+
+.inner {
+    padding: 0;
+}
+
+.im_content {
+    flex: none
+}

@@ -179,7 +179,7 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                                 {/*<Button variant="subtle" size='compact-sm' c='gray' leftSection={<IconBookmark size={16} />}>*/}
                                 {/*    Save*/}
                                 {/*</Button>*/}
-                                <ShareButton href={window.location.href} size={'compact-sm'} />
+                                <ShareButton href={''} size={'compact-sm'} />
                             </Group>
                         </Group>
                         <Space h={'xl'} />
@@ -223,6 +223,7 @@ const PostDetail: React.FC<PostDetailProps> = (props: PostDetailProps) => {
                                     author={comment.author}
                                     session={props.userSession}
                                     onAddReply={handleAddReply} // Pass down the function to add replies
+                                    postUserId={props.post.authorId}
                                 />
                             ))}
                         </div>

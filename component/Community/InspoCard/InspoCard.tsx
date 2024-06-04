@@ -22,6 +22,7 @@ export default function InspoCard(props: InspoCardProps ) {
                     <Overlay color="#000" backgroundOpacity={0.75} zIndex={1}>
                         <Group mt={'md'} ml={'md'}>
                             <Anchor
+                                onClick={(event) => event.stopPropagation()}
                                 href={'../../../../user/' + props.post.author.user.username}
                                 style={{
                                     color: 'inherit',
@@ -35,6 +36,7 @@ export default function InspoCard(props: InspoCardProps ) {
                             </Anchor>
                             <Anchor
                                 href={'../../../../user/' + props.post.author.user.username}
+                                onClick={(event) => event.stopPropagation()}
                                 style={{
                                     color: 'inherit',
                                 }}

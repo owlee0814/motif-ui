@@ -7,6 +7,7 @@ import {CommentWithRelations, UserWithRelations} from "../../../entities/Types";
 import {Session} from "next-auth";
 
 interface PostCommentProps {
+    postUserId: string;
     comment: CommentWithRelations
     author: UserWithRelations
     session: Session
@@ -60,7 +61,7 @@ export default function PostComment(props: PostCommentProps) {
     return (
         <div>
             <Space h={'xs'}/>
-            <Group display={'flex'}>
+            <Group display={'flex'} gap={5}>
                 <Anchor href={'../../../../user/' + props.author.user.username}>
                     <Avatar
                         src={props.comment.author.user.image}
@@ -80,7 +81,7 @@ export default function PostComment(props: PostCommentProps) {
                             >
                                 <Text size="sm">{props.comment.author.user.username}</Text>
                             </Anchor>
-                            <Text size="xs" fw='bold' c={'red'}>{props.author.id === props.comment.authorId ? 'OP' : ''}</Text>
+                            <Text size="xs" fw='bold' c={'red'}>{props.postUserId === props.comment.authorId ? 'OP' : ''}</Text>
                         </Group>
                         <Text size="xs" c="dimmed">
                             {timeAgo(props.comment.createdAt)}
@@ -92,7 +93,7 @@ export default function PostComment(props: PostCommentProps) {
                     <Space h={'xs'}/>
                 </Card>
             </Group>
-            <Group gap={0} p={'xs'}>
+            <Group gap={0} p={'xs'} pt={0}>
                 <Button leftSection={<IconMessage size={14} />} ml={'2.5rem'} size={'compact-sm'} variant={'subtle'} fw={'500'} onClick={() => setShowReplyForm(true)}>
                     Reply
                 </Button>
@@ -132,6 +133,7 @@ export default function PostComment(props: PostCommentProps) {
                             session={props.session}
                             onAddReply={props.onAddReply} // Pass down the function to handle adding replies
                             author={props.author}
+                            postUserId={props.postUserId}
                         />
                     </div>
                 )) : <></>

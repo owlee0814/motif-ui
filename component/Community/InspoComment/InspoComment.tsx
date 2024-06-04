@@ -6,6 +6,7 @@ import {CommentWithRelations, UserWithRelations} from "../../../entities/Types";
 import {Session} from "next-auth";
 
 interface PostCommentProps {
+    inspoUserId: string
     comment: CommentWithRelations
     author: UserWithRelations
     session: Session
@@ -90,7 +91,7 @@ export default function InspoComment(props: PostCommentProps) {
                             >
                                 <Text size="sm">{props.comment.author.user.username}</Text>
                             </Anchor>
-                            <Text size="xs" fw='bold' c={'red'}>{props.author.id === props.comment.authorId ? 'OP' : ''}</Text>
+                            <Text size="xs" fw='bold' c={'red'}>{props.inspoUserId === props.comment.authorId ? 'OP' : ''}</Text>
                         </Group>
                         <Text size="xs" c="dimmed">
                             {timeAgo(props.comment.createdAt)}
@@ -136,6 +137,7 @@ export default function InspoComment(props: PostCommentProps) {
                             session={props.session}
                             onAddReply={props.onAddReply} // Pass down the function to handle adding replies
                             author={props.author}
+                            inspoUserId={props.inspoUserId}
                         />
                     </div>
                 )) : <></>

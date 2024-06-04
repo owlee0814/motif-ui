@@ -2,7 +2,6 @@ import {
     AspectRatio,
     Avatar,
     Button,
-    Card,
     Center,
     Container,
     Divider,
@@ -10,7 +9,7 @@ import {
     Image,
     Loader,
     Modal,
-    Overlay, ScrollArea,
+    ScrollArea,
     Space,
     Stack,
     Text,
@@ -25,6 +24,7 @@ import React, {useEffect, useState} from "react";
 import {CommentWithRelations, PostWithRelations} from "../../entities/Types";
 import {Session} from "next-auth";
 import InspoComment from "../Community/InspoComment/InspoComment";
+import classes from "./InspoDetail.module.css";
 
 interface InspoDetailInterface {
     inspoId: number;
@@ -173,10 +173,8 @@ export default function InspoDetail(props: InspoDetailInterface) {
                     position: 'relative',
                     right: 250,
                 }}
-                styles={{
-                    content: {
-                        flex: 'none'
-                    }
+                classNames={{
+                    content: classes.im_content
                 }}
                 overlayProps={{
                     blur: 40,
@@ -187,7 +185,7 @@ export default function InspoDetail(props: InspoDetailInterface) {
                 radius={0}
             >
                 <AspectRatio ratio={7/10}>
-                    <Image src={inspo && inspo.images[0].imgUrl} h={'80dvh'}/>
+                    <Image src={inspo && inspo.images[0].imgUrl} w={'35dvw'}/>
                 </AspectRatio>
             </Modal>
             <Modal
@@ -198,19 +196,9 @@ export default function InspoDetail(props: InspoDetailInterface) {
                     blur: 0,
                 }}
                 withCloseButton={false}
-
-                styles={{
-                    inner: {
-                        padding: 0,
-                    },
-                    content: {
-                        backgroundColor: 'light-dark(rgb(240,240,240), rgb(21,22,25))',
-                        position: 'absolute',
-                        right: 0,
-                        minHeight: '100%',
-                        minWidth: '450px',
-                        maxWidth: '14vw',
-                    },
+                classNames={{
+                    content: classes.content,
+                    inner: classes.inner,
                 }}
                 radius={0}
             >
@@ -265,7 +253,7 @@ export default function InspoDetail(props: InspoDetailInterface) {
                                 </Group>
                             }
                             {
-                                JSON.parse(inspo.content).outfit.top &&
+                                JSON.parse(inspo.content).outfit.bottom &&
                                 <Group>
                                     <Title>·</Title>
                                     <IconShirt/>
@@ -273,7 +261,7 @@ export default function InspoDetail(props: InspoDetailInterface) {
                                 </Group>
                             }
                             {
-                                JSON.parse(inspo.content).outfit.top &&
+                                JSON.parse(inspo.content).outfit.shoes &&
                                 <Group>
                                     <Title>·</Title>
                                     <IconShoe/>
@@ -281,7 +269,7 @@ export default function InspoDetail(props: InspoDetailInterface) {
                                 </Group>
                             }
                             {
-                                JSON.parse(inspo.content).outfit.top &&
+                                JSON.parse(inspo.content).outfit.accessories &&
                                 <Group>
                                     <Title>·</Title>
                                     <IconSunglasses/>
@@ -291,7 +279,7 @@ export default function InspoDetail(props: InspoDetailInterface) {
                         </Stack>
                     }
                     <Group pb={'xs'}>
-                        <Text size={'lg'}>{convertDateToTimeMonthYear(inspo ?  inspo.createdAt : '')}</Text>
+                        <Text size={'md'}>{convertDateToTimeMonthYear(inspo ?  inspo.createdAt : '')}</Text>
                     </Group>
                     <Divider mb={5}/>
                     <Group gap={0} >
@@ -330,23 +318,22 @@ export default function InspoDetail(props: InspoDetailInterface) {
                                 author={comment.author}
                                 session={props.userSession}
                                 onAddReply={handleAddReply} // Pass down the function to add replies
+                                inspoUserId={inspo?.authorId || ''}
                             />
                         ))}
                     </Container>
                 </ScrollArea>
                 <div style={{position: 'fixed', bottom: 10, width: '93%', padding: '0'}}>
                     <Divider/>
-                    <Card radius={0} padding={0} pt={5} style={{ backgroundColor: 'light-dark(rgb(240,240,240), rgb(21,22,25))' }}>
-                        <Textarea radius={0} size='md' variant={'unstyled'} placeholder={'Add a comment...'}
-                                  value={newComment}
-                                  onChange={(event) => setNewComment(event.currentTarget.value)}
-                        />
-                        <Group justify={'flex-end'}>
-                            <Button p={0} variant={'transparent'} c='light-dark(black, white    )' size='sm' pl={'sm'} pr={'sm'} onClick={handlePostComment}>
-                                Post
-                            </Button>
-                        </Group>
-                    </Card>
+                    <Textarea radius={0} size='md' variant={'unstyled'} placeholder={'Add a comment...'}
+                              value={newComment}
+                              onChange={(event) => setNewComment(event.currentTarget.value)}
+                    />
+                    <Group justify={'flex-end'}>
+                        <Button p={0} variant={'transparent'} c='light-dark(black, white    )' size='sm' pl={'sm'} pr={'sm'} onClick={handlePostComment}>
+                            Post
+                        </Button>
+                    </Group>
                 </div>
             </Modal>
         </>
